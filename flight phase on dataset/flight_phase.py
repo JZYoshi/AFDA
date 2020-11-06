@@ -32,7 +32,7 @@ for file_name in list_file_name:
     df['time']= df['time'] - df['time'][0]
 
     phase_slicer = FlightPhase()
-    phase_slicer.set_trajectory(df['time'],df['geoaltitude'].values*m_to_ft,df['velocity'].values*m_by_s_to_kt, df['vertrate'].values*m_by_s_to_ft_by_min)
+    phase_slicer.set_trajectory(df['time'],df['baroaltitude'].values*m_to_ft,df['velocity'].values*m_by_s_to_kt, df['vertrate'].values*m_by_s_to_ft_by_min)
 
     df['phase'] = phase_slicer.phaselabel()
 
