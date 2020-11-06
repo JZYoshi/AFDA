@@ -17,7 +17,7 @@ def calculate_descriptor(phase):
     std_spd = phase['velocity'].std()
     vertrate_avg_spd = phase['vertrate'].mean()
     vertrate_std_spd = phase['vertrate'].std()
-    delta_h = phase['geoaltitude'].iloc[-1] - phase['geoaltitude'].iloc[0]
+    delta_h = phase['baroaltitude'].iloc[-1] - phase['baroaltitude'].iloc[0]
     max_spd = phase['velocity'].max()
     min_spd = phase['velocity'].min()
     max_vertrate_spd = phase['vertrate'].max()
@@ -47,8 +47,8 @@ for file_name in list_file_name:
     cruise = df[df['phase']=='CR']
     if not cruise.empty:
         desc_cruise = calculate_descriptor(cruise)
-        desc_cruise['mean_altitude'] = cruise['geoaltitude'].mean()
-        desc_cruise['std_altitude'] = cruise['geoaltitude'].std()
+        desc_cruise['mean_altitude'] = cruise['baroaltitude'].mean()
+        desc_cruise['std_altitude'] = cruise['baroaltitude'].std()
     else:
         desc_cruise={}
 
