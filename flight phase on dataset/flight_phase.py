@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[79]:
+
 
 
 import pandas as pd
@@ -11,15 +11,13 @@ from openap import FlightPhase
 from os import listdir
 import os
 
-# In[80]:
-
 
 m_to_ft = 3.28084
 m_by_s_to_ft_by_min = 3.28084*60
 m_by_s_to_kt = 1.94384
 
 
-# In[81]:
+
 
 path_to_dataset = "./test_flight_collection/"
 result_dir = "./test_flight_collection_with_phase/"
