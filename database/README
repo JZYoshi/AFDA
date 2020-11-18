@@ -1,0 +1,24 @@
+The database for storing flight information and descriptors will use PostgreSQL.
+
+PostgreSQL can be considered as an extended version of basic SQL.The fascinating feature that we are going to make use of is its support for JSON and array as column type.
+
+Following columns are defined:
+
+icao24: character[], 
+
+callsign: character[], 
+
+operator: character[], 
+
+manufacturer: character[], 
+
+aircraftICAO: character[],
+
+aircraftModel: character[],
+
+aircraftBuildTime: date,
+
+descriptors: jsonb[]
+
+
+The JSON objects stored in the descriptors column have the fields defined in doc_descriptors.txt
