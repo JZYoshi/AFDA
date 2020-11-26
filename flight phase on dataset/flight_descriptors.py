@@ -39,6 +39,8 @@ path_to_dataset = "./test_flight_collection_with_phase/"
 
 list_file_name = listdir(path_to_dataset)
 
+aircraft = pd.read_csv('./aircraftDatabase.csv')
+
 for file_name in list_file_name:
     print('filename:'+file_name)
 
@@ -72,8 +74,10 @@ for file_name in list_file_name:
             desc_descent )
     
         start, end = calculate_general_info(df)
-        db.execute("INSERT INTO general_info (flight_start, flight_end, flight_duration,icao) \
-            VALUES (?,?,?,?)",(start,end, end-start, file_name))
+        icao=file_name.split('_')[1]
+        airline = aircraft[aircraft['icao24']==icao].iloc[0]['operator']
+        db.execute("INSERT INTO general_info (flight_start, flight_end, flight_duration,icao,airline) \
+            VALUES (?,?,?,?,?)",(start,end, end-start, icao,airline))
         
         db.commit()
         db.close()
