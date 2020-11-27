@@ -70,13 +70,13 @@ for file_name in list_file_name:
     if enough_data(df) and is_complete(df):
         remove_jump(df)
 
-        df['time']= df['time'] - df['time'][0]
+        df['time_bis']= df['time'] - df['time'][0]
 
         phase_slicer = FlightPhase()
-        phase_slicer.set_trajectory(df['time'],df['baroaltitude'].values*m_to_ft,df['velocity'].values*m_by_s_to_kt, df['vertrate'].values*m_by_s_to_ft_by_min)
+        phase_slicer.set_trajectory(df['time_bis'],df['baroaltitude'].values*m_to_ft,df['velocity'].values*m_by_s_to_kt, df['vertrate'].values*m_by_s_to_ft_by_min)
 
         df['phase'] = phase_slicer.phaselabel()
-
+        df.drop(columns='time_bis', inplace=True)
 
         with open(result_dir + 'phase_'+file_name,'w') as file:
             file.write(df.to_csv(index=False))
