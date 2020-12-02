@@ -9,18 +9,9 @@ import matplotlib.pyplot as plt
 import json
 import os
 from os import listdir
+from db import get_db, init_db
 
 ## functions
-def check_full_flight(flight):
-    if (not flight[flight['phase']=='CL'].empty) and (not flight[flight['phase']=='DE'].empty):
-        begin_cl = flight[flight['phase']=='CL']['time'].iloc[0]
-        end_de = flight[flight['phase']=='DE']['time'].iloc[-1]
-        is_begin = flight[(flight['time']<begin_cl) & (flight['onground']==True)].empty
-        is_end = flight[(flight['time']>end_de) & (flight['onground']==True)].empty
-        if (not is_end) and (not is_begin):
-            return True
-    return False
-
 def calculate_descriptor(phase):
     duration = int(-phase['time'].iloc[0]+ phase['time'].iloc[-1])
     avg_spd = phase['velocity'].mean()
@@ -33,49 +24,67 @@ def calculate_descriptor(phase):
     max_vertrate_spd = phase['vertrate'].max()
     min_vertrate_spd = phase['vertrate'].min()
     del phase
-    return locals()
+    return [duration, avg_spd, std_spd,vertrate_avg_spd,vertrate_std_spd,delta_h,max_spd,min_spd,max_vertrate_spd,min_vertrate_spd]
+
+def calculate_general_info(flight):
+    start = int(flight[flight['phase']=='CL']['time'].iloc[0])
+    end = int(flight[flight['phase']=='DE']['time'].iloc[-1])
+    return start, end
 
 ## main
 
+init_db()
 
 path_to_dataset = "./test_flight_collection_with_phase/"
-result_dir = "./test_flight_collection_descriptors/"
-os.mkdir(result_dir)
 
 list_file_name = listdir(path_to_dataset)
 
+airline = pd.read_csv('airlines.csv')
+
 for file_name in list_file_name:
+    print('filename:'+file_name)
+
     df = pd.read_csv(path_to_dataset+file_name)
     df.fillna(value={'phase':'NA'},inplace=True)
     
-    if check_full_flight(df):
+    descent = df[df['phase']=='DE']
+    climb = df[df['phase']=='CL']
+    cruise = df[df['phase']=='CR']
 
-        climb = df[df['phase']=='CL']
-        if not climb.empty:
-            desc_climb = calculate_descriptor(climb)
+    if not(descent.empty) and not(climb.empty) and not(cruise.empty):
+        db = get_db()
+
+        desc_climb = calculate_descriptor(climb)
+        db.execute("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,delta_h,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed) \
+            VALUES (?,?,?,?,?,?,?,?,?,?)",
+            desc_climb )
+
+        desc_cruise = calculate_descriptor(cruise)
+        desc_cruise.append(cruise['baroaltitude'].mean())
+        desc_cruise.append(cruise['baroaltitude'].std())
+        db.execute("INSERT INTO cruise (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,delta_h,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,mean_altitude,std_altitude) \
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            desc_cruise)
+
+
+
+        desc_descent = calculate_descriptor(descent)
+        db.execute("INSERT INTO descent (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,delta_h,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed) \
+            VALUES (?,?,?,?,?,?,?,?,?,?)",
+            desc_descent )
+    
+        start, end = calculate_general_info(df)
+        callsign=file_name.split('_')[2][0:3]
+        icao24 = file_name.split('_')[1]
+        if len(airline[airline['ICAO']==callsign])>0:
+        	airline_name = airline[airline['ICAO']==callsign].iloc[0]['Airline']
         else:
-            desc_climb={}
+        	airline_name = None
+        print(airline_name)
+        db.execute("INSERT INTO general_info (flight_start, flight_end, flight_duration,icao,airline) \
+            VALUES (?,?,?,?,?)",(start,end, end-start, icao24,airline_name))
+        
+        db.commit()
+        db.close()
 
-        cruise = df[df['phase']=='CR']
-        if not cruise.empty:
-            desc_cruise = calculate_descriptor(cruise)
-            desc_cruise['mean_altitude'] = cruise['baroaltitude'].mean()
-            desc_cruise['std_altitude'] = cruise['baroaltitude'].std()
-        else:
-            desc_cruise={}
-
-
-        descent = df[df['phase']=='DE']
-        if not descent.empty:
-            desc_descent = calculate_descriptor(descent)
-        else:
-            desc_descent={}
-
-
-
-        descriptor = {'climb':desc_climb, 'cruise':desc_cruise, 'descent':desc_descent}
-
-
-        with open(result_dir+os.path.splitext(file_name)[0]+'.json', 'w') as my_file:
-            json.dump(descriptor, my_file)
 
