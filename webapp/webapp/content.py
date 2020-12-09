@@ -44,6 +44,7 @@ def compare_airline():
     airlines = db.execute("SELECT airline FROM general_info WHERE airline NOT NULL GROUP BY airline").fetchall()
     df = db_to_pandas(current_app.config['DATABASE'])
     descriptors = df.columns
+    compute_chart=False
     if request.method == 'POST':
         airline1 = request.form.get('airline1')
         airline2 = request.form.get('airline2')
@@ -56,10 +57,18 @@ def compare_airline():
         elif not descriptor:
             error = 'enter a descriptor'
         else:
-            df_desc = df[descriptor]
-            intervals = pd.cut(df_desc['descriptor'],100)
-            durations = intervals.groupby(intervals).count()
-            durations.index = [i.mid for i in durations.index]
-            
+            compute_chart = True
+            df_desc1 = df[df['airline']==airline1][descriptor].to_frame(name=descriptor)
+            intervals = pd.cut(df_desc1[descriptor],100)
+            df_desc1 = intervals.groupby(intervals).count()
+            df_desc1.index = [i.mid for i in df_desc1.index]
 
-    return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors)
+            df_desc2 = df[df['airline']==airline2][descriptor].to_frame(name=descriptor)
+            intervals = pd.cut(df_desc2[descriptor],100)
+            df_desc2 = intervals.groupby(intervals).count()
+            df_desc2.index = [i.mid for i in df_desc2.index]
+
+            return render_template('./content/compare_airline.html', 
+                    airlines=airlines, descriptors=descriptors, compute_chart=compute_chart, data1 = df_desc1, data2=df_desc2, xlabel=descriptor, title='descriptor')
+
+    return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors, compute_chart=compute_chart)
