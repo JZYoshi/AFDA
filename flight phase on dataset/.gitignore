@@ -4,3 +4,4 @@ test_flight_collection
 test_flight_collection_with_phase
 *.db
 __pycache__
+.ipynb_checkpoints
