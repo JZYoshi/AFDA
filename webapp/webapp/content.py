@@ -58,17 +58,17 @@ def compare_airline():
             error = 'enter a descriptor'
         else:
             compute_chart = True
-            df_desc1 = df[df['airline']==airline1][descriptor].to_frame(name=descriptor)
-            intervals = pd.cut(df_desc1[descriptor],100)
-            df_desc1 = intervals.groupby(intervals).count()
-            df_desc1.index = [i.mid for i in df_desc1.index]
-
-            df_desc2 = df[df['airline']==airline2][descriptor].to_frame(name=descriptor)
-            intervals = pd.cut(df_desc2[descriptor],100)
-            df_desc2 = intervals.groupby(intervals).count()
-            df_desc2.index = [i.mid for i in df_desc2.index]
+            intervals = pd.cut(df[descriptor],50)
+            df['interval'] = [inter.mid for inter in intervals]
+            df = df[[descriptor,'interval','airline']].groupby(by=['interval','airline']).count()
+            df = df.unstack(fill_value=0).stack()
+            data1 = df.xs(airline1, level='airline')[descriptor]
+            data1 = data1/sum(data1)
+            data2 = df.xs(airline2, level='airline')[descriptor]
+            data2 = data2/sum(data2)
+            index = map(int, data1.index)
 
             return render_template('./content/compare_airline.html', 
-                    airlines=airlines, descriptors=descriptors, compute_chart=compute_chart, data1 = df_desc1, data2=df_desc2, xlabel=descriptor, title='descriptor')
+                    airlines=airlines, descriptors=descriptors, compute_chart=compute_chart, data1 = data1, data2=data2,index=index, xlabel=descriptor, title=descriptor, airline1=airline1, airline2=airline2)
 
     return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors, compute_chart=compute_chart)
