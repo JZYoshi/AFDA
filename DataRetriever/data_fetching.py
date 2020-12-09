@@ -22,19 +22,28 @@ def search_hrefs(startUrl: str, filters: List[Callable[[PageElement], bool]]) ->
         urls = reduce(list.__add__, list(map(lambda url: get_filtered_hrefs(url, fil), urls)))
     return urls
 
-filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])', ele.string),
-            lambda ele: re.match('^[0-2][0-9]$', ele.string),
+filters = [ 
+        # lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])', ele.string),
+        # lambda ele: re.match('^[0-2][0-9]$', ele.string),
             lambda ele: ele.string.endswith('.csv.tar')]
 # To decomment when wanting to fetch all the files
 # res = search_hrefs('https://opensky-network.org/datasets/states/', filters)
 
-gz_files = []
+res = search_hrefs('https://opensky-network.org/datasets/states/2020-10-26/14/', filters)
 
-tarObj = tarfile.open('../dataset/states_2020-05-25-06.csv.tar')
-for member in tarObj.getmembers():
-    if (member.name.endswith('.csv.gz')):
-        tarObj.extractfile(member)
-        gz_files.append(member.name)
-tarObj.close()
+for url in res:
+    fname = url[-(len(url)-url.rfind('/')-1):]
+    print(fname)
+    fileObj = requests.get(url)
+    with open('../dataset/' + fname, 'wb') as local_file:
+        local_file.write(fileObj.content)
+# gz_files = []
+
+# tarObj = tarfile.open('../dataset/states_2020-05-25-06.csv.tar')
+# for member in tarObj.getmembers():
+#     if (member.name.endswith('.csv.gz')):
+#         tarObj.extractfile(member)
+#         gz_files.append(member.name)
+# tarObj.close()
 # df = pd.read_csv('./states_2020-05-25-06.csv.gz', compression='gzip')
-print(gz_files)
+# print(gz_files)
