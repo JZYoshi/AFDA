@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title%}Compare Airline{% endblock %}
+{% block section %}
+<form class='container col-8' method='POST'>
+    <div class="form-group">
+        <label for="airline1">Airline 1</label>
+        <select class="form-control" id="airline1" name="airline1">
+            {% for airline in airlines %}
+            <option>{{ airline['airline'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="airline2">Airline 2</label>
+        <select class="form-control" id="airline2", name="airline2">
+            {% for airline in airlines %}
+            <option>{{ airline['airline'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="airline2">Descriptor</label>
+        <select class="form-control" id="descriptor" name="descriptor">
+            {% for desc in descriptors %}
+            <option>{{ desc }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title%}index{% endblock %}
+{% block section %}
+<table class="table">
+
+<tr>
+    <th>Flight duration</th>
+    <th>Id of the plane</th>
+    <th>Airline</th> 
+</tr>
+
+{% for flight in flights %}
+<tr>
+    <td>{{ flight['flight_duration'] }}</td>
+    <td>{{ flight['icao'] }}</td>
+    <td>{{ flight['airline']}}
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

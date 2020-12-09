@@ -1,4 +1,5 @@
 import sqlite3
+import pandas as pd
 
 import click
 from flask import current_app, g
@@ -22,20 +23,17 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
-def init_db():
-    db = get_db()
-
-    with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
-
-
-@click.command('init-db')
-@with_appcontext
-def init_db_command():
-    """Clear the existing data and create new tables."""
-    init_db()
-    click.echo('Initialized the database.')
-
 def init_app(app):
     app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+
+def db_to_pandas(filename='descriptors.db'):
+    db = get_db()
+    climb = pd.read_sql_query('SELECT * FROM climb',db).add_suffix('_climb')
+    cruise = pd.read_sql_query('SELECT * FROM cruise',db).add_suffix('_cruise')
+    descent = pd.read_sql_query('SELECT * FROM descent', db).add_suffix('_descent')
+    info = pd.read_sql_query('SELECT * FROM general_info', db)
+
+    df = info.merge(descent, left_on='flight_id',right_on='flight_id_descent').drop(columns='flight_id_descent')
+    df = df.merge(cruise, left_on='flight_id',right_on='flight_id_cruise').drop(columns='flight_id_cruise')
+    df = df.merge(climb, left_on='flight_id',right_on='flight_id_climb').drop(columns='flight_id_climb')
+    return df

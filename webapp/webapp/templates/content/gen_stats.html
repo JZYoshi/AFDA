@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title%}General stats{% endblock %}
+{% block section %}
+
+<ul class="list-group col-5 m-3 float-left"> 
+    <li class='list-group-item list-group-item-primary'>List of airlines</li>
+    {% for airline in airlines %}
+    <li class='list-group-item'>{{ airline['airline'] }}</li>
+    {% endfor %}
+</ul>
+
+<div class="alert alert-info col-3 m-3 float-left text-center">
+    <h2>Number of airlines</h2>
+    <h4>{{ nb_airlines }}</h4>
+</div>
+
+<div class="alert alert-info col-3 m-3 float-left text-center">
+    <h2>Number of flights</h2>
+    <h4>{{ nb_flights }}</h4>
+</div>
+
+<canvas id="myChart" height="400" class="col-5"></canvas>
+<script src={{ url_for('static', filename='graph.js') }}></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+ctx.width=100;
+
+var label = [{% for i in durations.index %}{{ i }},{% endfor %}];
+var data = [{% for n in durations %}{{ n }},{% endfor %}];
+
+hist(ctx, label, data,'flight duration','flight number','Flight duration');
+</script>
+{% endblock %}
