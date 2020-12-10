@@ -31,7 +31,7 @@
         <label for="airline2">Descriptor:</label>
         <select class="form-control" id="descriptor" name="descriptor">
             {% for desc in descriptors %}
-            {% if desc == title %}
+            {% if desc == descriptor %}
             <option selected>{{ desc }}</option>
             {% else %}
             <option>{{ desc }}</option>
@@ -43,18 +43,8 @@
 </form>
 
 {% if compute_chart %}
-<canvas id="myChart" height="400" class="container col-8"></canvas>
-
-<script src={{ url_for('static', filename='graph.js') }}></script>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-ctx.width=100;
-
-var label = [{% for i in index %}{{ i }},{% endfor %}];
-var data1 = [{% for n in data1 %}{{ n }},{% endfor %}];
-var data2 = [{% for n in data2 %}{{ n }},{% endfor %}];
-
-hist_2_set(ctx, label, data1,data2,'{{ xlabel }}','{{ title }}','{{ title }}', '{{ airline1 }}', '{{ airline2 }}');
-</script>
+<div class="container">
+{{ fig|safe }}
+</div>
 {% endif %}
 {% endblock %}

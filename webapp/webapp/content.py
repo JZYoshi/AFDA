@@ -1,5 +1,9 @@
 import functools
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import mpld3
+from scipy.stats import gaussian_kde
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
@@ -58,17 +62,29 @@ def compare_airline():
             error = 'enter a descriptor'
         else:
             compute_chart = True
-            intervals = pd.cut(df[descriptor],50)
-            df['interval'] = [inter.mid for inter in intervals]
-            df = df[[descriptor,'interval','airline']].groupby(by=['interval','airline']).count()
-            df = df.unstack(fill_value=0).stack()
-            data1 = df.xs(airline1, level='airline')[descriptor]
-            data1 = data1/sum(data1)
-            data2 = df.xs(airline2, level='airline')[descriptor]
-            data2 = data2/sum(data2)
-            index = map(int, data1.index)
+            fig = plt.figure()
 
+            plt.hist(df[df['airline']==airline1][descriptor],color='blue', bins=20, density=True, alpha=0.5, label=airline1)
+            plt.hist(df[df['airline']==airline2][descriptor],color='red', bins=20, density=True, alpha=0.5, label=airline2)
+            
+            kde1=gaussian_kde(df[df['airline']==airline1][descriptor])
+            kde2=gaussian_kde(df[df['airline']==airline2][descriptor])
+            
+            borne_inf, borne_sup=(min(df[descriptor]),max(df[descriptor]))
+            x = np.linspace(borne_inf,borne_sup,200)
+            
+            plt.plot(x, kde1(x), 'b--', label='kernel estimation')
+            plt.plot(x, kde2(x), 'r--', label='kernel estimation')
+            
+            dist = np.linalg.norm(kde1(x)-kde2(x))**2/(np.linalg.norm(kde1(x))+np.linalg.norm(kde2(x)))**2
+
+            plt.xlabel(descriptor)
+            plt.legend()
+            fig = mpld3.fig_to_html(fig)
+            
             return render_template('./content/compare_airline.html', 
-                    airlines=airlines, descriptors=descriptors, compute_chart=compute_chart, data1 = data1, data2=data2,index=index, xlabel=descriptor, title=descriptor, airline1=airline1, airline2=airline2)
+            airlines=airlines, descriptors=descriptors, compute_chart=compute_chart,
+            airline1=airline1, airline2=airline2, descriptor=descriptor, fig=fig)
+
 
     return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors, compute_chart=compute_chart)
