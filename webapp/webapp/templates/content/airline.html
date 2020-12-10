@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ airline }}{% endblock %}
+{% block section %}
+
+<img class="m-3" src="{{ url_for('static', filename=airline+'.png') }}" style="width:5cm">
+<h1 class='text-center'>{{airline}}</h1>
+
+
+{% for fig in figlist %}
+<div class="float-left">
+{{ fig|safe }}
+</div>
+{% endfor %}
+{% endblock %}

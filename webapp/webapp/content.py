@@ -14,33 +14,7 @@ from webapp.db import get_db, db_to_pandas
 
 bp = Blueprint('content', __name__, url_prefix='/content')
 
-@bp.route("/all_flights/")
-def all_flights():
-    db = get_db()
-    flights = db.execute("SELECT * FROM general_info").fetchall()
-    db.close()
-    return render_template('content/index.html', flights=flights)
 
-@bp.route('/gen_stats/')
-def gen_stats():
-    db = get_db()
-    airlines = db.execute("SELECT airline FROM general_info WHERE airline NOT NULL GROUP BY airline").fetchall()
-    nb_airlines = len(airlines)
-    nb_flights = db.execute("SELECT COUNT(flight_id) AS n FROM general_info").fetchone()['n']
-    
-    durations = pd.read_sql_query("SELECT flight_duration FROM general_info", db)
-    intervals = pd.cut(durations['flight_duration'],100)
-    durations = intervals.groupby(intervals).count()
-    durations.index = [i.mid for i in durations.index]
-
-    db.close()
-    return render_template('content/gen_stats.html', 
-        airlines=airlines,
-        nb_airlines=nb_airlines,
-        nb_flights=nb_flights,
-        durations=durations,
-        
-        )
 
 @bp.route('/compare_airline/', methods=['GET','POST'])
 def compare_airline():
@@ -88,3 +62,39 @@ def compare_airline():
 
 
     return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors, compute_chart=compute_chart)
+
+@bp.route('/airlines/')
+def airlines():
+    df = db_to_pandas(current_app.config['DATABASE'])
+    nb_flights = df[['airline','flight_id']].groupby('airline').count().rename(columns={'flight_id':'number of flights'})
+    nb_flights.sort_values('number of flights', ascending=False, inplace=True)
+
+    fig = plt.figure()
+    plt.barh(nb_flights.index,nb_flights['number of flights'], color='red', alpha=0.7, label='number of flights')
+    ax=plt.gca()
+    ax.set_yticks(nb_flights.index)
+    ax.set_yticklabels(nb_flights.index)
+    plt.legend()
+    fig = mpld3.fig_to_html(fig)
+
+    nb_airlines = len(nb_flights)
+    tt_flights = nb_flights['number of flights'].sum()
+
+    return render_template('./content/airlines.html', airlines=nb_flights, fig=fig,
+        nb_airlines=nb_airlines, nb_flights=tt_flights)
+
+@bp.route('/airline/<airline>/')
+def desc_airline(airline):
+    df = db_to_pandas(current_app.config['DATABASE'])
+    my_airline = df[df['airline']==airline]
+
+    my_airline.drop(columns=['flight_id','flight_start','flight_end','icao','airline'], inplace=True)
+    descriptors = my_airline.columns
+
+    figlist=[]
+    for descriptor in descriptors:
+        fig = plt.figure()
+        plt.hist(my_airline[descriptor],color='blue', bins=20, density=True, alpha=0.8, label=descriptor)
+        plt.legend()
+        figlist.append(mpld3.fig_to_html(fig))
+    return render_template('./content/airline.html',airline=airline, figlist=figlist)
