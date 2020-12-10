@@ -84,7 +84,7 @@ def compare_airline():
             
             return render_template('./content/compare_airline.html', 
             airlines=airlines, descriptors=descriptors, compute_chart=compute_chart,
-            airline1=airline1, airline2=airline2, descriptor=descriptor, fig=fig)
+            airline1=airline1, airline2=airline2, descriptor=descriptor, fig=fig, dist=dist)
 
 
     return render_template('./content/compare_airline.html', airlines=airlines, descriptors=descriptors, compute_chart=compute_chart)

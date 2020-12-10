@@ -43,8 +43,13 @@
 </form>
 
 {% if compute_chart %}
-<div class="container">
+<div class="container float-left col-8">
 {{ fig|safe }}
+</div>
+
+<div class="alert alert-info col-3 m-3 float-left text-center">
+    <h2>Distance between density</h2>
+    <h4>{{ dist }}</h4>
 </div>
 {% endif %}
 {% endblock %}
