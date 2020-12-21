@@ -22,7 +22,7 @@
 <div class='container'>
 {% for airline, N in airlines.iterrows() %}
 <div class="card m-3 float-left" style="width: 18rem;">
-    <img class="card-img-top" height=100px src="{{ url_for('static', filename=airline+'.png') }}">
+    <img class="card-img-top" style="height:2cm;" src="{{ url_for('static', filename=airline+'.png') }}">
     <div class="card-body">
         <h5 class="card-title">{{ airline }}</h5>
         <ul class='list-group list-group-flush m-3'>
