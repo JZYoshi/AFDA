@@ -5,8 +5,6 @@ from bs4 import PageElement, ResultSet;
 from typing import Callable, List;
 from functools import reduce;
 import re;
-import pandas as pd;
-import tarfile;
 
 def get_all_href_elements(url: str) -> ResultSet:
     return BeautifulSoup(requests.get(url).text, 'html.parser').find_all('a')
@@ -27,14 +25,9 @@ filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[
             lambda ele: ele.string.endswith('.csv.tar')]
 # To decomment when wanting to fetch all the files
 # res = search_hrefs('https://opensky-network.org/datasets/states/', filters)
-
-gz_files = []
-
-tarObj = tarfile.open('../dataset/states_2020-05-25-06.csv.tar')
-for member in tarObj.getmembers():
-    if (member.name.endswith('.csv.gz')):
-        tarObj.extractfile(member)
-        gz_files.append(member.name)
-tarObj.close()
-# df = pd.read_csv('./states_2020-05-25-06.csv.gz', compression='gzip')
-print(gz_files)
+# for url in res:
+#     fname = url[-(len(url) - url.rfind('/') - 1):]
+#     print(fname)
+#     fileObj = requests.get(url)
+#     with open('../dataset/' + fname, 'wb') as local_file:
+#         local_file.write(fileObj.content)
