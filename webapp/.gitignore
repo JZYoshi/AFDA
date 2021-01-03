@@ -1,5 +1,5 @@
 venv/
-static/
+webapp/static/
 
 *.pyc
 __pycache__/
