@@ -15,12 +15,16 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text to="/stats">
-        <span class="mr-2">Stats</span>
+      <v-btn text to="/" class="mr-2">
+        Home
       </v-btn>
 
-      <v-btn text to="/clustering">
-        <span class="mr-2">Clustering</span>
+      <v-btn text to="/stats" class="mr-2">
+        Stats
+      </v-btn>
+
+      <v-btn text to="/clustering" class="mr-2">
+        Clustering
       </v-btn>
     </v-app-bar>
 
