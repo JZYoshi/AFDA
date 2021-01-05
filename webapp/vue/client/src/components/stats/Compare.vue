@@ -1,25 +1,19 @@
 <template>
   <v-container fluid class="fill-height align-start">
     <v-row>
-      <v-col cols="3">
+      <v-col cols="5">
         <v-autocomplete
-          v-model="airline_1"
+          v-model="airlines_selected"
           :items="airlines"
-          label="Airline 1"
+          label="Airlines"
           outlined
+          multiple
+          chips
+          small-chips
           dense
         ></v-autocomplete>
       </v-col>
-      <v-col cols="3">
-        <v-autocomplete
-          v-model="airline_2"
-          :items="airlines"
-          label="Airline 2"
-          outlined
-          dense
-        ></v-autocomplete>
-      </v-col>
-      <v-col cols="4">
+      <v-col cols="5">
         <v-autocomplete
           v-model="descriptors_selected"
           :items="descriptors"
@@ -37,17 +31,26 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="(fig_raw, i) in fig_raw_list"
-        :key="i"
+        v-for="fig_raw in fig_raw_list"
+        :key="fig_raw.descriptor"
         xl="4"
         lg="6"
         md="12"
       >
-        <div :id="'compare-fig-' + i" class="fig-canvas mx-auto"></div>
+        <v-card class="mx-auto">
+          <div
+            :id="'compare-fig-' + fig_raw.descriptor"
+            class="fig-canvas mx-auto"
+          ></div>
+          <v-divider></v-divider>
+          <div
+            :id="'kde-entropy-fig-' + fig_raw.descriptor"
+            class="fig-canvas mx-auto"
+          ></div>
+        </v-card>
       </v-col>
     </v-row>
     <v-overlay
-      absolute
       :value="loading_airlines || loading_descriptors || loading_fig"
       opacity="1"
       color="background"
@@ -71,7 +74,7 @@
 
 <script>
 import axios from "axios";
-import $mpld3 from "../../utils/mpld3API";
+import Plotly from "plotly.js-dist";
 
 export default {
   data() {
@@ -81,8 +84,7 @@ export default {
       loading_fig: false,
       airlines: [],
       descriptors: [],
-      airline_1: null,
-      airline_2: null,
+      airlines_selected: null,
       descriptors_selected: null,
       fig_raw_list: []
     };
@@ -92,18 +94,61 @@ export default {
       this.loading_fig = true;
       axios
         .post("http://127.0.0.1:5000/compareairlines", {
-          airline_1: this.airline_1,
-          airline_2: this.airline_2,
+          airlines: this.airlines_selected,
           descriptors: this.descriptors_selected
         })
         .then(res => {
-          this.fig_raw_list = res.data.fig_raw_list;
+          this.fig_raw_list = res.data;
           this.$forceUpdate();
           this.$forceNextTick(() => {
-            for (let i = 0; i < this.fig_raw_list.length; i++) {
-              $mpld3.draw_figure("compare-fig-" + i, this.fig_raw_list[i]);
+            let to_plot = this.fig_raw_list.length;
+            for (const fig_data of this.fig_raw_list) {
+              Plotly.react(
+                "compare-fig-" + fig_data.descriptor,
+                fig_data.airlines.flatMap(airline_stat => [
+                  {
+                    x: airline_stat.descriptor_values,
+                    type: "histogram",
+                    histnorm: "probability density",
+                    opacity: 0.7,
+                    name: airline_stat.airline
+                  },
+                  {
+                    x: airline_stat.x_kde,
+                    y: airline_stat.kde_values,
+                    type: "scatter",
+                    line: { dash: "dot" },
+                    name: airline_stat.airline + " KDE"
+                  }
+                ]),
+                {
+                  title: { text: fig_data.descriptor },
+                  margin: { l: 60, r: 40, t: 60, b: 40 }
+                }
+              ).then(() => {
+                to_plot = to_plot - 1;
+                if (to_plot == 0) {
+                  this.loading_fig = false;
+                }
+              });
+
+              Plotly.react(
+                "kde-entropy-fig-" + fig_data.descriptor,
+                [
+                  {
+                    z: fig_data.kde_entropy,
+                    x: fig_data.airlines.map(e => e.airline),
+                    y: fig_data.airlines.map(e => e.airline),
+                    type: "heatmap"
+                  }
+                ],
+                {
+                  title: {
+                    text: "KDE Entropy"
+                  }
+                }
+              );
             }
-            this.loading_fig = false;
           });
         });
     }
@@ -119,7 +164,7 @@ export default {
         console.error(err);
       });
     axios
-      .get("http://127.0.0.1:5000/allairlines")
+      .post("http://127.0.0.1:5000/allairlines", { threshold: 3 })
       .then(res => {
         this.airlines = res.data.airlines;
         this.loading_airlines = false;

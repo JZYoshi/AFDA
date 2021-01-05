@@ -41,7 +41,7 @@
 <style scoped>
 #general-info-fig {
   width: 800px;
-  height: 600px;
+  height: 550px;
 }
 
 .nb {
@@ -51,7 +51,7 @@
 
 <script>
 import axios from "axios";
-import $mpld3 from "../../utils/mpld3API";
+import Plotly from "plotly.js-dist";
 
 export default {
   data: function() {
@@ -68,7 +68,14 @@ export default {
       .then(res => {
         this.nb_airlines = res.data.nb_airlines;
         this.nb_flights = res.data.tt_flights;
-        $mpld3.draw_figure("general-info-fig", res.data.fig_raw);
+        const fig_data = [
+          {
+            x: res.data.fig_data.airline,
+            y: res.data.fig_data["number of flights"],
+            type: "bar"
+          }
+        ];
+        Plotly.newPlot("general-info-fig", fig_data);
         this.loading = false;
       })
       .catch(err => {

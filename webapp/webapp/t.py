@@ -2,9 +2,7 @@ from flask import Flask, render_template, current_app, request
 import os
 from flask.json import jsonify
 import numpy as np
-import matplotlib.pyplot as plt
-import mpld3
-from scipy.stats import gaussian_kde
+from scipy.stats import gaussian_kde, entropy
 from . import db
 
 app = Flask(__name__, template_folder="../vue/client/dist", static_folder="../vue/client/dist/static")
@@ -35,13 +33,7 @@ def general_info():
     nb_flights = df[['airline','flight_id']].groupby('airline').count().rename(columns={'flight_id':'number of flights'})
     nb_flights.sort_values('number of flights', ascending=False, inplace=True)
 
-    fig = plt.figure(figsize=(4, 3), dpi=200)
-    plt.barh(nb_flights.index,nb_flights['number of flights'], color='red', alpha=0.7, label='number of flights')
-    ax=plt.gca()
-    ax.set_yticks(nb_flights.index)
-    ax.set_yticklabels(nb_flights.index)
-    plt.legend()
-    fig = mpld3.fig_to_dict(fig)
+    fig_data = nb_flights.to_dict('list')
 
     nb_airlines = len(nb_flights)
     tt_flights = int(nb_flights['number of flights'].sum())
@@ -49,7 +41,7 @@ def general_info():
     return jsonify({
         'nb_airlines': nb_airlines,
         'tt_flights': tt_flights,
-        'fig_raw': fig
+        'fig_data': fig_data
     })
 
 @app.route('/flightsnumbers', methods=['GET'])
@@ -72,19 +64,20 @@ def get_airline():
 
     figlist=[]
     for descriptor in descriptors:
-        fig = plt.figure(figsize=(5, 4), dpi=80)
-        plt.hist(my_airline[descriptor],color='blue', bins=20, density=True, alpha=0.8, label=descriptor)
-        plt.legend()
-        figlist.append(mpld3.fig_to_dict(fig))
-    
-    return jsonify({
-        'fig_raw_list': figlist
-    })
+        figlist.append({ 'label': descriptor, 'values': my_airline[descriptor].dropna().tolist() })
+    return jsonify(figlist) 
 
-@app.route('/allairlines', methods=['GET'])
+@app.route('/allairlines', methods=['GET', 'POST'])
 def get_all_airlines():
     df = db.db_to_pandas(current_app.config['DATABASE'])
-    airlines = list(set(df[df['airline'].notnull()]['airline'].tolist()))
+    airlines = []
+    if (request.method == 'GET'):
+        airlines = list(set(df[df['airline'].notnull()]['airline'].tolist()))
+    else:
+        threshold = request.get_json().get('threshold')
+        s = df['airline'].value_counts()
+        s = s[s >= threshold]
+        airlines = s.index.tolist()
     return jsonify({
         'airlines': airlines
     })
@@ -92,7 +85,7 @@ def get_all_airlines():
 @app.route('/descriptors', methods=['GET'])
 def get_all_descriptors():
     df = db.db_to_pandas(current_app.config['DATABASE'])
-    descriptors = list(df.columns)
+    descriptors = list(df.drop(columns=['flight_id','flight_start','flight_end','icao','airline']).columns)
     return jsonify({
         'descriptors': descriptors
     })
@@ -101,30 +94,38 @@ def get_all_descriptors():
 def get_airlines_compare_res():
     df = db.db_to_pandas(current_app.config['DATABASE'])
     post_data = request.get_json()
-    airline1 = post_data.get('airline_1')
-    airline2 = post_data.get('airline_2')
+    airlines = post_data.get('airlines')
     descriptors = post_data.get('descriptors')
     figlist = []
     for descriptor in descriptors:
-        fig = plt.figure(figsize=(4, 3), dpi=160)
-        plt.hist(df[df['airline']==airline1][descriptor],color='blue', bins=20, density=True, alpha=0.5, label=airline1)
-        plt.hist(df[df['airline']==airline2][descriptor],color='red', bins=20, density=True, alpha=0.5, label=airline2)
-        
-        kde1=gaussian_kde(df[df['airline']==airline1][descriptor])
-        kde2=gaussian_kde(df[df['airline']==airline2][descriptor])
-        
-        borne_inf, borne_sup=(min(df[descriptor]),max(df[descriptor]))
-        x = np.linspace(borne_inf,borne_sup,200)
-        
-        plt.plot(x, kde1(x), 'b--', label='kernel estimation')
-        plt.plot(x, kde2(x), 'r--', label='kernel estimation')
-        
-        dist = np.linalg.norm(kde1(x)-kde2(x))**2/(np.linalg.norm(kde1(x))+np.linalg.norm(kde2(x)))**2
+        x_min = min(df[descriptor])
+        x_max = max(df[descriptor])
+        x = np.linspace(x_min,x_max, 100)
+        airline_stat_list = []
+        kde_values_list = []
+        for airline in airlines:
+            values = df[df['airline']==airline][descriptor].dropna().tolist()
+            kde = gaussian_kde(df[df['airline']==airline][descriptor])
+            kde_values = kde(x)
+            airline_stat_list.append({
+                'airline': airline,
+                'descriptor_values': values,
+                'kde_values': list(kde_values),
+                'x_kde': list(x) 
+            })
+            kde_values_list.append(kde_values)
+        step = x[1] - x[0]
+        n = len(airlines)
+        mat_dist = np.zeros((n,n))
+        for i in range(n):
+            for j in range(n):
+                mat_dist[i, j] = step*entropy(pk=kde_values_list[i], qk=kde_values_list[j])
+        mat_dist = np.where(~np.isfinite(mat_dist), None, mat_dist) 
+        figlist.append({
+            'descriptor': descriptor,
+            'airlines': airline_stat_list,
+            'kde_entropy': mat_dist.tolist()
+        })
 
-        plt.xlabel(descriptor)
-        plt.legend()
-        figlist.append(mpld3.fig_to_dict(fig))
-
-    return jsonify({
-        'fig_raw_list': figlist
-    })
+        
+    return jsonify(figlist)

@@ -2,7 +2,7 @@
   <v-container fluid class="fill-height">
     <v-row justify="space-around">
       <v-col
-        v-for="(fig_raw, i) in fig_raw_list"
+        v-for="(fig_raw, i) in fig_data_list"
         :key="i"
         xl="3"
         lg="4"
@@ -12,13 +12,7 @@
         <div class="fig-canvas mx-auto" :id="'airline-stat-' + i" />
       </v-col>
     </v-row>
-    <v-overlay
-      absolute
-      :value="loading"
-      opacity="1"
-      color="background"
-      z-index="1"
-    >
+    <v-overlay :value="loading" opacity="1" color="background" z-index="1">
       <v-progress-circular
         :size="70"
         :width="7"
@@ -37,12 +31,12 @@
 </style>
 <script>
 import axios from "axios";
-import $mpld3 from "../../utils/mpld3API";
+import Plotly from "plotly.js-dist";
 
 export default {
   data() {
     return {
-      fig_raw_list: [],
+      fig_data_list: [],
       loading: true
     };
   },
@@ -52,13 +46,31 @@ export default {
         airline: this.$route.params.id
       })
       .then(res => {
-        this.fig_raw_list = res.data.fig_raw_list;
+        this.fig_data_list = res.data;
         this.$forceUpdate();
         this.$forceNextTick(() => {
-          for (let i = 0; i < this.fig_raw_list.length; i++) {
-            $mpld3.draw_figure("airline-stat-" + i, this.fig_raw_list[i]);
+          let to_plot = this.fig_data_list.length;
+          for (let i = 0; i < this.fig_data_list.length; i++) {
+            Plotly.newPlot(
+              "airline-stat-" + i,
+              [
+                {
+                  x: this.fig_data_list[i].values,
+                  type: "histogram",
+                  histnorm: "probability density"
+                }
+              ],
+              {
+                title: { text: this.fig_data_list[i].label },
+                margin: { l: 60, r: 40, t: 60, b: 40 }
+              }
+            ).then(() => {
+              to_plot = to_plot - 1;
+              if (to_plot == 0) {
+                this.loading = false;
+              }
+            });
           }
-          this.loading = false;
         });
       })
       .catch(err => {

@@ -11,9 +11,9 @@ import VueForceNextTick from "vue-force-next-tick";
 Vue.config.productionTip = false;
 Vue.use(LoadScript);
 Vue.use(VueForceNextTick);
-Vue.loadScript("/static/js/d3.v5.min.js").then(() => {
-  Vue.loadScript("/static/js/mpld3.v0.5.2.js");
-});
+// Vue.loadScript("/static/js/d3.v5.min.js").then(() => {
+//   Vue.loadScript("/static/js/mpld3.v0.5.2.js");
+// });
 
 Vue.component("StatsNavBar", StatsNavBar);
 Vue.component("AirlineCard", AirlineCard);
