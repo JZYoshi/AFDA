@@ -143,9 +143,8 @@ export default {
                   }
                 ],
                 {
-                  title: {
-                    text: "KDE Entropy"
-                  }
+                  title: { text: "KDE Entropy" },
+                  margin: { t: 60, b: 40 }
                 }
               );
             }

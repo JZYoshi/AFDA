@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HelloWorld from "../components/HelloWorld.vue";
+import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "HelloWorld",
-    component: HelloWorld
+    name: "Home",
+    component: Home
   },
   {
     path: "/stats",
@@ -38,7 +38,6 @@ const routes = [
           },
           {
             path: "*",
-            name: "Airlines",
             component: () => import("../components/stats/AirlineShowCase.vue")
           }
         ]

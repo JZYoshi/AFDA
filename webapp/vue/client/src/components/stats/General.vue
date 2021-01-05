@@ -16,6 +16,13 @@
             </h2>
           </v-col>
         </v-row>
+        <v-row justify="center">
+          <v-col offset="3">
+            <h2>
+              Other info...
+            </h2>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="7">
         <div id="general-info-fig"></div>
@@ -75,8 +82,9 @@ export default {
             type: "bar"
           }
         ];
-        Plotly.newPlot("general-info-fig", fig_data);
-        this.loading = false;
+        Plotly.newPlot("general-info-fig", fig_data).then(() => {
+          this.loading = false;
+        });
       })
       .catch(err => {
         console.error(err);
