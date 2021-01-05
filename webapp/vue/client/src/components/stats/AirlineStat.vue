@@ -25,8 +25,8 @@
 
 <style scoped>
 .fig-canvas {
-  height: 320px;
-  width: 400px;
+  height: 40vh;
+  width: 25vw;
 }
 </style>
 <script>
@@ -62,7 +62,11 @@ export default {
               ],
               {
                 title: { text: this.fig_data_list[i].label },
-                margin: { l: 60, r: 40, t: 60, b: 40 }
+                margin: { l: 60, r: 40, t: 60, b: 40 },
+                autosize: true
+              },
+              {
+                responsive: true
               }
             ).then(() => {
               to_plot = to_plot - 1;

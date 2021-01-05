@@ -5,7 +5,8 @@
         <v-img
           :src="get_airline_img"
           :aspect-ratio="16 / 10"
-          width="320"
+          width="17vw"
+          class="mx-auto"
           contain
         ></v-img>
 

@@ -47,8 +47,8 @@
 
 <style scoped>
 #general-info-fig {
-  width: 800px;
-  height: 550px;
+  width: 53vw;
+  height: 80vh;
 }
 
 .nb {
@@ -82,7 +82,16 @@ export default {
             type: "bar"
           }
         ];
-        Plotly.newPlot("general-info-fig", fig_data).then(() => {
+        Plotly.newPlot(
+          "general-info-fig",
+          fig_data,
+          {
+            autosize: true
+          },
+          {
+            responsive: true
+          }
+        ).then(() => {
           this.loading = false;
         });
       })

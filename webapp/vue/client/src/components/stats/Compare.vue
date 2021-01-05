@@ -67,8 +67,8 @@
 </template>
 <style scoped>
 .fig-canvas {
-  height: 480px;
-  width: 640px;
+  height: 55vh;
+  width: 40vw;
 }
 </style>
 
@@ -123,7 +123,11 @@ export default {
                 ]),
                 {
                   title: { text: fig_data.descriptor },
-                  margin: { l: 60, r: 40, t: 60, b: 40 }
+                  margin: { l: 60, r: 40, t: 60, b: 40 },
+                  autosize: true
+                },
+                {
+                  responsive: true
                 }
               ).then(() => {
                 to_plot = to_plot - 1;
@@ -144,7 +148,11 @@ export default {
                 ],
                 {
                   title: { text: "KDE Entropy" },
-                  margin: { t: 60, b: 40 }
+                  margin: { t: 60, b: 40 },
+                  autosize: true
+                },
+                {
+                  responsive: true
                 }
               );
             }
