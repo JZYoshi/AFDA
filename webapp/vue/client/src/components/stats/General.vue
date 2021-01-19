@@ -3,21 +3,36 @@
     <v-row align="center" justify="center">
       <v-col cols="5">
         <v-row justify="center">
-          <v-col offset="3">
+          <v-col offset="2">
+            <h2>
+              The flights are operated by <span class="nb">A320 family</span>
+            </h2>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col offset="2">
             <h2>
               Number of Airlines: <span class="nb">{{ nb_airlines }}</span>
             </h2>
           </v-col>
         </v-row>
         <v-row justify="center">
-          <v-col offset="3">
+          <v-col offset="2">
             <h2>
               Number of Flights: <span class="nb">{{ nb_flights }}</span>
             </h2>
           </v-col>
         </v-row>
         <v-row justify="center">
-          <v-col offset="3">
+          <v-col offset="2">
+            <h2>
+              The data are collected from <span class="nb">..</span> to
+              <span class="nb">..</span>
+            </h2>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col offset="2">
             <h2>
               Other info...
             </h2>
@@ -71,14 +86,17 @@ export default {
   methods: {},
   mounted() {
     axios
-      .get("http://127.0.0.1:5000/generalinfo")
+      .get("http://127.0.0.1:5000/flightsnumbers")
       .then(res => {
-        this.nb_airlines = res.data.nb_airlines;
-        this.nb_flights = res.data.tt_flights;
+        const flights_numbers = res.data;
+        this.nb_airlines = Object.keys(flights_numbers).length;
+        this.nb_flights = Object.values(flights_numbers).reduce(
+          (a, b) => a + b
+        );
         const fig_data = [
           {
-            x: res.data.fig_data.airline,
-            y: res.data.fig_data["number of flights"],
+            x: Object.keys(flights_numbers),
+            y: Object.values(flights_numbers),
             type: "bar"
           }
         ];

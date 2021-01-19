@@ -42,7 +42,7 @@ export default {
   props: ["airlineId", "airlineAvailFlights"],
   computed: {
     get_airline_name: function() {
-      return airline_profiles[this.airlineId]?.name || "An Airline";
+      return airline_profiles[this.airlineId]?.name || this.airlineId;
     },
 
     get_airline_img: function() {

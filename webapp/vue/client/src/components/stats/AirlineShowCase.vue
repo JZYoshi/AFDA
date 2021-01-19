@@ -1,7 +1,14 @@
 <template>
   <v-container fluid class="fill-height">
     <v-row>
-      <v-col v-for="id in airline_ids" :key="id" xl="2" lg="3" md="4" sm="6">
+      <v-col
+        v-for="id in Object.keys(flights_numbers)"
+        :key="id"
+        xl="2"
+        lg="3"
+        md="4"
+        sm="6"
+      >
         <AirlineCard
           class="mx-auto"
           :airline-id="id"
@@ -9,7 +16,13 @@
         />
       </v-col>
     </v-row>
-    <v-overlay :value="loading" opacity="1" color="background" z-index="1">
+    <v-overlay
+      absolute
+      :value="loading"
+      opacity="1"
+      color="background"
+      z-index="1"
+    >
       <v-progress-circular
         :size="70"
         :width="7"
@@ -20,7 +33,6 @@
   </v-container>
 </template>
 <script>
-import airline_profiles from "../../utils/airline_profiles";
 import axios from "axios";
 export default {
   data() {
@@ -29,11 +41,7 @@ export default {
       loading: true
     };
   },
-  computed: {
-    airline_ids: function() {
-      return Object.keys(airline_profiles);
-    }
-  },
+  computed: {},
   mounted() {
     axios
       .get("http://127.0.0.1:5000/flightsnumbers")
