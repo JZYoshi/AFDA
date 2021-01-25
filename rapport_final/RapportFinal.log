@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  12 JAN 2021 14:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  25 JAN 2021 14:55
 entering extended mode
 **./RapportFinal.tex
 (RapportFinal.tex
@@ -1037,7 +1037,7 @@ File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count328
 \l__pdf_internal_box=\box83
 ) (RapportFinal.aux (01-introduction.aux)
-(02-first-chapter.aux) (03-another-chapter.aux) (04-conclusion.aux))
+(02-Organisation-du-projet.aux) (03-another-chapter.aux) (04-conclusion.aux))
 \openout1 = `RapportFinal.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
@@ -1121,7 +1121,7 @@ LaTeX Info: Redefining \nameref on input line 158.
 \@outlinefile=\write4
 \openout4 = `RapportFinal.out'.
 
-<images//logo-isae-supaero.png, id=46, 452.1693pt x 274.3851pt>
+<images//logo-isae-supaero.png, id=74, 452.1693pt x 274.3851pt>
 File: images//logo-isae-supaero.png Graphic file (type png)
 <use images//logo-isae-supaero.png>
 Package pdftex.def Info: images//logo-isae-supaero.png  used on input line 167.
@@ -1159,57 +1159,74 @@ ges//logo-isae-supaero.png>] (RapportFinal.toc)
 r (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.10 
-      [1
-
-
-
-
-]) [2]
-\openout2 = `02-first-chapter.aux'.
-
- (02-first-chapter.tex
-Chapitre 1.
-
-LaTeX Warning: Citation `Roque2012' on page 3 undefined on input line 5.
-
-
-LaTeX Warning: Citation `Roque2012b' on page 3 undefined on input line 5.
-
-
-LaTeX Warning: Citation `Roque2012c' on page 3 undefined on input line 5.
-
-
-LaTeX Warning: Citation `Roque2012d' on page 3 undefined on input line 5.
-
-
-LaTeX Warning: Citation `Arapoglou2011' on page 3 undefined on input line 5.
-
-
-LaTeX Warning: Citation `Roque2013c' on page 3 undefined on input line 5.
-
-(images/tikz_diagram.tex)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3
+l.25 	\item t
+             rouver des descripteurs et les calculer pour chaque phase de vol
+[1
 
 
 
 
 ]
-[4]
-<images/bitmap_image.jpg, id=102, 505.60658pt x 361.06659pt>
-File: images/bitmap_image.jpg Graphic file (type jpg)
-<use images/bitmap_image.jpg>
-Package pdftex.def Info: images/bitmap_image.jpg  used on input line 39.
-(pdftex.def)             Requested size: 113.81102pt x 81.27504pt.
-) [5 <./images/bitmap_image.jpg>]
+<images//DiagrammePieuvre.png, id=115, 670.505pt x 367.3725pt>
+File: images//DiagrammePieuvre.png Graphic file (type png)
+<use images//DiagrammePieuvre.png>
+Package pdftex.def Info: images//DiagrammePieuvre.png  used on input line 54.
+(pdftex.def)             Requested size: 426.79134pt x 233.8395pt.
+) [2] [3 <./images//DiagrammePieuvre.png>]
+\openout2 = `02-Organisation-du-projet.aux'.
+
+ (02-Organisation-du-projet.tex
+<images//WBS.png, id=127, 1228.59pt x 685.56125pt>
+File: images//WBS.png Graphic file (type png)
+<use images//WBS.png>
+Package pdftex.def Info: images//WBS.png  used on input line 13.
+(pdftex.def)             Requested size: 341.43306pt x 190.5227pt.
+<images//MVP planning.png, id=131, 631.35875pt x 428.60126pt>
+File: images//MVP planning.png Graphic file (type png)
+<use images//MVP planning.png>
+Package pdftex.def Info: images//MVP planning.png  used on input line 26.
+(pdftex.def)             Requested size: 426.79134pt x 289.73154pt.
+<images//R1 planning.png, id=132, 635.37375pt x 121.95563pt>
+File: images//R1 planning.png Graphic file (type png)
+<use images//R1 planning.png>
+Package pdftex.def Info: images//R1 planning.png  used on input line 33.
+(pdftex.def)             Requested size: 426.79134pt x 81.92197pt.
+<images//gestion projet.png, id=133, 711.4078pt x 93.34875pt>
+File: images//gestion projet.png Graphic file (type png)
+<use images//gestion projet.png>
+Package pdftex.def Info: images//gestion projet.png  used on input line 40.
+(pdftex.def)             Requested size: 426.79134pt x 56.00397pt.
+<images//RACI.jpg, id=135, 743.02594pt x 284.56313pt>
+File: images//RACI.jpg Graphic file (type jpg)
+<use images//RACI.jpg>
+Package pdftex.def Info: images//RACI.jpg  used on input line 52.
+(pdftex.def)             Requested size: 426.79134pt x 163.45317pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[4
+
+
+
+
+ <./images//WBS.png>] [5 <./images//MVP planning.png> <./images//R1 planning.pn
+g> <./images//gestion projet.png>]
+<images//Organigramme.png, id=154, 963.6pt x 722.7pt>
+File: images//Organigramme.png Graphic file (type png)
+<use images//Organigramme.png>
+Package pdftex.def Info: images//Organigramme.png  used on input line 69.
+(pdftex.def)             Requested size: 284.52756pt x 213.39314pt.
+ [6 <./images//RACI.jpg>]
+Underfull \vbox (badness 4193) has occurred while \output is active []
+
+ [7 <./images//Organigramme.png>]) [8]
 \openout2 = `03-another-chapter.aux'.
 
  (03-another-chapter.tex
-Chapitre 2.
+Chapitre 1.
 
-LaTeX Warning: Citation `Cadambe2008' on page 6 undefined on input line 4.
+LaTeX Warning: Citation `Cadambe2008' on page 9 undefined on input line 4.
 
 (images/tikz_plot.tex
 Missing character: There is no ; in font nullfont!
@@ -1217,37 +1234,37 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [6
+) [9
 
 
 
 
-] [7] [8]) [9]
+] [10] [11]) [12]
 \openout2 = `04-conclusion.aux'.
 
- (04-conclusion.tex) [10
+ (04-conclusion.tex) [13
 
 
 
 
 ]
-(RapportFinal.aux (01-introduction.aux) (02-first-chapter.aux)
+(RapportFinal.aux (01-introduction.aux) (02-Organisation-du-projet.aux)
 (03-another-chapter.aux) (04-conclusion.aux))
 Package rerunfilecheck Info: File `RapportFinal.out' has not changed.
-(rerunfilecheck)             Checksum: 01039A5C1127EC8EF9F1759168C6401B;655.
+(rerunfilecheck)             Checksum: C424ADBF112E2B6DCF249054A259FBBD;1141.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 33607 strings out of 479697
- 808871 string characters out of 2862383
- 1253417 words of memory out of 3000000
- 50019 multiletter control sequences out of 15000+200000
+ 33623 strings out of 479697
+ 809167 string characters out of 2862383
+ 1251625 words of memory out of 3000000
+ 50022 multiletter control sequences out of 15000+200000
  420586 words of font info for 67 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,20n,85p,2250b,2411s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 80i,20n,85p,2116b,2414s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
 pi600\ecbx1440.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfo
 ur/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKT
@@ -1270,9 +1287,9 @@ nts/cm/cmr12.pfb><C:/Users/Tiberghien_loic/AppData/Local/Programs/MiKTeX/fonts/
 type1/public/amsfonts/cm/cmr6.pfb><C:/Users/Tiberghien_loic/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Tiberghien_loic/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on RapportFinal.pdf (12 pages, 605734 bytes).
+Output written on RapportFinal.pdf (15 pages, 760307 bytes).
 PDF statistics:
- 484 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 588 PDF objects out of 1000 (max. 8388607)
+ 44 named destinations out of 1000 (max. 500000)
+ 189 words of extra memory for PDF output out of 10000 (max. 10000000)
 
