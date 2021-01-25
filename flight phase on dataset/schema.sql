@@ -5,11 +5,9 @@ DROP TABLE IF EXISTS general_info;
 
 CREATE TABLE general_info (
     flight_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    flight_start FLOAT,
-    flight_end FLOAT,
-    flight_duration FLOAT,
     airline TEXT,
-    icao TEXT
+    icao TEXT,
+    icao_airline TEXT
 );
 
 CREATE TABLE cruise (
@@ -19,7 +17,6 @@ CREATE TABLE cruise (
     std_speed FLOAT,
     avg_vertrate_speed FLOAT,
     std_vertrate_speed FLOAT,
-    delta_h FLOAT,
     max_spd FLOAT,
     min_spd FLOAT,
     max_vertrate_speed FLOAT,
@@ -35,7 +32,6 @@ CREATE TABLE climb (
     std_speed FLOAT,
     avg_vertrate_speed FLOAT,
     std_vertrate_speed FLOAT,
-    delta_h FLOAT,
     max_spd FLOAT,
     min_spd FLOAT,
     max_vertrate_speed FLOAT,
@@ -49,7 +45,6 @@ CREATE TABLE descent (
     std_speed FLOAT,
     avg_vertrate_speed FLOAT,
     std_vertrate_speed FLOAT,
-    delta_h FLOAT,
     max_spd FLOAT,
     min_spd FLOAT,
     max_vertrate_speed FLOAT,
