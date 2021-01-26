@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,6 +8,7 @@ from openap import FlightPhase
 from os import listdir
 import os
 import warnings
+from mpi4py import MPI
 warnings.filterwarnings('ignore')
 
 ## rules to clean the data
@@ -84,17 +82,29 @@ m_by_s_to_kt = 1.94384
 
 path_to_dataset = "../../__tempo/"
 result_dir = "../../flight_with_phase/"
-os.mkdir(result_dir)
 
-list_file_name = listdir(path_to_dataset)
+# share of of file among process
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+
+if rank == 0:
+    os.mkdir(result_dir)
+    l = listdir(path_to_dataset)
+    list_file_name = [l[i:i+len(l)//size] for i in range(0,len(l)-len(l)%size,len(l)//size)]
+    list_file_name[0]+=l[len(l)-len(l)%size:]
+else:
+    list_file_name = None
+
+list_file_name = comm.scatter(list_file_name, root=0)
 
 i=0
 nb_files = len(list_file_name)
 
 for file_name in list_file_name:
     i+=1
-    print('filename:'+file_name)
-    print('file '+str(i)+' over '+str(nb_files))
+    print('process '+str(rank)+': filename:'+file_name)
+    print('process '+str(rank)+': file '+str(i)+' over '+str(nb_files))
     df = pd.read_csv(path_to_dataset+file_name, na_values='None')
     
     df.dropna(subset=['baroaltitude',], inplace=True)
