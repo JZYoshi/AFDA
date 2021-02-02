@@ -5,14 +5,8 @@
 \contentsline {section}{Contraintes associées au projet}{2}{section*.6}%
 \contentsline {chapter}{Organisation du projet}{4}{chapter*.8}%
 \contentsline {section}{Work Breakdown Structure}{4}{section*.9}%
-\contentsline {section}{Planning}{4}{section*.11}%
-\contentsline {section}{Association des taches aux membres du projet}{4}{section*.15}%
-\contentsline {section}{Suivi}{5}{section*.17}%
-\contentsline {section}{Organigramme}{6}{section*.18}%
-\contentsline {section}{Gestion des risques}{6}{section*.20}%
-\contentsline {chapter}{\numberline {1}Un chapitre}{9}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Analyse aux limites}{9}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Quelques détails sur cette méthode}{10}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}On n'est jamais très fort pour ce calcul}{11}{subsection.1.1.2}%
-\contentsline {section}{\numberline {1.2}Vérification par simulation numérique}{11}{section.1.2}%
-\contentsline {chapter}{Conclusion}{13}{chapter*.22}%
+\contentsline {section}{Association des taches aux membres du projet}{5}{section*.15}%
+\contentsline {section}{Suivi}{7}{section*.18}%
+\contentsline {section}{Gestion des risques}{7}{section*.19}%
+\contentsline {chapter}{Développement du projet}{9}{chapter*.20}%
+\contentsline {chapter}{Conclusion}{11}{chapter*.26}%
