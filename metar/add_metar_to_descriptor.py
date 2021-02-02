@@ -13,7 +13,6 @@ def init_column(df):
 
 def which_phase(flight):
     return np.isnan(flight['duration_climb']),
-           np.isnan(flight['duration_cruise']),
            np.isnan(flight['duration_descent'])
 
 def calculate_descriptors(df):
@@ -22,12 +21,26 @@ def calculate_descriptors(df):
                     usecols=['Name','ICAO'])
     for i in range(n):
         flight = df.iloc[i]
-        climb, cruise, descent = which_phase(flight)
+        climb, descent = which_phase(flight)
         
         if climb:
-            pass
-        if cruise:
-            pass
+            # calcul of weather
+            lat = flight['lat_start']
+            lon = flight['long_start']
+            end_time = (int(flight['start_time'])//3600)*3600
+            metar = pd.read_csv(metar_path+str(end_time)+'.csv', header=5,
+                                usecols=['station_id','latitude','longitude','wind_speed_kt','temp_c','dewpoint_c','sea_level_pressure_mb'])
+            metar = metar.merge(airports, left_on="station_id", right_on="ICAO", how='left', suffixes=('',''))
+            metar['dist'] = (metar['latitude']-lat)**2+(metar['longitude']-lon)**2
+            idmin = metar['dist'].idxmin(axis=1)
+            weather = metar.loc[idmin]
+
+            #assigner les valeurs de weather avec at ou iat
+            df.at[i,'departure'] = weather['Name']
+            df.at[i,'temp_c_end'] = weather['temp_c']
+            df.at[i,'dewpoint_c_end'] = weather['dewpoint_c']
+            df.at[i,'wind_speed_kt_end'] = weather['wind_speed_kt']
+
         if descent:
             # calcul of weather
             lat = flight['lat_end']
@@ -42,6 +55,9 @@ def calculate_descriptors(df):
 
             #assigner les valeurs de weather avec at ou iat
             df.at[i,'arrival'] = weather['Name']
+            df.at[i,'temp_c_end'] = weather['temp_c']
+            df.at[i,'dewpoint_c_end'] = weather['dewpoint_c']
+            df.at[i,'wind_speed_kt_end'] = weather['wind_speed_kt']
     
 
 
