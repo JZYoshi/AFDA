@@ -5,7 +5,7 @@
         <v-row justify="center">
           <v-col offset="2">
             <h2>
-              The flights are operated by <span class="nb">A320 family</span>
+              The flights are operated with <span class="nb">A320 family</span>
             </h2>
           </v-col>
         </v-row>
@@ -89,14 +89,14 @@ export default {
       .get("http://127.0.0.1:5000/flightsnumbers")
       .then(res => {
         const flights_numbers = res.data;
-        this.nb_airlines = Object.keys(flights_numbers).length;
-        this.nb_flights = Object.values(flights_numbers).reduce(
+        this.nb_airlines = flights_numbers.airlines.length;
+        this.nb_flights = flights_numbers["flight_number"].reduce(
           (a, b) => a + b
         );
         const fig_data = [
           {
-            x: Object.keys(flights_numbers),
-            y: Object.values(flights_numbers),
+            x: flights_numbers.airlines,
+            y: flights_numbers["flight_number"],
             type: "bar"
           }
         ];

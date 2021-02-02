@@ -124,7 +124,8 @@ export default {
                 {
                   title: { text: fig_data.descriptor },
                   margin: { l: 60, r: 40, t: 60, b: 40 },
-                  autosize: true
+                  autosize: true,
+                  barmode: "overlay"
                 },
                 {
                   responsive: true

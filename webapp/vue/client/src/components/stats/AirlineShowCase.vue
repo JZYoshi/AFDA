@@ -2,7 +2,7 @@
   <v-container fluid class="fill-height">
     <v-row>
       <v-col
-        v-for="id in Object.keys(flights_numbers)"
+        v-for="(id, index) in airlines"
         :key="id"
         xl="2"
         lg="3"
@@ -12,7 +12,7 @@
         <AirlineCard
           class="mx-auto"
           :airline-id="id"
-          :airline-avail-flights="flights_numbers[id] || 0"
+          :airline-avail-flights="flights_numbers[index] || 0"
         />
       </v-col>
     </v-row>
@@ -37,7 +37,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      flights_numbers: {},
+      airlines: [],
+      flights_numbers: [],
       loading: true
     };
   },
@@ -46,7 +47,8 @@ export default {
     axios
       .get("http://127.0.0.1:5000/flightsnumbers")
       .then(res => {
-        this.flights_numbers = res.data;
+        this.airlines = res.data.airlines;
+        this.flights_numbers = res.data.flight_number;
         this.loading = false;
       })
       .catch(err => {

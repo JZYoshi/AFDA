@@ -48,8 +48,11 @@ def general_info():
 def get_flights_numbers():
     df = db.db_to_pandas(current_app.config['DATABASE'])
     nb_flights = df[['airline','flight_id']].groupby('airline').count().rename(columns={'flight_id':'number of flights'})
-    nb_flight_list = list(nb_flights.iterrows())
-    nb_flight_dict = { airline: int(N[0]) for airline, N in nb_flight_list }
+    nb_flights.sort_values(by='number of flights', ascending=False, inplace=True)
+    nb_flights.info()
+    #nb_flight_list = list(nb_flights.iterrows())
+    #nb_flight_dict = { airline: int(N[0]) for airline, N in nb_flight_list }
+    nb_flight_dict = { 'airlines': nb_flights.index.tolist(), 'flight_number': nb_flights['number of flights'].tolist() }
     return jsonify(nb_flight_dict)
 
 @app.route('/airlinestat', methods=['POST'])
