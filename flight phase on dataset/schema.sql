@@ -35,7 +35,11 @@ CREATE TABLE climb (
     max_spd FLOAT,
     min_spd FLOAT,
     max_vertrate_speed FLOAT,
-    min_vertrate_speed FLOAT
+    min_vertrate_speed FLOAT,
+    airport TEXT,
+    temp_c FLOAT,
+    dewpoint_c FLOAT,
+    wind_spind_kt FLOAT
 );
 
 CREATE TABLE descent (
@@ -48,5 +52,9 @@ CREATE TABLE descent (
     max_spd FLOAT,
     min_spd FLOAT,
     max_vertrate_speed FLOAT,
-    min_vertrate_speed FLOAT
+    min_vertrate_speed FLOAT,
+    airport TEXT,
+    temp_c FLOAT,
+    dewpoint_c FLOAT,
+    wind_spind_kt FLOAT
 );

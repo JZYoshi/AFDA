@@ -26,6 +26,21 @@ def calculate_descriptor(phase):
     del phase
     return [duration,avg_spd, std_spd,vertrate_avg_spd,vertrate_std_spd,max_spd,min_spd,max_vertrate_spd,min_vertrate_spd]
 
+
+def calculate_metar(lat,lon,time):
+    try:
+        metar = pd.read_csv('../../data/metar/'+str(time)+'.csv', header=5,
+                        usecols=['station_id','latitude','longitude','wind_speed_kt','temp_c','dewpoint_c','sea_level_pressure_mb'])
+
+        metar = metar.merge(airports, left_on="station_id", right_on="ICAO", how='left', suffixes=('',''))
+        metar['dist'] = (metar['latitude']-lat)**2+(metar['longitude']-lon)**2
+        idmin = metar['dist'].idxmin(axis=1)
+        weather = metar.loc[idmin]
+        return [weather['Name'],weather['temp_c'],weather['dewpoint_c'],weather['wind_speed_kt']]
+
+    except FileNotFoundError:
+        return [None,np.NaN,np.NaN,np.NaN]
+
 def calculate_general_info(flight):
     start = int(flight[flight['phase']=='CL']['time'].iloc[0])
     end = int(flight[flight['phase']=='DE']['time'].iloc[-1])
@@ -35,11 +50,13 @@ def calculate_general_info(flight):
 
 init_db()
 
-path_to_dataset = "../../flight_with_phase/"
+path_to_dataset = "../../data/flight_with_phase/"
 
 list_file_name = listdir(path_to_dataset)
 
-airline = pd.read_csv('../../airlines.csv')
+airline = pd.read_csv('../../data/airlines.csv')
+airports=pd.read_csv('../../data/airports.csv',
+                usecols=['Name','ICAO'])
 
 for file_name in list_file_name:
     print('filename:'+file_name)
@@ -54,8 +71,13 @@ for file_name in list_file_name:
     
     if not(climb.empty):
         desc_climb = calculate_descriptor(climb)
-        db.execute("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed) \
-            VALUES (?,?,?,?,?,?,?,?,?)",
+        data_takeof = climb.iloc[0]
+        lat = data_takeof['lat']
+        lon = data_takeof['lon']
+        time = (int(data_takeof['time'])//3600)*3600
+        desc_climb += calculate_metar(lat,lon,time)
+        db.execute("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             desc_climb )
     else:
         db.execute("INSERT INTO climb DEFAULT VALUES")
@@ -73,8 +95,13 @@ for file_name in list_file_name:
 
     if not(descent.empty):
         desc_descent = calculate_descriptor(descent)
-        db.execute("INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed) \
-            VALUES (?,?,?,?,?,?,?,?,?)",
+        data_landing = descent.iloc[-1]
+        lat = data_landing['lat']
+        lon = data_landing['lon']
+        time = (int(data_landing['time'])//3600)*3600
+        desc_descent += calculate_metar(lat,lon,time)
+        db.execute("INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             desc_descent )
     else:
         db.execute('INSERT INTO descent DEFAULT VALUES')
