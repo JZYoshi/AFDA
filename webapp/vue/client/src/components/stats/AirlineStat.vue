@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="fill-height">
-    <v-row justify="space-around">
+    <v-row>
       <v-col
         v-for="(fig_raw, i) in fig_data_list"
         :key="i"

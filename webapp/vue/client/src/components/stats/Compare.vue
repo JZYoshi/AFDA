@@ -110,7 +110,7 @@ export default {
                     x: airline_stat.descriptor_values,
                     type: "histogram",
                     histnorm: "probability density",
-                    opacity: 0.7,
+                    opacity: 0.5,
                     name: airline_stat.airline
                   },
                   {

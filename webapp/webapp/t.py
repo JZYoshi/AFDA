@@ -50,8 +50,6 @@ def get_flights_numbers():
     nb_flights = df[['airline','flight_id']].groupby('airline').count().rename(columns={'flight_id':'number of flights'})
     nb_flights.sort_values(by='number of flights', ascending=False, inplace=True)
     nb_flights.info()
-    #nb_flight_list = list(nb_flights.iterrows())
-    #nb_flight_dict = { airline: int(N[0]) for airline, N in nb_flight_list }
     nb_flight_dict = { 'airlines': nb_flights.index.tolist(), 'flight_number': nb_flights['number of flights'].tolist() }
     return jsonify(nb_flight_dict)
 
@@ -62,7 +60,7 @@ def get_airline():
     df = db.db_to_pandas(current_app.config['DATABASE'])
     my_airline = df[df['airline']==airline]
 
-    my_airline.drop(columns=['flight_id','flight_start','flight_end','icao','airline'], inplace=True)
+    my_airline.drop(columns=['flight_id','icao','airline', 'icao_airline'], inplace=True)
     descriptors = my_airline.columns
 
     figlist=[]
@@ -88,7 +86,7 @@ def get_all_airlines():
 @app.route('/descriptors', methods=['GET'])
 def get_all_descriptors():
     df = db.db_to_pandas(current_app.config['DATABASE'])
-    descriptors = list(df.drop(columns=['flight_id','flight_start','flight_end','icao','airline']).columns)
+    descriptors = list(df.drop(columns=['flight_id','icao','airline', 'icao_airline']).columns)
     return jsonify({
         'descriptors': descriptors
     })
@@ -96,6 +94,8 @@ def get_all_descriptors():
 @app.route('/compareairlines', methods=['POST'])
 def get_airlines_compare_res():
     df = db.db_to_pandas(current_app.config['DATABASE'])
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
+    df.dropna(inplace=True)
     post_data = request.get_json()
     airlines = post_data.get('airlines')
     descriptors = post_data.get('descriptors')
@@ -104,15 +104,17 @@ def get_airlines_compare_res():
         x_min = min(df[descriptor])
         x_max = max(df[descriptor])
         x = np.linspace(x_min,x_max, 100)
+        print(x_min)
+        print(x_max)
         airline_stat_list = []
         kde_values_list = []
         for airline in airlines:
-            values = df[df['airline']==airline][descriptor].dropna().tolist()
-            kde = gaussian_kde(df[df['airline']==airline][descriptor])
+            values = df[df['airline']==airline][descriptor].dropna()
+            kde = gaussian_kde(values)
             kde_values = kde(x)
             airline_stat_list.append({
                 'airline': airline,
-                'descriptor_values': values,
+                'descriptor_values': values.tolist(),
                 'kde_values': list(kde_values),
                 'x_kde': list(x) 
             })

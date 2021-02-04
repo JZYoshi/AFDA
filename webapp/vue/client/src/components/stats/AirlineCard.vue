@@ -46,8 +46,7 @@ export default {
     },
 
     get_airline_img: function() {
-      const fname =
-        airline_profiles[this.airlineId]?.img || "wildcard_airline.png";
+      const fname = airline_profiles[this.airlineId]?.img || "wildcard.jpg";
       return require("../../assets/airline_img/" + fname);
     }
   }
