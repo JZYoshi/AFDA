@@ -10,6 +10,7 @@ import json
 import os
 from os import listdir
 from db import get_db, init_db
+import time as clock
 
 ## functions
 def calculate_descriptor(phase):
@@ -58,8 +59,14 @@ airline = pd.read_csv('../../data/airlines.csv')
 airports=pd.read_csv('../../data/airports.csv',
                 usecols=['Name','ICAO'])
 
-for file_name in list_file_name:
-    print('filename:'+file_name)
+
+N = len(list_file_name)
+print('number of file to be processed:', N)
+start = clock.time()
+i=0
+unknown_airline=[]
+
+for file_name in list_file_name[0:20]:
 
     df = pd.read_csv(path_to_dataset+file_name)
     
@@ -113,11 +120,18 @@ for file_name in list_file_name:
         airline_name = airline[airline['ICAO']==id_airline].iloc[0]['Airline']
     else:
         airline_name = None
-        print(id_airline)
+        unknown_airline.append(id_airline)
     db.execute("INSERT INTO general_info (icao,icao_airline,airline) \
         VALUES (?,?,?)",(icao24,id_airline,airline_name))
 
     db.commit()
     db.close()
 
+    i+=1
+    total_time = clock.time()-start
+    print('estimated time:', total_time/i*N)
+
+print("process end with success")
+print('total_time:', total_time)
+print('process time by file:', total_time/i)
 
