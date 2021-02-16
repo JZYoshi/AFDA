@@ -8,12 +8,8 @@ def retrieve_metar():
     r = requests.get(url)
     with open('../../data/metar/'+str((int(time.time())//3600) *3600)+'.csv','wb') as metar:
         metar.write(r.content)
+        print("succefuly download "+str((int(time.time())//3600) *3600)+'.csv')
 
 
 ## main program
-last_time=time.time()-3600
-while True:
-    if time.time()-last_time>=3600:
-        retrieve_metar()
-        last_time=time.time()
-        
+retrieve_metar()
