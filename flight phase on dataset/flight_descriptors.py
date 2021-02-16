@@ -39,7 +39,7 @@ def calculate_metar(lat,lon,time):
         weather = metar.loc[idmin]
         return [weather['Name'],weather['temp_c'],weather['dewpoint_c'],weather['wind_speed_kt']]
 
-    except FileNotFoundError:
+    except (FileNotFoundError, KeyError) as e:
         return [None,np.NaN,np.NaN,np.NaN]
 
 def calculate_general_info(flight):
@@ -66,16 +66,16 @@ start = clock.time()
 i=0
 unknown_airline=[]
 
-for file_name in list_file_name[0:20]:
+for file_name in list_file_name:
 
     df = pd.read_csv(path_to_dataset+file_name)
-    
+
     descent = df[df['phase']=='DE']
     climb = df[df['phase']=='CL']
     cruise = df[df['phase']=='CR']
 
     db = get_db()
-    
+
     if not(climb.empty):
         desc_climb = calculate_descriptor(climb)
         data_takeof = climb.iloc[0]
@@ -134,4 +134,3 @@ for file_name in list_file_name[0:20]:
 print("process end with success")
 print('total_time:', total_time)
 print('process time by file:', total_time/i)
-
