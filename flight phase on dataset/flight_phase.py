@@ -80,8 +80,8 @@ m_by_s_to_kt = 1.94384
 
 
 
-path_to_dataset = "../../__tempo/"
-result_dir = "../../flight_with_phase/"
+path_to_dataset = "../../data/__tempo/"
+result_dir = "../../data/flight_with_phase/"
 
 # share of of file among process
 comm = MPI.COMM_WORLD
