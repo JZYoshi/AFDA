@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  2 FEB 2021 17:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  16 FEB 2021 11:01
 entering extended mode
 **./RapportFinal.tex
 (RapportFinal.tex
@@ -1037,11 +1037,8 @@ File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count328
 \l__pdf_internal_box=\box83
 ) (RapportFinal.aux (01-introduction.aux)
-(02-Organisation-du-projet.aux) (03-Développement-du-projet.aux
-
-LaTeX Warning: Label `fig:traitement_donnees' multiply defined.
-
-) (04-conclusion.aux))
+(02-Organisation-du-projet.aux) (03-Développement-du-projet.aux)
+(04-conclusion.aux))
 \openout1 = `RapportFinal.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
@@ -1195,21 +1192,15 @@ File: images//R1 planning.png Graphic file (type png)
 <use images//R1 planning.png>
 Package pdftex.def Info: images//R1 planning.png  used on input line 32.
 (pdftex.def)             Requested size: 426.79134pt x 81.92197pt.
-<images//TraitementDesDonnées.png, id=104, 466.74374pt x 234.8775pt>
-File: images//TraitementDesDonnées.png Graphic file (type png)
-<use images//TraitementDesDonnées.png>
-Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
-39.
-(pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
-<images//gestion projet.png, id=105, 711.4078pt x 93.34875pt>
+<images//gestion projet.png, id=104, 711.4078pt x 93.34875pt>
 File: images//gestion projet.png Graphic file (type png)
 <use images//gestion projet.png>
-Package pdftex.def Info: images//gestion projet.png  used on input line 46.
+Package pdftex.def Info: images//gestion projet.png  used on input line 39.
 (pdftex.def)             Requested size: 426.79134pt x 56.00397pt.
-<images//Organigramme.png, id=108, 963.6pt x 722.7pt>
+<images//Organigramme.png, id=107, 963.6pt x 722.7pt>
 File: images//Organigramme.png Graphic file (type png)
 <use images//Organigramme.png>
-Package pdftex.def Info: images//Organigramme.png  used on input line 58.
+Package pdftex.def Info: images//Organigramme.png  used on input line 51.
 (pdftex.def)             Requested size: 284.52756pt x 213.39314pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1219,69 +1210,63 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
- <./images//WBS.png>]
-<images//RACI.jpg, id=118, 743.02594pt x 284.56313pt>
+ <./images//WBS.png>] [5 <./images//MVP planning.png> <./images//R1 planning.pn
+g> <./images//gestion projet.png>]
+<images//RACI.jpg, id=127, 743.02594pt x 284.56313pt>
 File: images//RACI.jpg Graphic file (type jpg)
 <use images//RACI.jpg>
-Package pdftex.def Info: images//RACI.jpg  used on input line 65.
+Package pdftex.def Info: images//RACI.jpg  used on input line 58.
 (pdftex.def)             Requested size: 426.79134pt x 163.45317pt.
+ [6 <./images//Organigramme.png> <./images//RACI.jpg>]) [7]
+\openout2 = `03-Développement-du-projet.aux'.
 
+ (03-Développement-du-projet.tex
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
+
+ []
+
+<images//TraitementDesDonnées.png, id=138, 466.74374pt x 234.8775pt>
+File: images//TraitementDesDonnées.png Graphic file (type png)
+<use images//TraitementDesDonnées.png>
+Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
+29.
+(pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5 <./images//MVP planning.png> <./images//R1 planning.png>]
-
-LaTeX Warning: Text page 6 contains only floats.
-
-[6 <./images//TraitementDesDonnées.png> <./images//gestion projet.png> <./imag
-es//Organigramme.png>] [7 <./images//RACI.jpg>]) [8]
-\openout2 = `03-Développement-du-projet.aux'.
-
-
-(03-Développement-du-projet.tex
-
-LaTeX Warning: Reference `traitement_donnees' on page 9 undefined on input line
- 10.
-
-File: images//TraitementDesDonnées.png Graphic file (type png)
-<use images//TraitementDesDonnées.png>
-Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
-14.
-(pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
-) [9
+ [8
 
 
 
 
-] [10]
+])
+[9 <./images//TraitementDesDonnées.png>]
 \openout2 = `04-conclusion.aux'.
 
- (04-conclusion.tex) [11
+ (04-conclusion.tex) [10
 
 
 
 
-] (RapportFinal.aux (01-introduction.aux)
-(02-Organisation-du-projet.aux) (03-Développement-du-projet.aux)
-(04-conclusion.aux))
+]
+(RapportFinal.aux (01-introduction.aux) (02-Organisation-du-projet.aux)
+(03-Développement-du-projet.aux) (04-conclusion.aux))
 Package rerunfilecheck Info: File `RapportFinal.out' has not changed.
-(rerunfilecheck)             Checksum: CB059069C8512B7FDC05C868D620F697;695.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
+(rerunfilecheck)             Checksum: D015D9A39A919ACDEAA69ACC42A58390;695.
  ) 
 Here is how much of TeX's memory you used:
- 33148 strings out of 479697
- 795937 string characters out of 2862383
- 1196590 words of memory out of 3000000
- 49559 multiletter control sequences out of 15000+200000
+ 33145 strings out of 479697
+ 795893 string characters out of 2862383
+ 1197590 words of memory out of 3000000
+ 49558 multiletter control sequences out of 15000+200000
  418281 words of font info for 64 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  80i,11n,85p,2115b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1295,9 +1280,9 @@ pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/
 dpi600\ecti1440.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljf
 our/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiK
 TeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk>
-Output written on RapportFinal.pdf (13 pages, 676900 bytes).
+Output written on RapportFinal.pdf (12 pages, 678430 bytes).
 PDF statistics:
- 473 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
+ 470 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
