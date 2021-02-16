@@ -33,7 +33,7 @@ airline_list_cat = filt_10log[filt_10log.values==True].index
 df_filt_10log = df_noairline[df_noairline['airline_cat'].isin(airline_list_cat)]
 feature_selection_df = df_filt_10log.dropna()
 X = feature_selection_df.iloc[:,:-1]
-y = feature_selection_df.loc[:,["airline_cat"]]
+y = feature_selection_df.loc[:,["airline_cat"]].values.ravel()
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 clf = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
 clf.fit(X_train, y_train)
@@ -58,7 +58,7 @@ def threshold_selection(begin=-3, end=3, n_choices=10):
         clf_important.fit(X_important_train, y_train)
         y_important_pred = clf_important.predict(X_important_test)
         accurate_important = accuracy_score(y_test, y_important_pred)
-        print(i)
+        print(f'number of evaluation is {j}')
         if accurate_important < accurate:
             break
     sfm = SelectFromModel(clf, threshold=rg[j-1]*mad+np.median(clf.feature_importances_))
