@@ -11,7 +11,7 @@ def retrieve_metar():
 
 
 ## main program
-last_time=time.time()
+last_time=time.time()-3600
 while True:
     if time.time()-last_time>=3600:
         retrieve_metar()
