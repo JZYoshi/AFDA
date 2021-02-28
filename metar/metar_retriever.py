@@ -12,4 +12,5 @@ def retrieve_metar():
 
 
 ## main program
-retrieve_metar()
+if __name__=="__main__":
+    retrieve_metar()
