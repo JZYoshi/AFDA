@@ -15,6 +15,20 @@ from db import *
 
 
 def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_min_max=True):
+    """
+    Delete some columns, filter airlines with more than a specific number of flights and encode airlines
+
+    :param database_name: the name of the database containing the descriptors
+    :param columns_dropped: the columns chosen to be deleted manually
+    :param threshold_nb_flights: the minimum number of flights for an airline to be displayed in the classification
+    :param drop_min_max: if the columns with maximums or minimums to be deleted
+    :returns: three dataframes and a dictionary:
+        + whole dataset
+        + a dataset with only weather conditions
+        + a dataset with only operation data (from ADS-B)
+        + a dictionary storing airlines and their codes
+    """
+
     meteo_columns = ["temp_c_descent", "dewpoint_c_descent", "wind_spind_kt_descent", "temp_c_climb",
                      "dewpoint_c_climb", "wind_spind_kt_climb"]
     df = db_to_pandas(filename=database_name)
@@ -44,6 +58,21 @@ def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_
 
 
 def feature_selection_baseline(df_filt_log, n_estimators=100):
+    """
+    Create a baseline model for feature selection
+
+    :param df_filt_log: dataframe filtered which saves only airlines with enough flights
+    :param n_estimators: the number of estimators defined into random forest classifier
+    :return: some characteristics of baseline model:
+        + mean absolute deviation of feature importances
+        + baseline model
+        + baseline model score on test dataset
+        + input used for training
+        + input used for test
+        + output used for training
+        + output used for test
+
+    """
     # delete all lines with null values
     feature_selection_df = df_filt_log.dropna()
     X = feature_selection_df.iloc[:, :-1]
@@ -58,10 +87,22 @@ def feature_selection_baseline(df_filt_log, n_estimators=100):
     return mad, clf, accuracy, X_train, X_test, y_train, y_test
 
 
-def threshold_selection(mad, clf, accuracy, X_train, X_test, y_train, y_test, columns, begin=-3, end=3, n_choices=10):
+def feature_selection(mad, clf, accuracy, X_train, X_test, y_train, y_test, columns, begin=-3, end=3, n_choices=10):
     """
-    :param mad:a quoi ca correspond
-    :return: une ziqing
+    Conduct feature selection
+
+    :param mad: mean absolute deviation of feature importances for baseline model
+    :param clf: baseline model
+    :param accuracy: baseline model score on test dataset
+    :param X_train: input used for training from baseline model
+    :param X_test: input used for test from baseline model
+    :param y_train: output used for training from baseline model
+    :param y_test: output used for test from baseline model
+    :param columns: columns for input baseline model
+    :param begin: the left limit of threshold to be considered
+    :param end: the right limit of threshold to be considered
+    :param n_choices: the number of points to be calculated
+    :returns: a list of remained columns after feature selection
     """
     # define the range of threshold
 
@@ -88,5 +129,13 @@ def threshold_selection(mad, clf, accuracy, X_train, X_test, y_train, y_test, co
     columns_remained = X_columns[selection]
     return columns_remained
 
+
 def columns_deleted(columns, columns_remained):
+    """
+    Show the columns deleted by feature selection
+
+    :param columns: original columns of dataframe
+    :param columns_remained: remained columns after feature selection
+    :return: a list of column names for which the columns are deleted
+    """
     return list((set(columns).difference(set(columns_remained))).difference({"airline_cat"}))
