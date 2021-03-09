@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# from data_preparation import *
-# from data_fetching import *
 import glob
 import tarfile
 import pandas as pd
@@ -10,7 +8,7 @@ from data_preparation import group_flight_data_with_conditions
 
 gz_files = []
 
-for filename in glob.glob('../dataset/*.csv.tar'):
+for filename in glob.glob('./dataset/*.csv.tar'):
     print('extracting ', filename)
     tarObj = tarfile.open(filename)
     for member in tarObj.getmembers():
@@ -20,7 +18,7 @@ for filename in glob.glob('../dataset/*.csv.tar'):
     tarObj.close()
 
 df = pd.concat((pd.read_csv(f) for f in gz_files))
-aircraft_database = pd.read_csv('../dataset/aircraftDatabase.csv')
+aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv')
 conditions = {'manufacturericao': 'AIRBUS', 'typecode': r'\bA318\b|\bA319\b|\bA320\b|\bA321\b'}
 flight_dict = {}
 labels = ['icao24', 'callsign']

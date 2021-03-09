@@ -1,0 +1,1 @@
+This fold is to store temporarily the data archive downloaded from Opensky Network

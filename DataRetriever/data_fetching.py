@@ -29,5 +29,5 @@ filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[
 #     fname = url[-(len(url) - url.rfind('/') - 1):]
 #     print(fname)
 #     fileObj = requests.get(url)
-#     with open('../dataset/' + fname, 'wb') as local_file:
+#     with open('./dataset/' + fname, 'wb') as local_file:
 #         local_file.write(fileObj.content)

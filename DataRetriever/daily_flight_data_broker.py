@@ -38,7 +38,7 @@ def distribute_to_indiv_files(states, tempo_dname='./__tempo', format='.csv'):
         try:
             aircraft_database
         except:
-            aircraft_database = pd.read_csv('../dataset/aircraftDatabase.csv', low_memory=False)
+            aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv', low_memory=False)
         
         if not os.path.exists(tempo_dname):
             os.mkdir(tempo_dname)
@@ -78,6 +78,6 @@ def print_states(s):
     else:
         print('failed to get data')
 
-# aircraft_database = pd.read_csv('../dataset/aircraftDatabase.csv', low_memory=False)
+# aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv', low_memory=False)
 # periodic_retrieve(10, distribute_to_indiv_files, True)
 periodic_retrieve(10, print_states, True)

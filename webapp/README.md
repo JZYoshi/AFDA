@@ -5,6 +5,6 @@ To start the web application:
 3. execute `npm install` and wait for the packages installation
 4. execute `npm run build` and wait for the compilation
 5. rename a .db file to 'descriptors.db' and put it inside webapp/instance
-6. go to the webapp/webapp directory
-7. set up environment variables (execute `$env:FLASK_ENV="development"`; `$env:FLASK_APP="t"`; `set FLASK_APP=t.py`)
+6. go to the webapp/ directory
+7. set up environment variables (execute `$env:FLASK_ENV="development"`; `$env:FLASK_APP="server"`)
 8. run the server by executing `flask run`
