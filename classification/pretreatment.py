@@ -30,6 +30,7 @@ def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_
     df["airline"] = df["airline"].astype('category')
     df["airline_cat"] = df["airline"].cat.codes
     df_no_airline = df.drop(columns=['airline'])
+    airlines_decoder = dict(enumerate(df["airline"].cat.categories))
 
     df_no_airline.set_index('flight_id', inplace=True)
 
@@ -39,7 +40,7 @@ def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_
     df_filt_log_meteo = pd.concat([df_filt_log[meteo_columns], df_filt_log["airline_cat"]], axis=1)
     df_filt_log_operation = df_filt_log.drop(columns=meteo_columns)
 
-    return df_filt_log, df_filt_log_meteo, df_filt_log_operation
+    return df_filt_log, df_filt_log_meteo, df_filt_log_operation, airlines_decoder
 
 
 def feature_selection_baseline(df_filt_log, n_estimators=100):
