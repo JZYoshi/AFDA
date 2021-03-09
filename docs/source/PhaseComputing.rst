@@ -7,7 +7,7 @@ of flights which has a specific flight number. Thus, each file contains potentia
 several flights.
 
 The script processes each file one by one applying the same algorithm. For each files, it splits
-it into several flight. Then for each file, it applies a function in openap library which associates to
+it into several flight. Then for each flight, it applies a function in openap library which associates to
 each data a label to indicate in which phase the plane is. Then, since the data is often bad quality,
 it applies several rules to determines which phase of the flight can be kept. Finally, the algorithm
 save every phase which are considered as clean in a directory.

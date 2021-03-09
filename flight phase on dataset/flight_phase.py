@@ -52,10 +52,19 @@ def enough_data(df):
 def check_and_drop_phase(df):
     """
     This function apply several rules to determine if a phase is complete
-    or not and then drop it or not. A phase is kept if it is complete and the maximum
-    time between two data is not too big.
+    or not and then drop it or not. A phase is kept if:
+        + it has at least 10 points
+        + the time between two datas is less than (240,1080,240) for (climb, cruise, descent)
+        + for climb phase,
+            + we can find a point in the first 10 points with altitude less than 2000m
+            + the cruise phase is present
+        + for descent phase,
+            + we can find a point in the last 10 points with altitude less than 2000m
+            + the cruise phase is present
+        + for cruise phase,
+            + descent and climb phase are present
     
-    :param df: dataframe containig flight data
+    :param df: dataframe containig flight data (ONLY ONE FLIGHT)
     :returns: dataframe containig only exploitable data
     """
 

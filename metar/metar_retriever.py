@@ -4,6 +4,11 @@ import numpy as np
 import time
 
 def retrieve_metar():
+    """
+    This function downloads a file containing metar data.
+    The url of the downloaded data is `metar_data <https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv>`_
+    Finally the name of the file which is created corresponds to the unix time of the hour of the downloading.
+    """
     url = 'https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv'
     r = requests.get(url)
     with open('../../data/metar/'+str((int(time.time())//3600) *3600)+'.csv','wb') as metar:
