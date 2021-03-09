@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  16 FEB 2021 11:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  9 MAR 2021 11:19
 entering extended mode
 **./RapportFinal.tex
 (RapportFinal.tex
@@ -1221,55 +1221,79 @@ Package pdftex.def Info: images//RACI.jpg  used on input line 58.
 \openout2 = `03-Développement-du-projet.aux'.
 
  (03-Développement-du-projet.tex
-Underfull \hbox (badness 10000) in paragraph at lines 11--12
-
- []
-
+<images//TraitementDesDonnées.png, id=138, 466.74374pt x 234.8775pt>
+File: images//TraitementDesDonnées.png Graphic file (type png)
+<use images//TraitementDesDonnées.png>
+Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
+14.
+(pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
 
-<images//TraitementDesDonnées.png, id=138, 466.74374pt x 234.8775pt>
-File: images//TraitementDesDonnées.png Graphic file (type png)
-<use images//TraitementDesDonnées.png>
-Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
-29.
-(pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8
+[8
 
 
 
 
-])
-[9 <./images//TraitementDesDonnées.png>]
+ <./images//TraitementDesDonnées.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 29--30
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--50
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 56--57
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 62--230
+
+ []
+
+[10]
 \openout2 = `04-conclusion.aux'.
 
- (04-conclusion.tex) [10
+ (04-conclusion.tex) [11
 
 
 
 
-]
-(RapportFinal.aux (01-introduction.aux) (02-Organisation-du-projet.aux)
-(03-Développement-du-projet.aux) (04-conclusion.aux))
+] (RapportFinal.aux (01-introduction.aux)
+(02-Organisation-du-projet.aux) (03-Développement-du-projet.aux)
+(04-conclusion.aux))
 Package rerunfilecheck Info: File `RapportFinal.out' has not changed.
 (rerunfilecheck)             Checksum: D015D9A39A919ACDEAA69ACC42A58390;695.
  ) 
 Here is how much of TeX's memory you used:
- 33145 strings out of 479697
- 795893 string characters out of 2862383
+ 33144 strings out of 479697
+ 795877 string characters out of 2862383
  1197590 words of memory out of 3000000
- 49558 multiletter control sequences out of 15000+200000
+ 49556 multiletter control sequences out of 15000+200000
  418281 words of font info for 64 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,11n,85p,2115b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 80i,11n,85p,760b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
 pi600\eccc1200.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfo
 ur/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKT
@@ -1280,9 +1304,9 @@ pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/
 dpi600\ecti1440.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljf
 our/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiK
 TeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk>
-Output written on RapportFinal.pdf (12 pages, 678430 bytes).
+Output written on RapportFinal.pdf (13 pages, 679162 bytes).
 PDF statistics:
- 470 PDF objects out of 1000 (max. 8388607)
- 37 named destinations out of 1000 (max. 500000)
+ 475 PDF objects out of 1000 (max. 8388607)
+ 38 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
