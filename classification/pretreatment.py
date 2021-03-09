@@ -7,13 +7,16 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import accuracy_score
+from scipy.stats import median_abs_deviation
+from sklearn.model_selection import train_test_split
 
 sys.path.append("../flight phase on dataset")
 from db import *
 
 
 def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_min_max=True):
-    meteo_columns = ["temp_c_descent", "dewpoint_c_descent", "wind_spind_kt_descent", "temp_c_climb", "dewpoint_c_climb", "wind_spind_kt_climb"]
+    meteo_columns = ["temp_c_descent", "dewpoint_c_descent", "wind_spind_kt_descent", "temp_c_climb",
+                     "dewpoint_c_climb", "wind_spind_kt_climb"]
     df = db_to_pandas(filename=database_name)
     df.drop(columns=columns_dropped, inplace=True)
     if drop_min_max:
@@ -33,14 +36,28 @@ def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_
     filt_log = df_no_airline['airline_cat'].value_counts() >= threshold_nb_flights
     airline_list_cat = filt_log[filt_log.values].index
     df_filt_log = df_no_airline[df_no_airline['airline_cat'].isin(airline_list_cat)]
-    # df_filt_log_meteo = df_filt_log[meteo_columns]
-    # df_filt_log_
-    # df_filt
+    df_filt_log_meteo = pd.concat([df_filt_log[meteo_columns], df_filt_log["airline_cat"]], axis=1)
+    df_filt_log_operation = df_filt_log.drop(columns=meteo_columns)
 
-    return df_filt_log
+    return df_filt_log, df_filt_log_meteo, df_filt_log_operation
 
 
-def threshold_selection(mad, clf, X_train, X_test, y_train, y_test, accurate, columns, begin=-3, end=3, n_choices=10):
+def feature_selection_baseline(df_filt_log, n_estimators=100):
+    # delete all lines with null values
+    feature_selection_df = df_filt_log.dropna()
+    X = feature_selection_df.iloc[:, :-1]
+    y = feature_selection_df.loc[:, ["airline_cat"]].values.ravel()
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+    clf = RandomForestClassifier(n_estimators=n_estimators, random_state=0, n_jobs=-1)
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    mad = median_abs_deviation(clf.feature_importances_)
+
+    return mad, clf, accuracy, X_train, X_test, y_train, y_test
+
+
+def threshold_selection(mad, clf, accuracy, X_train, X_test, y_train, y_test, columns, begin=-3, end=3, n_choices=10):
     """
     :param mad:a quoi ca correspond
     :return: une ziqing
@@ -61,7 +78,7 @@ def threshold_selection(mad, clf, X_train, X_test, y_train, y_test, accurate, co
         y_important_pred = clf_important.predict(X_important_test)
         accurate_important = accuracy_score(y_test, y_important_pred)
         print(f'number of evaluation is {j}')
-        if accurate_important < accurate:
+        if accurate_important < accuracy:
             break
     sfm = SelectFromModel(clf, threshold=rg[j - 1] * mad + np.median(clf.feature_importances_))
     sfm.fit(X_train, y_train)
@@ -69,3 +86,6 @@ def threshold_selection(mad, clf, X_train, X_test, y_train, y_test, accurate, co
     X_columns = columns[:-1]
     columns_remained = X_columns[selection]
     return columns_remained
+
+def columns_deleted(columns, columns_remained):
+    return list((set(columns).difference(set(columns_remained))).difference({"airline_cat"}))
