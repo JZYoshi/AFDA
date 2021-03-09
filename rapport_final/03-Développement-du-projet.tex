@@ -6,6 +6,7 @@
 Ce chapitre présente les différentes étapes techniques qui ont été réalisé pour mener à bien le projet. 
 
 \section*{Récupération et réorganisation des données}
+\addcontentsline{toc}{section}{Récupération et réorganisation des données}
 
 La figure \ref{fig:traitement_donnees} résume ce qui a été fait au niveau du traitement des données : 
 
@@ -17,7 +18,7 @@ La figure \ref{fig:traitement_donnees} résume ce qui a été fait au niveau du 
 \end{figure}
 
 
-Initialement, les données de vols étaient stockées sur le site d'OpenSky à l'adresse "https://opensky-network.org/". C'est un site qui stocke les fichiers dans lesquels sont enregistrés à un instant fixé une photo de l'état du ciel, c'est à dire toutes les informations des avions qui volent (identité, position, vitesse, direction...).\\
+Initialement, les données de vols étaient stockées sur le site d'OpenSky à l'adresse "https://opensky-network.org/". C'est un site qui stocke les fichiers dans lesquels sont enregistrés à un instant fixé une photo de l'état du ciel, c'est à dire toutes les informations des avions qui volent (identité, position, vitesse, direction...). \\
 
 Ce mode de stockage était très difficilement exploitable pour 2 raisons : 
 
@@ -29,9 +30,12 @@ Ce mode de stockage était très difficilement exploitable pour 2 raisons :
 Nous avons donc utilisé tout d'abord un web crawler pour regrouper les données dans des fichiers contenant les informations sur les vols par heure. Puis à l'aide de la librairie Pandas de python, nous avons pu construire une grande base de données, pour ensuite la réorganiser afin d'obtenir un fichier par vol. \\
 
 
-Cette manière de fonctionner nous a été utile pour la première de fonctionner
+Cette manière de fonctionner nous a été utile pour la première partie de notre projet : cela nous a permis d'avancer dans le prototypage des solutions suivantes tels que le calcul des phase de vol et des descripteurs. Cependant, nous ne nous sommes pas arrêtés à cette manière de fonctionner afin de pouvoir récupérer plus de vols. En effet, le site d'OpenSky ne fournit que les données de vols des lundis des 6 derniers mois, ce qui est limitant quand à la taille de la base de données. De plus, nous avons voulu dans un second temps intégrer les données météo dans notre analyse.\\
+
+Nous avons donc développé 2 scripts pour récupérer ces données de manière continue ce qui est avéré être efficace (données ADS récupérées toutes les 10 secondes, données météo récupérées toutes les heures). Finalement, nous avons obtenu autour de 100000 vols pour la base de données, ce qui est une base de données convenable pour faire de la classification. \\
 
 \section*{Calcul des descripteurs}
+\addcontentsline{toc}{section}{Calcul des descripteurs}
 
 
 Une fois la réorganisation des données effectuée, nous avons essayé d'identifier les descripteurs qui pourraient être pertinents pour classifier les avions. Entre autres, nous avons repérés : 
@@ -43,7 +47,7 @@ Une fois la réorganisation des données effectuée, nous avons essayé d'identi
 	\item La variation de hauteur de l'avion durant la phase
 \end{itemize}
 
-Avant de faire l'analyse sur les descripteurs, il nous semblait pertinent de découper ces vols en plusieurs phase (décollage, montée, croisière, descente, atterrissage) afin d'en sortir des descripteurs pertinent et cohérent suivant le mode de vol. Pour cela, le fichier "flight-phase.py" parcours les différents vols et utilise la fonction FlightPhase de la librairie openap de python pour déterminer les différentes phases pour chaque vols. Un travail de tri a aussi été effectué pour éviter de garder des données de mauvaise qualité (absence de valeurs, valeurs incohérentes...). Etant donné que le fichier peut demander de longs calculs, il s'exécute sous la norme MPI. \\
+Avant de faire l'analyse sur les descripteurs, il nous semblait pertinent de découper ces vols en plusieurs phase (décollage, montée, croisière, descente, atterrissage) afin d'en sortir des descripteurs pertinent et cohérent suivant le mode de vol. Pour cela, le fichier "flight-phase.py" parcours les différents vols et utilise la fonction FlightPhase de la librairie openap de python pour déterminer les différentes phases pour chaque vols. Un travail de tri a aussi été effectué pour éviter de garder des données de mauvaise qualité (absence de valeurs et valeurs incohérentes). Etant donné que le fichier peut demander de longs calculs, celui-ci s'exécute sous la norme MPI pour paralléliser les calculs. \\
 
 
 Avec les fichiers contenant les labels de phase de vols, il devient assez simple de calculer les descripteurs en utilisant les fonctions mean, std, min et max de python. Le fichier flight-descriptors.py les calcule pour chaque vol et pour chaque phase (avec certains descripteurs qui sont spécifiques à chaque phase). Ce fichier renvoie 4 tables SQL : une pour la phase de montée de tous les vols, une pour la phase de croisière, une pour la phase de descente, et une table donnant des informations générales relatives à chaque vol. \\
@@ -52,11 +56,19 @@ Une fois tous les descripteurs calculés, il reste à choisir une manière de le
 
 
 \section*{Développement de l'application Web}
+\addcontentsline{toc}{section}{Développement de l'application Web}
 
 Pour développer l'application Web, nous avons utilisé "Flask", un micro framework open-source de développement web en Python. \\
 
+
+
 \section*{Classification des compagnies aériennes}
+\addcontentsline{toc}{section}{Classification des compagnies aériennes}
 
 Cette section présente les choix effectués pour la visualisation des descripteurs. La difficulté de cette partie résidait dans le traitement des descripteurs qui étaient au nombre de 33 et dans le choix de la visualisation. \\
 
-Plusieurs analyses ont donc été effectuée. La première méthode que nous avons essayé est l'AFD (Analyse Factorielle Discriminante). Nous avons aussi tenté de faire une CAH (Classification Ascendante Hierarchique) afin de pouvoir en ressortir un dendrogramme ce qui est assez visuel pour la classification. Enfin, une dernière méthode utilisant l'estimation par noyau a été explorée. Cette méthode permet de comparer plusieurs compagnies aériennes selon un descripteur fixé et donne la corrélation entre ces compagnies. \\
+Plusieurs analyses ont donc été effectuées. La première méthode que nous avons essayé est l'AFD (Analyse Factorielle Discriminante). 
+
+Nous avons aussi effectué une Classification Ascendante Hierarchique (CAH). Cette méthode prend en entrée le dataframe contenant tous les descripteurs et les normalise pour avoir des objets comparables. La CAH regroupe d'abord les compagnies aériennes ayant les caractéristiques les plus proches pour ensuite regrouper celles les plus éloignées. Cela conduit à l'obtention d'un dendrogramme comme présenté figure ... Une grande longueur de trait correspond à un grand nombre de caractéristiques différentes entre les groupes. Afin d'effectuer des clusters de compagnies aériennes pertinents, il reste à effectuer des coupes à ces endroit là, car c'est là où il y a beaucoup de caractéristiques différentes entre les groupes. Cette méthode est pratique et assez visuelle pour la classification. \\
+
+Enfin, une dernière méthode utilisant la divergence de Jensen-Shannon a été utilisée. C'est une méthode qui mesure les similarités entre plusieurs densité de probabilités. Pour un descripteur fixé, nous pouvons créer pour chaque compagnie aérienne la distribution de ce descripteur autour de sa médiane. En sélectionnant les compagnies aérienne souhaitées, nous obtenons la corrélation entre ces compagnies pour le descripteur étudié. \\

@@ -1,12 +1,18 @@
 \babel@toc {french}{}
 \contentsline {chapter}{Introduction}{1}{chapter*.2}%
+\contentsline {section}{Contexte}{1}{section*.3}%
 \contentsline {section}{Objectifs}{1}{section*.4}%
-\contentsline {section}{Parties prenantes}{2}{section*.5}%
+\contentsline {section}{Parties prenantes et Livrables}{2}{section*.5}%
 \contentsline {section}{Contraintes associées au projet}{2}{section*.6}%
 \contentsline {chapter}{Organisation du projet}{4}{chapter*.8}%
-\contentsline {section}{Work Breakdown Structure}{4}{section*.9}%
-\contentsline {section}{Association des taches aux membres du projet}{5}{section*.14}%
-\contentsline {section}{Suivi}{6}{section*.17}%
-\contentsline {section}{Gestion des risques}{7}{section*.18}%
+\contentsline {section}{Work Breakdown Structure et Planning}{4}{section*.9}%
+\contentsline {section}{Association des tâches aux membres du projet et Organigramme}{4}{section*.14}%
+\contentsline {section}{Suivi}{5}{section*.17}%
+\contentsline {section}{Gestion des risques et Opportunités}{7}{section*.18}%
 \contentsline {chapter}{Développement du projet}{8}{chapter*.19}%
-\contentsline {chapter}{Conclusion}{11}{chapter*.25}%
+\contentsline {section}{Récupération et réorganisation des données}{8}{section*.20}%
+\contentsline {section}{Calcul des descripteurs}{9}{section*.22}%
+\contentsline {section}{Développement de l'application Web}{10}{section*.23}%
+\contentsline {section}{Classification des compagnies aériennes}{10}{section*.24}%
+\contentsline {chapter}{Résultats}{12}{chapter*.25}%
+\contentsline {chapter}{Conclusion et perspectives}{13}{chapter*.26}%

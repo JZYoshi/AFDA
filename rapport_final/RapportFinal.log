@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  9 MAR 2021 11:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.12)  9 MAR 2021 15:42
 entering extended mode
 **./RapportFinal.tex
 (RapportFinal.tex
@@ -32,6 +32,10 @@ Package: inputenc 2020/08/01 v1.3d Input encoding file
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.
 sty
 Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+)
+(C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\times.
+sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
 )
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel
 .sty
@@ -849,7 +853,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 38.
+Package hyperref Info: Option `colorlinks' set `true' on input line 39.
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fanc
 yhdr.sty
@@ -867,11 +871,11 @@ Package: fancyhdr 2021/01/04 v4.0 Extensive control of page headers and footers
 )
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 44.
+less on input line 45.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 45.
+less on input line 46.
 
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/colortbl\colo
@@ -1030,36 +1034,42 @@ Package: xstring 2019/02/06 v1.83 String manipulations (CT)
 \c@remarque=\count325
 \c@propriete=\count326
 \c@exemple=\count327
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 15
+9.
 
+(C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ptm.
+fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3b
 ackend-pdftex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count328
 \l__pdf_internal_box=\box83
-) (RapportFinal.aux (01-introduction.aux)
+) (RapportFinal.aux (01-Introduction.aux)
 (02-Organisation-du-projet.aux) (03-Développement-du-projet.aux)
-(04-conclusion.aux))
+(04-Résultats.aux) (05-Conclusion.aux))
 \openout1 = `RapportFinal.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Info: Redefining \degres on input line 158.
-LaTeX Info: Redefining \dots on input line 158.
-LaTeX Info: Redefining \up on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Info: Redefining \degres on input line 159.
+LaTeX Info: Redefining \dots on input line 159.
+LaTeX Info: Redefining \up on input line 159.
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\s
 upp-pdf.mkii
@@ -1099,7 +1109,7 @@ Package caption Info: End \AtBeginDocument code.
 Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.17}).
 
-Package hyperref Info: Link coloring ON on input line 158.
+Package hyperref Info: Link coloring ON on input line 159.
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\name
 ref.sty
@@ -1115,27 +1125,27 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count335
 )
-LaTeX Info: Redefining \ref on input line 158.
-LaTeX Info: Redefining \pageref on input line 158.
-LaTeX Info: Redefining \nameref on input line 158.
+LaTeX Info: Redefining \ref on input line 159.
+LaTeX Info: Redefining \pageref on input line 159.
+LaTeX Info: Redefining \nameref on input line 159.
  (RapportFinal.out) (RapportFinal.out)
 \@outlinefile=\write4
 \openout4 = `RapportFinal.out'.
 
-<images//logo-isae-supaero.png, id=50, 452.1693pt x 274.3851pt>
+<images//logo-isae-supaero.png, id=74, 452.1693pt x 274.3851pt>
 File: images//logo-isae-supaero.png Graphic file (type png)
 <use images//logo-isae-supaero.png>
-Package pdftex.def Info: images//logo-isae-supaero.png  used on input line 167.
+Package pdftex.def Info: images//logo-isae-supaero.png  used on input line 168.
 
 (pdftex.def)             Requested size: 276.43555pt x 167.74727pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 191
+LaTeX Font Info:    Trying to load font information for U+msa on input line 192
 .
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa
 .fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 191
+LaTeX Font Info:    Trying to load font information for U+msb on input line 192
 .
 
 (C:\Users\Tiberghien_loic\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb
@@ -1154,81 +1164,96 @@ ges//logo-isae-supaero.png>] (RapportFinal.toc)
 
 
 ]
-\openout2 = `01-introduction.aux'.
+\openout2 = `01-Introduction.aux'.
 
- (01-introduction.texpdfTeX warning (ext4): destination with the same identifie
+ (01-Introduction.texpdfTeX warning (ext4): destination with the same identifie
 r (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.25 	\item t
-             rouver des descripteurs et les calculer pour chaque phase de vol
+l.27 	\item r
+             éaliser une application web pour avoir un aperçu global des d...
 [1
 
 
 
 
 ]
-<images//DiagrammePieuvre.png, id=85, 670.505pt x 367.3725pt>
+<images//DiagrammePieuvre.png, id=111, 670.505pt x 367.3725pt>
 File: images//DiagrammePieuvre.png Graphic file (type png)
 <use images//DiagrammePieuvre.png>
-Package pdftex.def Info: images//DiagrammePieuvre.png  used on input line 54.
+Package pdftex.def Info: images//DiagrammePieuvre.png  used on input line 55.
 (pdftex.def)             Requested size: 426.79134pt x 233.8395pt.
 ) [2] [3 <./images//DiagrammePieuvre.png>]
 \openout2 = `02-Organisation-du-projet.aux'.
 
  (02-Organisation-du-projet.tex
-<images//WBS.png, id=98, 1228.59pt x 685.56125pt>
+<images//WBS.png, id=123, 1228.59pt x 685.56125pt>
 File: images//WBS.png Graphic file (type png)
 <use images//WBS.png>
 Package pdftex.def Info: images//WBS.png  used on input line 14.
 (pdftex.def)             Requested size: 341.43306pt x 190.5227pt.
-<images//MVP planning.png, id=102, 631.35875pt x 428.60126pt>
+<images//MVP planning.png, id=127, 631.35875pt x 428.60126pt>
 File: images//MVP planning.png Graphic file (type png)
 <use images//MVP planning.png>
 Package pdftex.def Info: images//MVP planning.png  used on input line 25.
 (pdftex.def)             Requested size: 426.79134pt x 289.73154pt.
-<images//R1 planning.png, id=103, 635.37375pt x 121.95563pt>
+<images//R1 planning.png, id=128, 635.37375pt x 121.95563pt>
 File: images//R1 planning.png Graphic file (type png)
 <use images//R1 planning.png>
 Package pdftex.def Info: images//R1 planning.png  used on input line 32.
 (pdftex.def)             Requested size: 426.79134pt x 81.92197pt.
-<images//gestion projet.png, id=104, 711.4078pt x 93.34875pt>
+<images//gestion projet.png, id=129, 711.4078pt x 93.34875pt>
 File: images//gestion projet.png Graphic file (type png)
 <use images//gestion projet.png>
 Package pdftex.def Info: images//gestion projet.png  used on input line 39.
 (pdftex.def)             Requested size: 426.79134pt x 56.00397pt.
-<images//Organigramme.png, id=107, 963.6pt x 722.7pt>
+
+Overfull \hbox (6.28374pt too wide) in paragraph at lines 44--44
+[][]\T1/ptm/b/n/17.28 Association des t�ches aux membres du pro-jet et Or-ga-ni
+-gramme 
+ []
+
+<images//Organigramme.png, id=132, 963.6pt x 722.7pt>
 File: images//Organigramme.png Graphic file (type png)
 <use images//Organigramme.png>
 Package pdftex.def Info: images//Organigramme.png  used on input line 51.
 (pdftex.def)             Requested size: 284.52756pt x 213.39314pt.
+<images//RACI.jpg, id=133, 743.02594pt x 284.56313pt>
+File: images//RACI.jpg Graphic file (type jpg)
+<use images//RACI.jpg>
+Package pdftex.def Info: images//RACI.jpg  used on input line 58.
+(pdftex.def)             Requested size: 426.79134pt x 163.45317pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
- [4
+[4
 
 
 
 
  <./images//WBS.png>] [5 <./images//MVP planning.png> <./images//R1 planning.pn
 g> <./images//gestion projet.png>]
-<images//RACI.jpg, id=127, 743.02594pt x 284.56313pt>
-File: images//RACI.jpg Graphic file (type jpg)
-<use images//RACI.jpg>
-Package pdftex.def Info: images//RACI.jpg  used on input line 58.
-(pdftex.def)             Requested size: 426.79134pt x 163.45317pt.
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [6 <./images//Organigramme.png> <./images//RACI.jpg>]) [7]
 \openout2 = `03-Développement-du-projet.aux'.
 
- (03-Développement-du-projet.tex
-<images//TraitementDesDonnées.png, id=138, 466.74374pt x 234.8775pt>
+
+(03-Développement-du-projet.tex
+<images//TraitementDesDonnées.png, id=163, 466.74374pt x 234.8775pt>
 File: images//TraitementDesDonnées.png Graphic file (type png)
 <use images//TraitementDesDonnées.png>
 Package pdftex.def Info: images//TraitementDesDonnées.png  used on input line 
-14.
+15.
 (pdftex.def)             Requested size: 426.79134pt x 214.78178pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 20--21
+Overfull \hbox (30.71909pt too wide) in paragraph at lines 21--22
+[]\T1/ptm/m/n/12 Initialement, les don-n�es de vols �taient sto-ck�es sur le si
+te d'OpenSky � l'adresse "https ://opensky-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--22
 
  []
 
@@ -1238,75 +1263,93 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
 
  <./images//TraitementDesDonnées.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
+Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 56--57
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
-)
-Underfull \hbox (badness 10000) in paragraph at lines 62--230
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
-[10]
-\openout2 = `04-conclusion.aux'.
 
- (04-conclusion.tex) [11
+Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
-
+ []
 
 
-] (RapportFinal.aux (01-introduction.aux)
-(02-Organisation-du-projet.aux) (03-Développement-du-projet.aux)
-(04-conclusion.aux))
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
+
+ []
+
+[10])
+Underfull \hbox (badness 10000) in paragraph at lines 74--231
+
+ []
+
+[11]
+\openout2 = `04-Résultats.aux'.
+
+ (04-Résultats.tex) [12
+
+
+
+
+]
+\openout2 = `05-Conclusion.aux'.
+
+ (05-Conclusion.tex) [13
+
+
+
+
+] (RapportFinal.aux
+(01-Introduction.aux) (02-Organisation-du-projet.aux)
+(03-Développement-du-projet.aux) (04-Résultats.aux) (05-Conclusion.aux))
 Package rerunfilecheck Info: File `RapportFinal.out' has not changed.
-(rerunfilecheck)             Checksum: D015D9A39A919ACDEAA69ACC42A58390;695.
+(rerunfilecheck)             Checksum: D45520FF5E5D8B45CA318C1A7AE4B602;1231.
  ) 
 Here is how much of TeX's memory you used:
- 33144 strings out of 479697
- 795877 string characters out of 2862383
- 1197590 words of memory out of 3000000
- 49556 multiletter control sequences out of 15000+200000
- 418281 words of font info for 64 fonts, out of 3000000 for 9000
+ 33206 strings out of 479697
+ 797080 string characters out of 2862383
+ 1198027 words of memory out of 3000000
+ 49599 multiletter control sequences out of 15000+200000
+ 442029 words of font info for 73 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,11n,85p,760b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\eccc1200.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfo
-ur/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKT
-eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\Tiberghien_loic\Ap
-pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Ti
-berghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1440.
-pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/
-dpi600\ecti1440.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiKTeX\fonts/pk/ljf
-our/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Tiberghien_loic\AppData\Local\MiK
-TeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk>
-Output written on RapportFinal.pdf (13 pages, 679162 bytes).
+ 80i,12n,85p,885b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Tiberghien_loic/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/
+8r.enc}<C:/Users/Tiberghien_loic/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
+times/utmb8a.pfb><C:/Users/Tiberghien_loic/AppData/Local/Programs/MiKTeX/fonts/
+type1/urw/times/utmr8a.pfb><C:/Users/Tiberghien_loic/AppData/Local/Programs/MiK
+TeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on RapportFinal.pdf (15 pages, 622568 bytes).
 PDF statistics:
- 475 PDF objects out of 1000 (max. 8388607)
- 38 named destinations out of 1000 (max. 500000)
- 146 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 215 PDF objects out of 1000 (max. 8388607)
+ 41 named destinations out of 1000 (max. 500000)
+ 194 words of extra memory for PDF output out of 10000 (max. 10000000)
 
