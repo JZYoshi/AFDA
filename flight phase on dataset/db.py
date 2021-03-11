@@ -2,17 +2,33 @@ import sqlite3
 import pandas as pd
 
 def init_db(filename='descriptors.db'):
+    """
+    Execute the script schema.sql to initialize the sqlite database.
+
+    :param filename: the name of the output sqlite database
+    """
     conn = sqlite3.connect(filename)
     with open('schema.sql', 'r') as schema:
         conn.executescript(schema.read())
     conn.close()
 
 def get_db(filename='descriptors.db'):
+    """
+    Return a connection object corresponding to the specified filename.
+
+    :param filename:
+    """
     conn = sqlite3.connect(filename)
     conn.row_factory = sqlite3.Row
     return conn
 
 def db_to_pandas(filename='descriptors.db'):
+    """
+    Convert the sql database containing descriptors to a pandas dataframe.
+
+    :param filename: the name of the database containing the descriptors.
+    :returns: a dataframe containing every descriptors of each flight
+    """
     db = get_db(filename)
     climb = pd.read_sql_query('SELECT * FROM climb',db).add_suffix('_climb')
     cruise = pd.read_sql_query('SELECT * FROM cruise',db).add_suffix('_cruise')
