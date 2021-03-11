@@ -10,9 +10,10 @@ from sklearn.decomposition import PCA
 def to_airlines(df, group_by="median"):
     """
     Group by the dataframe with flights into a dataframe with airlines
+
     :param df: the original dataframe
     :param group_by: the parameter for group_by function ("median" or "mean")
-    :return: a dataframe with aggregated information on the airline level
+    :returns: a dataframe with aggregated information on the airline level
     """
 
     if group_by == "median":
@@ -27,8 +28,9 @@ def to_airlines(df, group_by="median"):
 def scale(df):
     """
     Scale each feature of dataframe by its maximum absolute value
+
     :param df: the original dataframe
-    :return: the scaled dataframe
+    :returns: the scaled dataframe
     """
 
     df_scaled = MaxAbsScaler().fit_transform(df)
@@ -40,10 +42,11 @@ def scale(df):
 def cah(df_airlines, threshold=2, plot=True):
     """
     Provide a classification by CAH (hierarchical clustering)
+
     :param df_airlines: Pandas dataframe on which to compute CAH
     :param threshold: float threshold to split groups in CAH
     :param plot: Boolean whether to plot dendrogram (True by default)
-    :return: list of group labels from CAH
+    :returns: list of group labels from CAH
     """
 
     # scaling
@@ -65,6 +68,7 @@ def cah(df_airlines, threshold=2, plot=True):
 def pca_plot_clustering(df_airlines, groups):
     """
     Provide a PCA plot for clustering
+
     :param df_airlines: dataframe on airline level
     :param groups: list of group labels
     """
@@ -78,9 +82,10 @@ def pca_plot_clustering(df_airlines, groups):
 def group_descriptors(df_airlines, groups):
     """
     Provide descriptor information on group level
+
     :param df_airlines: dataframe on airline level
     :param groups: list of group labels
-    :return: dataframe sorted by feature importance on group level
+    :returns: dataframe sorted by feature importance on group level
     """
 
     df_airlines['group'] = groups
@@ -97,10 +102,11 @@ def group_descriptors(df_airlines, groups):
 def airlines_group(df_airlines, groups, airlines_decoder):
     """
     Provide a dataframe with airlines and their group
+
     :param df_airlines: dataframe on airline level
     :param groups: list of group labels
     :param airlines_decoder: a dictionary providing a correspondence between airline name and airline code
-    :return: dataframe containing airline and their affiliation to groups
+    :returns: dataframe containing airline and their affiliation to groups
     """
     idg = np.argsort(groups)
     df1 = pd.DataFrame(df_airlines.index[idg], groups[idg])
