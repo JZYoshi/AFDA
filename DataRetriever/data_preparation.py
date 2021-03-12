@@ -8,6 +8,18 @@ def group_flight_data_with_conditions(df, flight_dict, labels, new_index, aircra
     the aircraft of the flight. *aircraft_database_df* should be a dataframe of the aircraft database given
     by the OpenSky Network <https://opensky-network.org/datasets/metadata/>_, and it contains all the info of aircrafts.
     The result is stored in *flight_dict*. 
+
+    :param df: a Pandas dataframe containing raw flight data
+
+    :param flight_dict: an empty dictionary used to store results. Key: labels, Value: new dataframe
+
+    :param labels: a list of strings that should also be part of column labels of the raw dataframe
+
+    :param new_index: a string that will be the new index of the new dataframes, should also be one of column labels of the raw dataframe
+
+    :param aircraft_database: a dataframe of the aircraft database provided by OpenSky Network <https://opensky-network.org/datasets/metadata/>_
+
+    :param conditions: a dict whose keys are part of the *aircraft_database* labels, and whose values are string or regex  
     """
     ad_id = []
     columns = list(aircraft_database.columns)
