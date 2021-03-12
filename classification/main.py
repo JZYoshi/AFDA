@@ -25,8 +25,8 @@ columns_remained_operation = feature_selection(mad, clf, accuracy, X_train, X_te
 
 # display of feature selection results
 print(f'Columns deleted for whole dataset: {columns_deleted(columns, columns_remained)}')
-print(f'Columns deleted for meteo sub dataset: {columns_deleted(columns_meteo, columns_remained_meteo)}')
-print(f'Columns deleted for meteo sub dataset: {columns_deleted(columns_operation, columns_remained_operation)}')
+print(f'Columns deleted for weather sub dataset: {columns_deleted(columns_meteo, columns_remained_meteo)}')
+print(f'Columns deleted for operation sub dataset: {columns_deleted(columns_operation, columns_remained_operation)}')
 
 # aggregate data on airline level
 df_airlines = to_airlines(df, columns_remained)

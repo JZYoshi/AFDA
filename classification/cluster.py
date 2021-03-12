@@ -140,9 +140,9 @@ def optimal_group_numbers(df_airlines, min=2, max=15, plot=False):
         kmeans = KMeans(n_clusters=k).fit(df_airlines_scaled)
         silhouettes.append(silhouette_score(df_airlines_scaled, kmeans.labels_))
     if plot:
-        plot.title('Silhouette')
+        plt.title('Silhouette')
         plt.plot(range(min, max), silhouettes)
-        plot.show()
+        plt.show()
 
     optimal_nbs = np.argmax(silhouettes) + min
 
