@@ -1,15 +1,17 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.preprocessing import RobustScaler, MaxAbsScaler
-from scipy.cluster.hierarchy import ward, fcluster
+import pandas as pd
 from scipy.cluster.hierarchy import dendrogram, linkage
+from scipy.cluster.hierarchy import fcluster
 from sklearn.decomposition import PCA
+from sklearn.preprocessing import MaxAbsScaler
+from sklearn.metrics import silhouette_score
 
 
-def to_airlines(df, group_by="median"):
+
+def to_airlines(df, columns_remained, group_by="median"):
     """
-    Group by the dataframe with flights into a dataframe with airlines
+    Group by the dataframe with flights into a dataframe with airlines, considering only important features
 
     :param df: the original dataframe
     :param group_by: the parameter for group_by function ("median" or "mean")
@@ -22,7 +24,7 @@ def to_airlines(df, group_by="median"):
         df_agg = df.groupby(by='airline_cat').mean()
     df_agg.dropna(inplace=True)
 
-    return df_agg
+    return df_agg[columns_remained]
 
 
 def scale(df):
@@ -56,9 +58,10 @@ def cah(df_airlines, threshold=2, plot=True):
     Z = linkage(df_airlines_scaled, method='ward', metric='euclidean')
 
     # plot CAH
-    plt.title('CAH')
-    dendrogram(Z, labels=df_airlines_scaled.index, orientation='right', color_threshold=threshold)
-    plt.show()
+    if plot:
+        plt.title('CAH')
+        dendrogram(Z, labels=df_airlines_scaled.index, orientation='right', color_threshold=threshold)
+        plt.show()
 
     groups_cah = fcluster(Z, t=threshold, criterion='distance')
 
@@ -74,9 +77,11 @@ def pca_plot_clustering(df_airlines, groups):
     """
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(scale(df_airlines))
+    plt.figure()
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
+    plt.show()
 
 
 def group_descriptors(df_airlines, groups):
@@ -116,3 +121,26 @@ def airlines_group(df_airlines, groups, airlines_decoder):
     df_airlines_group = df_airlines_group.rename(columns={0: 'airline'}).drop('airline_cat', axis=1)
 
     return df_airlines_group
+
+
+def optimal_group_numbers(df_airlines, min=2, max=15, plot=False):
+    """
+    Provide recommended numbers of group by K-means algorithm
+
+    :param df_airlines: dataframe on airline level
+    :param min: minimum groups to be divided
+    :param max: maximum groups to be divided
+    :param plot: whether to provide silhouette diagram based on K-means algorithm
+    :returns: an optimal numbers of group
+    """
+    silhouettes = []
+    df_airlines_scaled = scale(df_airlines)
+    for k in range(min, max):
+        kmeans = KMeans(n_clusters=k).fit(df_airlines_scaled)
+        silhouettes.append(silhouette_score(df_airlines_scaled, kmeans.labels_))
+    if plot:
+        plt.plot(range(min, max), silhouettes)
+    optimal_nbs = np.argmax(silhouettes)+min
+
+    return optimal_nbs
+
