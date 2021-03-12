@@ -3,10 +3,10 @@ import numpy as np
 import pandas as pd
 from scipy.cluster.hierarchy import dendrogram, linkage
 from scipy.cluster.hierarchy import fcluster
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.metrics import silhouette_score
-
 
 
 def to_airlines(df, columns_remained, group_by="median"):
@@ -14,6 +14,7 @@ def to_airlines(df, columns_remained, group_by="median"):
     Group by the dataframe with flights into a dataframe with airlines, considering only important features
 
     :param df: the original dataframe
+    :param columns_remained: a list of remained columns after feature selection
     :param group_by: the parameter for group_by function ("median" or "mean")
     :returns: a dataframe with aggregated information on the airline level
     """
@@ -77,7 +78,7 @@ def pca_plot_clustering(df_airlines, groups):
     """
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(scale(df_airlines))
-    plt.figure()
+    plt.title('PCA')
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
@@ -139,8 +140,10 @@ def optimal_group_numbers(df_airlines, min=2, max=15, plot=False):
         kmeans = KMeans(n_clusters=k).fit(df_airlines_scaled)
         silhouettes.append(silhouette_score(df_airlines_scaled, kmeans.labels_))
     if plot:
+        plot.title('Silhouette')
         plt.plot(range(min, max), silhouettes)
-    optimal_nbs = np.argmax(silhouettes)+min
+        plot.show()
+
+    optimal_nbs = np.argmax(silhouettes) + min
 
     return optimal_nbs
-
