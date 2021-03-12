@@ -41,7 +41,7 @@ def periodic_retrieve(period, handler, in_parallel):
         time.sleep(max(next_call - time.time(), 0))
 
 
-def distribute_to_indiv_files(API_res, tempo_dname='./__tempo'):
+def distribute_to_indiv_files(API_res, tempo_dname='../data/__tempo'):
     """
     To explore the state vectors in the response of the API call, 
     and distribute useful data into files according to their flight numbers.
@@ -55,7 +55,7 @@ def distribute_to_indiv_files(API_res, tempo_dname='./__tempo'):
         try:
             aircraft_database
         except:
-            aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv', low_memory=False)
+            aircraft_database = pd.read_csv('../data/aircraftDatabase.csv', low_memory=False)
         
         if not os.path.exists(tempo_dname):
             os.mkdir(tempo_dname)
@@ -110,5 +110,5 @@ def print_states(s):
     else:
         print('failed to get data')
 
-# aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv', low_memory=False)
-# periodic_retrieve(10, distribute_to_indiv_files, True)
+aircraft_database = pd.read_csv('../data/aircraftDatabase.csv', low_memory=False)
+periodic_retrieve(10, distribute_to_indiv_files, True)

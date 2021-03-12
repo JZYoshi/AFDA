@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup;
 from bs4 import PageElement, ResultSet;
 from typing import Callable, List;
 from functools import reduce;
+import os;
 import re;
 
 def get_all_href_elements(url: str) -> ResultSet:
@@ -55,9 +56,12 @@ filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[
             lambda ele: ele.string.endswith('.csv.tar')]
 # To decomment when wanting to fetch all the files
 # res = search_hrefs('https://opensky-network.org/datasets/states/', filters)
+# tempo_dname = '../data/__tempo_archive/'
+# if not os.path.exists(tempo_dname):
+#            os.mkdir(tempo_dname)
 # for url in res:
 #     fname = url[-(len(url) - url.rfind('/') - 1):]
 #     print(fname)
 #     fileObj = requests.get(url)
-#     with open('./dataset/' + fname, 'wb') as local_file:
+#     with open(tempo_dname + fname, 'wb') as local_file:
 #         local_file.write(fileObj.content)

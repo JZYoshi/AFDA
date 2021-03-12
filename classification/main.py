@@ -2,7 +2,7 @@ from pretreatment import *
 from cluster import *
 
 # import database
-database_name = 'descriptors_last.db'
+database_name = '../data/descriptors.db'
 
 # manually delete the columns not necessary for the analysis
 columns_dropped = ['icao', 'icao_airline', 'duration_cruise', 'airport_climb', 'airport_descent']

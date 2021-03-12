@@ -148,7 +148,7 @@ export default {
                   }
                 ],
                 {
-                  title: { text: "KDE Entropy" },
+                  title: { text: "KDE Distance" },
                   margin: { t: 60, b: 40 },
                   autosize: true
                 },

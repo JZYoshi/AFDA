@@ -56,7 +56,7 @@ def calculate_metar(lat,lon,time):
     :returns: a list containing airport name, temperature(in Celcius), dewpoint(in Celcius) and wind speed(in kt) 
     """
     try:
-        metar = pd.read_csv('../../data/metar/'+str(time)+'.csv', header=5,
+        metar = pd.read_csv('../data/metar/'+str(time)+'.csv', header=5,
                         usecols=['station_id','latitude','longitude','wind_speed_kt','temp_c','dewpoint_c','sea_level_pressure_mb'])
 
         metar = metar.merge(airports, left_on="station_id", right_on="ICAO", how='left', suffixes=('',''))
@@ -73,12 +73,12 @@ if __name__=="__main__":
     # initialisation ( initialiase database, useful dataframe, print info)
     init_db()
 
-    path_to_dataset = "../../data/flight_with_phase/"
+    path_to_dataset = "../data/flight_with_phase/"
 
     list_file_name = listdir(path_to_dataset)
 
-    airline = pd.read_csv('../../data/airlines.csv')
-    airports=pd.read_csv('../../data/airports.csv',
+    airline = pd.read_csv('../data/airlines.csv')
+    airports=pd.read_csv('../data/airports.csv',
                     usecols=['Name','ICAO'])
 
 

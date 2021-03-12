@@ -11,7 +11,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'descriptors.db'),
+        DATABASE=os.path.join(app.instance_path, '../../data/descriptors.db'),
     )
 
     # ensure the instance folder exists
@@ -121,7 +121,7 @@ def create_app(test_config=None):
             mat_dist = np.zeros((n,n))
             for i in range(n):
                 for j in range(n):
-                    mat_dist[i, j] = step*entropy(pk=kde_values_list[i], qk=kde_values_list[j])
+                    mat_dist[i, j] = np.sqrt(step*sum((kde_values_list[i] - kde_values_list[j])**2))
             mat_dist = np.where(~np.isfinite(mat_dist), None, mat_dist) 
             figlist.append({
                 'descriptor': descriptor,

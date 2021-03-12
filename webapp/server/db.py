@@ -22,7 +22,7 @@ def close_db(e=None):
 def init_app(app):
     app.teardown_appcontext(close_db)
 
-def db_to_pandas(filename='descriptors.db'):
+def db_to_pandas(filename):
     db = get_db()
     climb = pd.read_sql_query('SELECT * FROM climb',db).add_suffix('_climb')
     cruise = pd.read_sql_query('SELECT * FROM cruise',db).add_suffix('_cruise')
