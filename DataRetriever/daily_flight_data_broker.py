@@ -4,7 +4,10 @@ import os
 import pandas as pd
 
 def periodic_retrieve(period, handler, in_parallel):
-
+    """
+    To call the OpenSky Network API every *period*, and process the data with the *handler*.
+    The retrieval and the processing can be executed in parallel.
+    """
     api = OpenSkyApi()
 
     if in_parallel == True:
@@ -32,8 +35,14 @@ def periodic_retrieve(period, handler, in_parallel):
         time.sleep(max(next_call - time.time(), 0))
 
 
-def distribute_to_indiv_files(states, tempo_dname='./__tempo', format='.csv'):
-    if states is not None:
+def distribute_to_indiv_files(API_res, tempo_dname='./__tempo'):
+    """
+    To explore the state vectors in the response of the API call, 
+    and distribute useful data into files according to their flight numbers.
+    The files' names will be the combination of icao24 and callsign.
+    """
+    format='.csv'
+    if API_res is not None:
         global aircraft_database
         try:
             aircraft_database
@@ -42,8 +51,8 @@ def distribute_to_indiv_files(states, tempo_dname='./__tempo', format='.csv'):
         
         if not os.path.exists(tempo_dname):
             os.mkdir(tempo_dname)
-        t = states.time
-        for state in states.states:
+        t = API_res.time
+        for state in API_res.states:
             id_dict = { 'icao24': state.icao24.strip() }
             conditions = {'manufacturericao': 'AIRBUS', 'typecode': r'\bA318\b|\bA319\b|\bA320\b|\bA321\b'}
             if not match_conditions(id_dict, conditions, aircraft_database):
@@ -60,9 +69,14 @@ def distribute_to_indiv_files(states, tempo_dname='./__tempo', format='.csv'):
             f.close()
 
 
-def match_conditions(id_dict, conditions, aircraft_database):
+def match_conditions(id_dict, conditions, aircraft_database_df):
+    """
+    To tell whether an aircraft with its identification described by *id_dict* satisfies the given *conditions*
+    that are related to the aircraft. *aircraft_database_df* should be a dataframe of the aircraft database given
+    by the OpenSky Network <https://opensky-network.org/datasets/metadata/>_, and it contains all the info of aircrafts. 
+    """
     q = '&'.join([ '(' + k + '==' + f'"{str(v)}"' + ')' for (k,v) in id_dict.items() ])
-    entry = aircraft_database.query(q)
+    entry = aircraft_database_df.query(q)
     if entry.empty:
         return False
     else:
@@ -73,6 +87,10 @@ def match_conditions(id_dict, conditions, aircraft_database):
 
 
 def print_states(s):
+    """
+    To print the info of a response of the OpenSky Network API call, 
+    including the time and its states vectors length.
+    """
     if s is not None:
         print(f'At {s.time}, get {len(s.states)} states')
     else:
@@ -80,4 +98,3 @@ def print_states(s):
 
 # aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv', low_memory=False)
 # periodic_retrieve(10, distribute_to_indiv_files, True)
-periodic_retrieve(10, print_states, True)

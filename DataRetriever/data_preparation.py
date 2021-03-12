@@ -2,6 +2,13 @@
 import pandas as pd
 
 def group_flight_data_with_conditions(df, flight_dict, labels, new_index, aircraft_database, conditions):
+    """
+    To split the raw flight dataframe into new dataframes based on the given *labels*, and set the given *new_index*
+    as their index. It is possible to filter the dataframes by the given *conditions* that should be related to 
+    the aircraft of the flight. *aircraft_database_df* should be a dataframe of the aircraft database given
+    by the OpenSky Network <https://opensky-network.org/datasets/metadata/>_, and it contains all the info of aircrafts.
+    The result is stored in *flight_dict*. 
+    """
     ad_id = []
     columns = list(aircraft_database.columns)
     df = df.dropna(subset=labels)
