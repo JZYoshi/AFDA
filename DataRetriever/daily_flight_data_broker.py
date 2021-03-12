@@ -7,6 +7,12 @@ def periodic_retrieve(period, handler, in_parallel):
     """
     To call the OpenSky Network API every *period*, and process the data with the *handler*.
     The retrieval and the processing can be executed in parallel.
+
+    :param period: period in second (int)
+
+    :param handler: a function that takes result of API call as parameter
+
+    :param in_parallel: a boolean indicating whether the retrieval and the processing are executed in parallel 
     """
     api = OpenSkyApi()
 
@@ -40,6 +46,8 @@ def distribute_to_indiv_files(API_res, tempo_dname='./__tempo'):
     To explore the state vectors in the response of the API call, 
     and distribute useful data into files according to their flight numbers.
     The files' names will be the combination of icao24 and callsign.
+
+    :param API_res: result of an OpenSky Network API call
     """
     format='.csv'
     if API_res is not None:
@@ -74,6 +82,12 @@ def match_conditions(id_dict, conditions, aircraft_database_df):
     To tell whether an aircraft with its identification described by *id_dict* satisfies the given *conditions*
     that are related to the aircraft. *aircraft_database_df* should be a dataframe of the aircraft database given
     by the OpenSky Network <https://opensky-network.org/datasets/metadata/>_, and it contains all the info of aircrafts. 
+
+    :param id_dict: a dict describing the identification of an aircraft (key: a label of aircraft_database)
+
+    :param conditions: a dict describing the conditions that an aircraft should meet (key: a label of aircraft_database)
+
+    :param aircraft_database_df: a dataframe of aircraft database provided by OpenSky Network <https://opensky-network.org/datasets/metadata/>_    
     """
     q = '&'.join([ '(' + k + '==' + f'"{str(v)}"' + ')' for (k,v) in id_dict.items() ])
     entry = aircraft_database_df.query(q)
