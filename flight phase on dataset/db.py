@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 
-def init_db(filename='descriptors.db'):
+def init_db(filename='../data/descriptors.db'):
     """
     Execute the script schema.sql to initialize the sqlite database.
 
@@ -12,7 +12,7 @@ def init_db(filename='descriptors.db'):
         conn.executescript(schema.read())
     conn.close()
 
-def get_db(filename='descriptors.db'):
+def get_db(filename='../data/descriptors.db'):
     """
     Return a connection object corresponding to the specified filename.
 
@@ -22,7 +22,7 @@ def get_db(filename='descriptors.db'):
     conn.row_factory = sqlite3.Row
     return conn
 
-def db_to_pandas(filename='descriptors.db'):
+def db_to_pandas(filename='../data/descriptors.db'):
     """
     Convert the sql database containing descriptors to a pandas dataframe.
 

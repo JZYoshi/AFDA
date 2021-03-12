@@ -11,7 +11,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'descriptors.db'),
+        DATABASE=os.path.join(app.instance_path, '../../data/descriptors.db'),
     )
 
     # ensure the instance folder exists

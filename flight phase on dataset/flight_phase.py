@@ -111,12 +111,8 @@ if __name__=="__main__":
     m_to_ft = 3.28084
     m_by_s_to_ft_by_min = 3.28084*60
     m_by_s_to_kt = 1.94384
-
-
-
-
-    path_to_dataset = "../../data/__tempo/"
-    result_dir = "../../data/flight_with_phase/"
+    path_to_dataset = "../data/__tempo/"
+    result_dir = "../data/flight_with_phase/"
 
     # share of of file among process
     comm = MPI.COMM_WORLD
