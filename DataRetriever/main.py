@@ -8,7 +8,7 @@ from data_preparation import group_flight_data_with_conditions
 
 gz_files = []
 
-for filename in glob.glob('./dataset/*.csv.tar'):
+for filename in glob.glob('../data/__tempo_archive/*.csv.tar'):
     print('extracting ', filename)
     tarObj = tarfile.open(filename)
     for member in tarObj.getmembers():
@@ -18,15 +18,18 @@ for filename in glob.glob('./dataset/*.csv.tar'):
     tarObj.close()
 
 df = pd.concat((pd.read_csv(f) for f in gz_files))
-aircraft_database = pd.read_csv('../aircraft_db/aircraftDatabase.csv')
+aircraft_database = pd.read_csv('../data/aircraftDatabase.csv')
 conditions = {'manufacturericao': 'AIRBUS', 'typecode': r'\bA318\b|\bA319\b|\bA320\b|\bA321\b'}
 flight_dict = {}
 labels = ['icao24', 'callsign']
 new_index = 'time'
 group_flight_data_with_conditions(df, flight_dict, labels, new_index, aircraft_database, conditions)
 zf = zipfile.ZipFile('test_flight_collection.zip', 'w')
+tempo_dname = '../data/__tempo/'
+if not os.path.exists(tempo_dname):
+            os.mkdir(tempo_dname)
 for (k, v) in flight_dict.items():
-    filename = './{}_{}.csv'.format(k[0], k[1])
+    filename = tempo_dname + '{}_{}.csv'.format(k[0], k[1])
     print('add {} into zip'.format(filename))
     v.to_csv(filename)
     zf.write(filename)
