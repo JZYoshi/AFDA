@@ -48,14 +48,22 @@ pca_plot_clustering(df_airlines,groups_cah)
 pca_plot_clustering(df_airlines_meteo,groups_cah_meteo)
 pca_plot_clustering(df_airlines_operation, groups_cah_operation)
 
-# save statistics for clusters
+# save statistics for clusters (csv)
 with open('clustering_stats.csv', 'w') as f:
     f.write(group_descriptors(df_airlines, groups_cah).to_csv())
 with open('clustering_stats_meteo.csv', 'w') as f:
     f.write(group_descriptors(df_airlines_meteo, groups_cah_meteo).to_csv())
 with open('clustering_stats_operation.csv', 'w') as f:
     f.write(group_descriptors(df_airlines_operation, groups_cah_operation).to_csv())
-
+    
+# save statistics for clusters (json)
+with open('clustering_stats.json', 'w') as f:
+    f.write(group_descriptors(df_airlines, groups_cah).to_json(orient='records'))
+with open('clustering_stats_meteo.json', 'w') as f:
+    f.write(group_descriptors(df_airlines_meteo, groups_cah_meteo).to_json(orient='records'))
+with open('clustering_stats_operation.json', 'w') as f:
+    f.write(group_descriptors(df_airlines_operation, groups_cah_operation).to_json(orient='records'))
+    
 # show final clustering results
 classification = airlines_group(df_airlines, groups_cah, airlines_decoder)
 classification.reset_index(inplace=True)
@@ -76,4 +84,6 @@ cols = ["airline", "group", "group_meteo", "group_operation"]
 with open('classification.csv','w') as f:
     f.write(classification_3[cols].to_csv())
 
+with open('classification.json','w') as f:
+    f.write(classification_3[cols].to_json(orient = "records"))
 

@@ -1,7 +1,7 @@
 Airline Classification
 ======================
-
 In this section, a classification is proposed based on weather and operation flight data. The classification process consists of three major steps:
+
     + preprocessing of data
     + feature selection
     + aggregation of data on airline level
@@ -12,6 +12,7 @@ Preprocessing
 The descriptor database obtained from the precedent step, descriptors computing, is imported.
 
 Then preprocessing has following steps:
+
     + eliminate the effects of abnormal values by deleting maximums and minimums as descriptors
     + delete useless columns identified by business expert
     + encode airline names to create numerical label
@@ -40,6 +41,7 @@ For the visualisation part, principal component analysis is used to show the dis
 on the principal plane.
 
 Three clusterings are proposed :
+
     + using the whole dataset
     + using only weather data issued from METAR
     + using only operational data issued from ADS-B
@@ -47,7 +49,7 @@ Three clusterings are proposed :
 
 Documentation of functions in **pretreatment.py**:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. automodule:: data_preparation
+.. automodule:: pretreatment
     :members:
 
 Documentation of functions in **cluster.py**:
