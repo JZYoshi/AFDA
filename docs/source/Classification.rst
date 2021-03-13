@@ -20,9 +20,29 @@ Then preprocessing has following steps:
 
 Feature Selection
 ^^^^^^^^^^^^^^^^^^^^^
-As some columns are highly correlated, for instance
+As some columns are highly correlated which may have a negative impact on the results, we carry out a feature selection process.
+Feature selection can be done by principal component analysis or by tree-based models using scores distributed for each feature.
+In order to keep a good explicability of the results, a tree-based model, random forest, is used to conduct feature selection.
 
+For this part, the flights with at least one null value are deleted for the model training. The airline categorical code is used
+as labels. The baseline model is created by using all available columns. Then the feature importance scores are used to sort the columns by their importance.
+The features are eliminated gradually until the model trained with less features shows a poorer score than the baseline.
 
+Clustering
+^^^^^^^^^^^^^^^^^^^^^
+Data on flight level is aggregated on airline level by extracting only mean value or median value for each feature. Clustering
+can be then carried out on the data on airline level.
+
+Clustering is conducted mainly by hierarchical clustering in which Ward's method is used to define the distance between two clusters,
+and Euclidean distance is used. K-means associated with silhouette analysis is employed to propose an optimal number of clusters.
+
+For the visualisation part, principal component analysis is used to show the distribution of airlines and the clustering situation
+on the principal plane.
+
+Three clusterings are proposed :
+    + using the whole dataset
+    + using only weather data issued from METAR
+    + using only operational data issued from ADS-B
 
 
 Documentation of functions in **pretreatment.py**:
