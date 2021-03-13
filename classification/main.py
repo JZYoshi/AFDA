@@ -39,14 +39,29 @@ print(f'Optimal group numbers for meteo dataset: {optimal_group_numbers(df_airli
 print(f'Optimal group numbers for operation dataset: {optimal_group_numbers(df_airlines_operation, plot=True)}')
 
 # conduct clustering
-groups_cah = cah(df_airlines, threshold = 2)
-groups_cah_meteo = cah(df_airlines_meteo, threshold = 3)
-groups_cah_operation = cah(df_airlines_operation, threshold = 0.8)
+groups_cah, fig_text_cah = cah(df_airlines, threshold = 2)
+groups_cah_meteo, fig_text_cah_meteo = cah(df_airlines_meteo, threshold = 3)
+groups_cah_operation, fig_text_cah_operation = cah(df_airlines_operation, threshold = 0.8)
+
+    
+with open('../webapp/vue/client/src/assets/clustering_res/cah.txt', 'w') as f:
+    f.write(str(fig_text_cah))
+with open('../webapp/vue/client/src/assets/clustering_res/cah_meteo.txt', 'w') as f:
+    f.write(str(fig_text_cah_meteo))
+with open('../webapp/vue/client/src/assets/clustering_res/cah_operation.txt', 'w') as f:
+    f.write(str(fig_text_cah_operation))
 
 # visualize clusters on PCA
-pca_plot_clustering(df_airlines,groups_cah)
-pca_plot_clustering(df_airlines_meteo,groups_cah_meteo)
-pca_plot_clustering(df_airlines_operation, groups_cah_operation)
+fig_text_pca = pca_plot_clustering(df_airlines,groups_cah)
+fig_text_pca_meteo = pca_plot_clustering(df_airlines_meteo,groups_cah_meteo)
+fig_text_pca_operation = pca_plot_clustering(df_airlines_operation, groups_cah_operation)
+
+with open('../webapp/vue/client/src/assets/clustering_res/pca.txt', 'w') as f:
+    f.write(str(fig_text_pca))
+with open('../webapp/vue/client/src/assets/clustering_res/pca_meteo.txt', 'w') as f:
+    f.write(str(fig_text_pca_meteo))
+with open('../webapp/vue/client/src/assets/clustering_res/pca_operation.txt', 'w') as f:
+    f.write(str(fig_text_pca_operation))
 
 # save statistics for clusters (csv)
 with open('clustering_stats.csv', 'w') as f:

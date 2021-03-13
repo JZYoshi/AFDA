@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.metrics import silhouette_score
+import mpld3
 
 
 def to_airlines(df, columns_remained, group_by="median"):
@@ -60,13 +61,14 @@ def cah(df_airlines, threshold=2, plot=True):
 
     # plot CAH
     if plot:
-        plt.title('CAH')
+        fig = plt.figure()
+        plt.title('Hierarchical Clustering')
         dendrogram(Z, labels=df_airlines_scaled.index, orientation='right', color_threshold=threshold)
-        plt.show()
+        fig_text = mpld3.fig_to_dict(fig)
 
     groups_cah = fcluster(Z, t=threshold, criterion='distance')
 
-    return groups_cah
+    return groups_cah, fig_text
 
 
 def pca_plot_clustering(df_airlines, groups):
@@ -78,11 +80,15 @@ def pca_plot_clustering(df_airlines, groups):
     """
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(scale(df_airlines))
+    fig = plt.figure()
     plt.title('PCA')
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
+    plt.colorbar()
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
-    plt.show()
+    fig_text = mpld3.fig_to_dict(fig)
+    
+    return fig_text
 
 
 def group_descriptors(df_airlines, groups):
