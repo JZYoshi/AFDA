@@ -51,17 +51,18 @@ def search_hrefs(startUrl: str, filters: List[Callable[[PageElement], bool]]) ->
         urls = reduce(list.__add__, list(map(lambda url: get_filtered_hrefs(url, fil), urls)))
     return urls
 
-filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])', ele.string),
-            lambda ele: re.match('^[0-2][0-9]$', ele.string),
-            lambda ele: ele.string.endswith('.csv.tar')]
-# To decomment when wanting to fetch all the files
-# res = search_hrefs('https://opensky-network.org/datasets/states/', filters)
-# tempo_dname = '../data/__tempo_archive/'
-# if not os.path.exists(tempo_dname):
-#            os.mkdir(tempo_dname)
-# for url in res:
-#     fname = url[-(len(url) - url.rfind('/') - 1):]
-#     print(fname)
-#     fileObj = requests.get(url)
-#     with open(tempo_dname + fname, 'wb') as local_file:
-#         local_file.write(fileObj.content)
+if __name__=="__main__":
+    filters = [ lambda ele: re.match('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])', ele.string),
+                lambda ele: re.match('^[0-2][0-9]$', ele.string),
+                lambda ele: ele.string.endswith('.csv.tar')]
+    # To decomment when wanting to fetch all the files
+    # res = search_hrefs('https://opensky-network.org/datasets/states/', filters)
+    # tempo_dname = '../data/__tempo_archive/'
+    # if not os.path.exists(tempo_dname):
+    #            os.mkdir(tempo_dname)
+    # for url in res:
+    #     fname = url[-(len(url) - url.rfind('/') - 1):]
+    #     print(fname)
+    #     fileObj = requests.get(url)
+    #     with open(tempo_dname + fname, 'wb') as local_file:
+    #         local_file.write(fileObj.content)
