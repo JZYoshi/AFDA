@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score
 from scipy.stats import median_abs_deviation
 from sklearn.model_selection import train_test_split
 
-sys.path.append("../flight phase on dataset")
+sys.path.append("../PhaseAndDescComputation")
 from db import *
 
 
