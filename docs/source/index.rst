@@ -13,19 +13,11 @@ Install all python requirements
 
       pip install -r requirements.txt
 
-In the same directory than where `AFDA` is located, create a repository
-called `data` and place in it a directory `__tempo` containing the rough data
-,the files `airports.csv` and `airlines.csv` and an empty directory called `metar`
-
-At the end of installation you must the following structure:
-   .. code-block:: bash
-
-      |-data
-         |-__tempo
-         |-metar
-         |-airlines.csv
-         |-airports.csv
-      |-AFDA
+In the repository data, place the files `airports.csv` and `airlines.csv`.
+If you want to use the data that we provide, place also the repository `__tempo`
+containing the flight data and the repository `metar` containing the weather data.
+Once you've done that, you can perform the phase, descriptors and classification computation,
+then you will be able to run the webapp to visualize the results.
 
 ---------------------------------------
 

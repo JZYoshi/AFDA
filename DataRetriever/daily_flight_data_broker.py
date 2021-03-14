@@ -110,5 +110,6 @@ def print_states(s):
     else:
         print('failed to get data')
 
-aircraft_database = pd.read_csv('../data/aircraftDatabase.csv', low_memory=False)
-periodic_retrieve(10, distribute_to_indiv_files, True)
+if __name__=="__main__":
+    aircraft_database = pd.read_csv('../data/aircraftDatabase.csv', low_memory=False)
+    periodic_retrieve(10, distribute_to_indiv_files, True)
