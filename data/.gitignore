@@ -1,6 +1,2 @@
-*.csv.tar
-
-*.csv.gz
-flight_with_phase
-__tempo
-__tempo_archive
+*
+!.gitignore
