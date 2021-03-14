@@ -1,5 +1,6 @@
 from pretreatment import *
 from cluster import *
+from json_tricks import dump
 
 # import database
 database_name = '../data/descriptors.db'
@@ -44,24 +45,24 @@ groups_cah_meteo, fig_text_cah_meteo = cah(df_airlines_meteo, threshold = 3)
 groups_cah_operation, fig_text_cah_operation = cah(df_airlines_operation, threshold = 0.8)
 
     
-with open('../webapp/vue/client/src/assets/clustering_res/cah.txt', 'w') as f:
-    f.write(str(fig_text_cah))
-with open('../webapp/vue/client/src/assets/clustering_res/cah_meteo.txt', 'w') as f:
-    f.write(str(fig_text_cah_meteo))
-with open('../webapp/vue/client/src/assets/clustering_res/cah_operation.txt', 'w') as f:
-    f.write(str(fig_text_cah_operation))
+with open('../webapp/vue/client/src/assets/clustering_res/cah.json', 'w') as f:
+    dump(fig_text_cah, f)
+with open('../webapp/vue/client/src/assets/clustering_res/cah_meteo.json', 'w') as f:
+    dump(fig_text_cah_meteo, f)
+with open('../webapp/vue/client/src/assets/clustering_res/cah_operation.json', 'w') as f:
+    dump(fig_text_cah_operation, f)
 
 # visualize clusters on PCA
 fig_text_pca = pca_plot_clustering(df_airlines,groups_cah)
 fig_text_pca_meteo = pca_plot_clustering(df_airlines_meteo,groups_cah_meteo)
 fig_text_pca_operation = pca_plot_clustering(df_airlines_operation, groups_cah_operation)
 
-with open('../webapp/vue/client/src/assets/clustering_res/pca.txt', 'w') as f:
-    f.write(str(fig_text_pca))
-with open('../webapp/vue/client/src/assets/clustering_res/pca_meteo.txt', 'w') as f:
-    f.write(str(fig_text_pca_meteo))
-with open('../webapp/vue/client/src/assets/clustering_res/pca_operation.txt', 'w') as f:
-    f.write(str(fig_text_pca_operation))
+with open('../webapp/vue/client/src/assets/clustering_res/pca.json', 'w') as f:
+    dump(fig_text_pca, f)
+with open('../webapp/vue/client/src/assets/clustering_res/pca_meteo.json', 'w') as f:
+    dump(fig_text_pca_meteo, f)
+with open('../webapp/vue/client/src/assets/clustering_res/pca_operation.json', 'w') as f:
+    dump(fig_text_pca_operation, f)
 
 # save statistics for clusters (csv)
 with open('clustering_stats.csv', 'w') as f:
@@ -96,7 +97,7 @@ classification_operation.columns = ['group_operation', 'airline']
 classification_3 = classification.merge(classification_meteo, how='left', on='airline').merge(classification_operation, how='left', on='airline')
 cols = ["airline", "group", "group_meteo", "group_operation"]
 
-with open('classification.csv','w') as f:
+with open('classification.csv','w', encoding='utf-8') as f:
     f.write(classification_3[cols].to_csv())
 
 with open('classification.json','w') as f:
