@@ -1,6 +1,5 @@
 from pretreatment import *
 from cluster import *
-from json_tricks import dump
 
 # import database
 database_name = '../data/descriptors.db'
@@ -40,29 +39,14 @@ print(f'Optimal group numbers for meteo dataset: {optimal_group_numbers(df_airli
 print(f'Optimal group numbers for operation dataset: {optimal_group_numbers(df_airlines_operation, plot=True)}')
 
 # conduct clustering
-groups_cah, fig_text_cah = cah(df_airlines, threshold = 2)
-groups_cah_meteo, fig_text_cah_meteo = cah(df_airlines_meteo, threshold = 3)
-groups_cah_operation, fig_text_cah_operation = cah(df_airlines_operation, threshold = 0.8)
-
-    
-with open('../webapp/vue/client/src/assets/clustering_res/cah.json', 'w') as f:
-    dump(fig_text_cah, f)
-with open('../webapp/vue/client/src/assets/clustering_res/cah_meteo.json', 'w') as f:
-    dump(fig_text_cah_meteo, f)
-with open('../webapp/vue/client/src/assets/clustering_res/cah_operation.json', 'w') as f:
-    dump(fig_text_cah_operation, f)
+groups_cah = cah(df_airlines, "Hierarchical Clustering", "../webapp/vue/client/src/assets/clustering_res/cah.svg", threshold = 2)
+groups_cah_meteo = cah(df_airlines_meteo, "Hierarchical Clustering with weather", "../webapp/vue/client/src/assets/clustering_res/cah_meteo.svg", threshold = 3)
+groups_cah_operation = cah(df_airlines_operation, "Hierarchical Clustering ADSB", "../webapp/vue/client/src/assets/clustering_res/cah_operation.svg", threshold = 0.8)
 
 # visualize clusters on PCA
-fig_text_pca = pca_plot_clustering(df_airlines,groups_cah)
-fig_text_pca_meteo = pca_plot_clustering(df_airlines_meteo,groups_cah_meteo)
-fig_text_pca_operation = pca_plot_clustering(df_airlines_operation, groups_cah_operation)
-
-with open('../webapp/vue/client/src/assets/clustering_res/pca.json', 'w') as f:
-    dump(fig_text_pca, f)
-with open('../webapp/vue/client/src/assets/clustering_res/pca_meteo.json', 'w') as f:
-    dump(fig_text_pca_meteo, f)
-with open('../webapp/vue/client/src/assets/clustering_res/pca_operation.json', 'w') as f:
-    dump(fig_text_pca_operation, f)
+pca_plot_clustering(df_airlines, groups_cah, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca.svg")
+pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca_meteo.svg")
+pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca_operation.svg")
 
 # save statistics for clusters (csv)
 with open('clustering_stats.csv', 'w') as f:
