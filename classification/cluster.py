@@ -8,7 +8,6 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.metrics import silhouette_score
 
-
 def to_airlines(df, columns_remained, group_by="median"):
     """
     Group by the dataframe with flights into a dataframe with airlines, considering only important features
@@ -42,11 +41,13 @@ def scale(df):
     return df_scaled
 
 
-def cah(df_airlines, threshold=2, plot=True):
+def cah(df_airlines, fig_title, output_filename, threshold=2, plot=True, ):
     """
     Provide a classification by CAH (hierarchical clustering)
 
     :param df_airlines: Pandas dataframe on which to compute CAH
+    :param fig_title: title of the plotted figure
+    :param output_filename: path-like string that indicates the place to output the figure as well as its name
     :param threshold: float threshold to split groups in CAH
     :param plot: Boolean whether to plot dendrogram (True by default)
     :returns: list of group labels from CAH
@@ -60,29 +61,38 @@ def cah(df_airlines, threshold=2, plot=True):
 
     # plot CAH
     if plot:
-        plt.title('CAH')
+        fig = plt.figure()
+        plt.title(fig_title)
         dendrogram(Z, labels=df_airlines_scaled.index, orientation='right', color_threshold=threshold)
-        plt.show()
+        maxsize = 11
+        m = 0.2 # inch margin
+        s = maxsize/plt.gcf().dpi*len(df_airlines_scaled.index)+2*m
+        plt.gcf().set_size_inches(plt.gcf().get_size_inches()[0], s)
+        plt.savefig(output_filename, format="svg")
 
     groups_cah = fcluster(Z, t=threshold, criterion='distance')
 
     return groups_cah
 
 
-def pca_plot_clustering(df_airlines, groups):
+def pca_plot_clustering(df_airlines, groups, fig_title, output_filename):
     """
     Provide a PCA plot for clustering
 
     :param df_airlines: dataframe on airline level
     :param groups: list of group labels
+    :param fig_title: title of the plotted figure
+    :param output_filename: path-like string that indicates the place to output the figure as well as its name
     """
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(scale(df_airlines))
-    plt.title('PCA')
+    fig = plt.figure()
+    plt.title(fig_title)
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
+    plt.colorbar()
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
-    plt.show()
+    plt.savefig(output_filename, format="svg")
 
 
 def group_descriptors(df_airlines, groups):
