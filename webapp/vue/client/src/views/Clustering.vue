@@ -30,13 +30,21 @@
               <v-data-table
                 :headers="airlines_headers"
                 :items="airlines"
+                :search="search_airline"
                 item-key="airline"
                 show-group-by
-                height="75vh"
+                height="65vh"
                 fixed-header
                 disable-pagination
                 hide-default-footer
               >
+                <template v-slot:top>
+                  <v-text-field
+                    v-model="search_airline"
+                    label="Search for Airlines or Index..."
+                    class="mx-4"
+                  ></v-text-field>
+                </template>
               </v-data-table>
             </v-col>
           </div>
@@ -52,13 +60,21 @@
               <v-data-table
                 :headers="clustering_stats_headers"
                 :items="clustering_stats"
+                :search="search_group"
                 item-key="airline"
                 show-group-by
-                height="75vh"
+                height="65vh"
                 fixed-header
                 disable-pagination
                 hide-default-footer
               >
+                <template v-slot:top>
+                  <v-text-field
+                    v-model="search_group"
+                    label="Search for Group"
+                    class="mx-4"
+                  ></v-text-field>
+                </template>
               </v-data-table>
             </v-col>
           </div>
@@ -75,6 +91,8 @@ export default {
       chosen: ["Metar", "ADSB"],
       cah_fig_src: null,
       pca_fig_src: null,
+      search_airline: "",
+      search_group: "",
       airlines: [],
       airlines_headers: [
         {
@@ -83,6 +101,7 @@ export default {
           width: "6vw",
           align: "center",
           sortable: true,
+          filterable: true,
           groupable: false,
           divider: true,
           class: "secondary white--text"
@@ -101,7 +120,7 @@ export default {
           width: "10vw",
           align: "center",
           groupable: true,
-          filterable: true,
+          filterable: false,
           sortable: true,
           class: "secondary white--text"
         }
