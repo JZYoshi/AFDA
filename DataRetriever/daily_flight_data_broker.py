@@ -46,7 +46,7 @@ def distribute_to_indiv_files(API_res, tempo_dname='../data/__tempo'):
     To explore the state vectors in the response of the API call, 
     and distribute useful data into files according to their flight numbers.
     The files' names will be the combination of icao24 and callsign.
-    The files will be stored in '../data/tempo' by default
+    The files will be stored in '../data/__tempo' by default
     
     :param API_res: result of an OpenSky Network API call
     """
