@@ -1,5 +1,5 @@
 function get_unit(var_name) {
-  const spd_keywords = ["spd", "speed", "spind"];
+  const spd_keywords = ["spd", "speed"];
   const temp_keywords = ["temp", "dewpoint"];
   const altitude_keywords = ["altitude"];
   const duration_keywords = ["duration"];

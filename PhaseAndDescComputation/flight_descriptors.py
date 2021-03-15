@@ -85,7 +85,7 @@ def compute_descriptors_wrap_function(file_name, sql_query_queue):
         lon = data_takeof['lon']
         time = (int(data_takeof['time'])//3600)*3600
         desc_climb += calculate_metar(lat,lon,time)
-        sql_query_queue.put(["INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+        sql_query_queue.put(["INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_speed_kt) \
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             desc_climb])
     else:
@@ -110,7 +110,7 @@ def compute_descriptors_wrap_function(file_name, sql_query_queue):
         lon = data_landing['lon']
         time = (int(data_landing['time'])//3600)*3600
         desc_descent += calculate_metar(lat,lon,time)
-        sql_query_queue.put(["INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+        sql_query_queue.put(["INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_speed_kt) \
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             desc_descent])
     else:

@@ -30,8 +30,8 @@ def pretreatment(database_name, columns_dropped, threshold_nb_flights=100, drop_
         + a dictionary storing airlines and their codes
     """
 
-    meteo_columns = ["temp_c_descent", "dewpoint_c_descent", "wind_spind_kt_descent", "temp_c_climb",
-                     "dewpoint_c_climb", "wind_spind_kt_climb"]
+    meteo_columns = ["temp_c_descent", "dewpoint_c_descent", "wind_speed_kt_descent", "temp_c_climb",
+                     "dewpoint_c_climb", "wind_speed_kt_climb"]
     df = db_to_pandas(filename=database_name)
     df.drop(columns=columns_dropped, inplace=True)
     if drop_min_max:
