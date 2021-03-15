@@ -37,11 +37,12 @@ def scale(df):
 
     df_scaled = MaxAbsScaler().fit_transform(df)
     df_scaled = pd.DataFrame(df_scaled, columns=df.columns)
+    df_scaled.set_index(df.index, inplace=True)
 
     return df_scaled
 
 
-def cah(df_airlines, fig_title, output_filename, threshold=2, plot=True, ):
+def cah(df_airlines, fig_title, output_filename, threshold=2, plot=True):
     """
     Provide a classification by CAH (hierarchical clustering)
 
@@ -68,7 +69,7 @@ def cah(df_airlines, fig_title, output_filename, threshold=2, plot=True, ):
         m = 0.2 # inch margin
         s = maxsize/plt.gcf().dpi*len(df_airlines_scaled.index)+2*m
         plt.gcf().set_size_inches(plt.gcf().get_size_inches()[0], s)
-        plt.savefig(output_filename, format="svg")
+        plt.savefig(output_filename, format=output_filename.split(".")[-1])
 
     groups_cah = fcluster(Z, t=threshold, criterion='distance')
 
@@ -92,7 +93,7 @@ def pca_plot_clustering(df_airlines, groups, fig_title, output_filename):
     plt.colorbar()
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
-    plt.savefig(output_filename, format="svg")
+    plt.savefig(output_filename, format=output_filename.split(".")[-1])
 
 
 def group_descriptors(df_airlines, groups):
@@ -129,7 +130,8 @@ def airlines_group(df_airlines, groups, airlines_decoder):
     df2 = pd.DataFrame.from_dict(airlines_decoder, orient='index')
 
     df_airlines_group = pd.merge(df1, df2, how='left', left_on='airline_cat', right_index=True)
-    df_airlines_group = df_airlines_group.rename(columns={0: 'airline'}).drop('airline_cat', axis=1)
+    df_airlines_group = df_airlines_group.rename(columns={0: 'airline'})
+    # .drop('airline_cat', axis=1)
 
     return df_airlines_group
 
