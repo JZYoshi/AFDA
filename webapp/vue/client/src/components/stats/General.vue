@@ -26,16 +26,16 @@
         <v-row justify="center">
           <v-col offset="2">
             <h2>
-              The data are collected from <span class="nb">..</span> to
-              <span class="nb">..</span>
+              The data are collected from
+              <span class="nb">OpenSky Network</span>
             </h2>
           </v-col>
         </v-row>
         <v-row justify="center">
           <v-col offset="2">
-            <h2>
+            <!-- <h2>
               Other info...
-            </h2>
+            </h2> -->
           </v-col>
         </v-row>
       </v-col>
