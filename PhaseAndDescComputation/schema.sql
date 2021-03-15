@@ -39,7 +39,7 @@ CREATE TABLE climb (
     airport TEXT,
     temp_c FLOAT,
     dewpoint_c FLOAT,
-    wind_spind_kt FLOAT
+    wind_speedd_kt FLOAT
 );
 
 CREATE TABLE descent (
