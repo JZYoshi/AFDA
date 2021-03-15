@@ -215,9 +215,6 @@ export default {
   mounted() {
     this.load_fig();
     this.airlines = require("../assets/clustering_res/classification.json");
-    this.airlines.forEach((e, i) => {
-      e.index = i;
-    });
     this.load_table();
   },
   methods: {
@@ -247,7 +244,6 @@ export default {
 
       const labels = Object.keys(this.clustering_stats[0]);
       labels.splice(labels.indexOf("group"), 1);
-      console.log(labels);
       this.clustering_stats_headers = labels.map(k => ({
         text: k,
         value: k,
