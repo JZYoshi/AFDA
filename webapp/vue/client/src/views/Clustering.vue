@@ -1,5 +1,33 @@
 <template>
   <v-container fluid class="fill-height align-start">
+    <v-dialog v-model="recap_open" width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on" fab fixed>
+          Recap
+        </v-btn>
+      </template>
+      <v-card>
+        <v-data-table
+          :headers="airlines_recap_headers"
+          :items="airlines"
+          :search="search_recap_airline"
+          item-key="airline"
+          show-group-by
+          height="65vh"
+          fixed-header
+          disable-pagination
+          hide-default-footer
+        >
+          <template v-slot:top>
+            <v-text-field
+              v-model="search_recap_airline"
+              label="Search for Airlines or Index..."
+              class="mx-4"
+            ></v-text-field>
+          </template>
+        </v-data-table>
+      </v-card>
+    </v-dialog>
     <v-row dense>
       <v-col cols="12" class="d-flex justify-center">
         <v-btn-toggle
@@ -26,6 +54,7 @@
             <v-col cols="6">
               <v-img :src="cah_fig_src" height="75vh" contain />
             </v-col>
+            <v-divider vertical inset></v-divider>
             <v-col cols="6">
               <v-data-table
                 :headers="airlines_headers"
@@ -56,12 +85,13 @@
             <v-col cols="6">
               <v-img :src="pca_fig_src" height="75vh" contain />
             </v-col>
+            <v-divider vertical inset></v-divider>
             <v-col cols="6">
               <v-data-table
                 :headers="clustering_stats_headers"
                 :items="clustering_stats"
                 :search="search_group"
-                item-key="airline"
+                item-key="group"
                 show-group-by
                 height="65vh"
                 fixed-header
@@ -89,11 +119,64 @@ export default {
   data() {
     return {
       chosen: ["Metar", "ADSB"],
+      recap_open: false,
       cah_fig_src: null,
       pca_fig_src: null,
+      search_recap_airline: "",
       search_airline: "",
       search_group: "",
       airlines: [],
+      airlines_recap_headers: [
+        {
+          text: "Index",
+          value: "index",
+          width: "6vw",
+          align: "center",
+          sortable: true,
+          filterable: true,
+          groupable: false,
+          divider: true,
+          class: "secondary white--text"
+        },
+        {
+          text: "Airline",
+          value: "airline",
+          width: "20vw",
+          filterable: true,
+          groupable: false,
+          class: "secondary white--text"
+        },
+        {
+          text: "Group",
+          value: "group",
+          width: "10vw",
+          align: "center",
+          groupable: true,
+          filterable: false,
+          sortable: true,
+          class: "secondary white--text"
+        },
+        {
+          text: "Weather Group",
+          value: "group_meteo",
+          width: "10vw",
+          align: "center",
+          groupable: true,
+          filterable: false,
+          sortable: true,
+          class: "secondary white--text"
+        },
+        {
+          text: "Operation Group",
+          value: "group_operation",
+          width: "10vw",
+          align: "center",
+          groupable: true,
+          filterable: false,
+          sortable: true,
+          class: "secondary white--text"
+        }
+      ],
       airlines_headers: [
         {
           text: "Index",
@@ -163,6 +246,8 @@ export default {
       }
 
       const labels = Object.keys(this.clustering_stats[0]);
+      labels.splice(labels.indexOf("group"), 1);
+      console.log(labels);
       this.clustering_stats_headers = labels.map(k => ({
         text: k,
         value: k,

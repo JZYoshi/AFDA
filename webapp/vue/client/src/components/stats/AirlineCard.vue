@@ -14,7 +14,7 @@
           <h2 class="title primary--text">
             {{ get_airline_name }}
           </h2>
-          A little concise presentation of the airline company
+          ......
         </v-card-text>
 
         <v-card-title>

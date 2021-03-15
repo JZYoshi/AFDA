@@ -3,6 +3,7 @@
 *.db
 *.csv
 *.json
+!webapp/vue/client/src/assets/clustering_res/*.json
 .ipynb_checkpoints
 venv/
 docs/build/

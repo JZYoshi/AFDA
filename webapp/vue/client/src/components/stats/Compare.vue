@@ -75,6 +75,7 @@
 <script>
 import axios from "axios";
 import Plotly from "plotly.js-dist";
+import get_unit from "../../utils/my_utils";
 
 export default {
   data() {
@@ -122,7 +123,21 @@ export default {
                   }
                 ]),
                 {
-                  title: { text: fig_data.descriptor },
+                  title: {
+                    text:
+                      "<b>" +
+                      fig_data.descriptor.replaceAll("_", " ").toUpperCase() +
+                      " PDF</b>"
+                  },
+                  xaxis: {
+                    title: {
+                      text:
+                        fig_data.descriptor +
+                        " (" +
+                        get_unit(fig_data.descriptor) +
+                        ")"
+                    }
+                  },
                   margin: { l: 60, r: 40, t: 60, b: 40 },
                   autosize: true,
                   barmode: "overlay"
