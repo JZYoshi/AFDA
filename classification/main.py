@@ -40,28 +40,32 @@ print(f'Optimal group numbers for operation dataset: {optimal_group_numbers(df_a
 
 # conduct clustering
 groups_cah = cah(df_airlines, "Hierarchical Clustering", "../webapp/vue/client/src/assets/clustering_res/cah.svg", threshold = 2)
-groups_cah_meteo = cah(df_airlines_meteo, "Hierarchical Clustering with weather", "../webapp/vue/client/src/assets/clustering_res/cah_meteo.svg", threshold = 3)
+groups_cah_meteo = cah(df_airlines_meteo, "Hierarchical Clustering Weather", "../webapp/vue/client/src/assets/clustering_res/cah_meteo.svg", threshold = 3)
 groups_cah_operation = cah(df_airlines_operation, "Hierarchical Clustering ADSB", "../webapp/vue/client/src/assets/clustering_res/cah_operation.svg", threshold = 0.8)
 
 # visualize clusters on PCA
 pca_plot_clustering(df_airlines, groups_cah, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca.svg")
-pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca_meteo.svg")
-pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca_operation.svg")
+pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA Weather", "../webapp/vue/client/src/assets/clustering_res/pca_meteo.svg")
+pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA ADSB", "../webapp/vue/client/src/assets/clustering_res/pca_operation.svg")
+
+pca_plot_clustering(df_airlines, groups_cah, "PCA", "../classification_result/pca.svg")
+pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA Weather", "../classification_result/pca_meteo.svg")
+pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA ADSB", "../classification_result/pca_operation.svg")
 
 # save statistics for clusters (csv)
-with open('clustering_stats.csv', 'w') as f:
+with open('../classification_result/clustering_stats.csv', 'w') as f:
     f.write(group_descriptors(df_airlines, groups_cah).to_csv())
-with open('clustering_stats_meteo.csv', 'w') as f:
+with open('../classification_result/clustering_stats_meteo.csv', 'w') as f:
     f.write(group_descriptors(df_airlines_meteo, groups_cah_meteo).to_csv())
-with open('clustering_stats_operation.csv', 'w') as f:
+with open('../classification_result/clustering_stats_operation.csv', 'w') as f:
     f.write(group_descriptors(df_airlines_operation, groups_cah_operation).to_csv())
     
 # save statistics for clusters (json)
-with open('clustering_stats.json', 'w') as f:
+with open('../webapp/vue/client/src/assets/clustering_res/clustering_stats.json', 'w') as f:
     f.write(group_descriptors(df_airlines, groups_cah).to_json(orient='records'))
-with open('clustering_stats_meteo.json', 'w') as f:
+with open('../webapp/vue/client/src/assets/clustering_res/clustering_stats_meteo.json', 'w') as f:
     f.write(group_descriptors(df_airlines_meteo, groups_cah_meteo).to_json(orient='records'))
-with open('clustering_stats_operation.json', 'w') as f:
+with open('../webapp/vue/client/src/assets/clustering_res/clustering_stats_operation.json', 'w') as f:
     f.write(group_descriptors(df_airlines_operation, groups_cah_operation).to_json(orient='records'))
     
 # show final clustering results
@@ -81,9 +85,9 @@ classification_operation.columns = ['group_operation', 'airline']
 classification_3 = classification.merge(classification_meteo, how='left', on='airline').merge(classification_operation, how='left', on='airline')
 cols = ["airline", "group", "group_meteo", "group_operation"]
 
-with open('classification.csv','w', encoding='utf-8') as f:
+with open('../classification_result/classification.csv','w', encoding='utf-8') as f:
     f.write(classification_3[cols].to_csv())
 
-with open('classification.json','w') as f:
+with open('../webapp/vue/client/src/assets/clustering_res/classification.json','w') as f:
     f.write(classification_3[cols].to_json(orient = "records"))
 
