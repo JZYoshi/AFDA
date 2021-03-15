@@ -6,11 +6,17 @@ export default {
   "Aeroflot Russian Airlines": {
     img: "aeroflot.jpg"
   },
+  "Air Arabia": {
+    img: "Air_arabia.png"
+  },
   "Air Arabia Maroc": {
     img: "Air-Arabia-maroc-Logo.jpg"
   },
   "Air Canada": {
     img: "air_canada.png"
+  },
+  "Air China": {
+    img: "Air_China.png"
   },
   "Air Corsica": {
     img: "air-corsica-logo.png"
@@ -18,6 +24,9 @@ export default {
   "Air France": {
     name: "Air France",
     img: "air_france.png"
+  },
+  "Air India Limited": {
+    img: "air_india.png"
   },
   "Air Macau": {
     img: "air-macau-logo.png"
@@ -57,6 +66,9 @@ export default {
   "Austrian Airlines": {
     img: "austrian-airlines-logo.png"
   },
+  Avianca: {
+    img: "avianca.jpg"
+  },
   "British Airways": {
     name: "British Airways",
     img: "British Airways.png"
@@ -69,6 +81,12 @@ export default {
   },
   "Bulgaria Air": {
     img: "Bulgaria_Air.png"
+  },
+  "China Eastern Airlines": {
+    img: "China_Eastern.png"
+  },
+  "China Southern Airlines": {
+    img: "china_southern.png"
   },
   "Condor Flugdienst": {
     img: "Condor_logo.png"
@@ -123,15 +141,39 @@ export default {
   "Gulf Air": {
     img: "Gulf_Air_logo.png"
   },
+  "Iberia Airlines": {
+    img: "iberia.png"
+  },
+  "IndiGo Airlines": {
+    img: "indigo.png"
+  },
+  "JetBlue Airways": {
+    img: "JetBlue.png"
+  },
+  "Jetstar Airways": {
+    img: "JetStar.png"
+  },
+  "LATAM Brasil": {
+    img: "LATAM.png"
+  },
+  "LATAM Peru": {
+    img: "LATAM.png"
+  },
   Lufthansa: {
     name: "Lufthansa",
     img: "Lufthansa.png"
+  },
+  "Pacific Airlines": {
+    img: "pacific_air.png"
   },
   "Peach Aviation": {
     img: "peach_tailwing.png"
   },
   "Pegasus Airlines": {
     img: "Pegasus-Airlines-logo.jpg"
+  },
+  "Qatar Airways": {
+    img: "qatar_airways.jpg"
   },
   Rossiya: {
     img: "rossiya-airlines-logo.png"
@@ -144,6 +186,12 @@ export default {
   },
   "Scandinavian Airlines": {
     img: "scandinavian-airlines-sas.png"
+  },
+  "Shenzhen Airlines": {
+    img: "shenzhen.jpg"
+  },
+  "Sichuan Airlines": {
+    img: "sichuan.png"
   },
   "Spirit Airlines": {
     img: "spirit_logo.jpg"
@@ -168,6 +216,18 @@ export default {
   },
   "Ural Airlines": {
     img: "Ural_airlines.png"
+  },
+  "Vietjet Air": {
+    img: "vietJet.png"
+  },
+  "Vietnam Airlines": {
+    img: "vietnam_airlines.jpg"
+  },
+  Vistara: {
+    img: "vistara.png"
+  },
+  Volaris: {
+    img: "volaris.png"
   },
   Volotea: {
     img: "volotea-logo.png"
