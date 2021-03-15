@@ -7,10 +7,12 @@ import StatsNavBar from "./components/stats/StatsNavBar.vue";
 import AirlineCard from "./components/stats/AirlineCard.vue";
 import "./assets/global.css";
 import VueForceNextTick from "vue-force-next-tick";
+import Viewer from "v-viewer";
 
 Vue.config.productionTip = false;
 Vue.use(LoadScript);
 Vue.use(VueForceNextTick);
+Vue.use(Viewer);
 // Vue.loadScript("/static/js/d3.v5.min.js").then(() => {
 //   Vue.loadScript("/static/js/mpld3.v0.5.2.js");
 // });
