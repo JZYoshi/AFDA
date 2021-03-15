@@ -32,6 +32,7 @@
 <script>
 import axios from "axios";
 import Plotly from "plotly.js-dist";
+import get_unit from "../../utils/my_utils";
 
 export default {
   data() {
@@ -61,7 +62,23 @@ export default {
                 }
               ],
               {
-                title: { text: this.fig_data_list[i].label },
+                title: {
+                  text:
+                    "<b>" +
+                    this.fig_data_list[i].label
+                      .replaceAll("_", " ")
+                      .toUpperCase() +
+                    " PDF</b>"
+                },
+                xaxis: {
+                  title: {
+                    text:
+                      this.fig_data_list[i].label +
+                      " (" +
+                      get_unit(this.fig_data_list[i].label) +
+                      ")"
+                  }
+                },
                 margin: { l: 60, r: 40, t: 60, b: 40 },
                 autosize: true
               },
