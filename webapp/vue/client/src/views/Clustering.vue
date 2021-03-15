@@ -26,6 +26,7 @@
             <v-col cols="6">
               <v-img :src="cah_fig_src" height="75vh" contain />
             </v-col>
+            <v-divider vertical inset></v-divider>
             <v-col cols="6">
               <v-data-table
                 :headers="airlines_headers"
@@ -56,6 +57,7 @@
             <v-col cols="6">
               <v-img :src="pca_fig_src" height="75vh" contain />
             </v-col>
+            <v-divider vertical inset></v-divider>
             <v-col cols="6">
               <v-data-table
                 :headers="clustering_stats_headers"
