@@ -1,44 +1,55 @@
-# !!! Use of git
+Welcome to AFDA!
+================================
 
-!!! TIP: ${} is a placeholder (replace it with your input)
+Installation
+^^^^^^^^^^^^
+Install all python requirements
+   .. code-block:: bash
 
-1. create in local (your computer) your own branch from a reference branch (ex. main)
+      pip install -r requirements.txt
 
-    git checkout -b ${NAME OF THE NEW BRANCH}
+In the repository data, place the files `airports.csv` and `airlines.csv`.
+If you want to use the data that we provide, place also the repository `__tempo`
+containing the flight data and the repository `metar` containing the weather data.
+Once you've done that, you can perform the phase, descriptors and classification computation,
+then you will be able to run the webapp to visualize the results.
 
+---------------------------------------
 
-2. every time before starting to working on the code, pull the lastest changes of the project in Github
+Run the web application for data visualization:
+   1. install *node.js* and *npm* if it's not installed
+   2. go to the **vue/client** directory
 
-    git pull origin main
+      .. code-block:: bash
 
+         cd webapp/vue/client
 
-3. work on the code
+   3. execute `npm install` and wait for the packages installation
 
+      .. code-block:: bash
 
-4. once finished, stage your modifications (so that they are ready to be committed)
+         npm install
 
-    git add -A
+   4. execute `npm run build` and wait for the compilation
 
+      .. code-block:: bash
 
-5. commit your modifications
+         npm run build
 
-    git commit -m "${the commit message}"
+   5. rename a .db file to 'descriptors.db' and put it inside **webapp/instance**
+   6. go to the **webapp/** directory
+   7. set up environment variables (execute `$env:FLASK_ENV="development"`; `$env:FLASK_APP="server"`)
 
+      .. code-block:: bash
+         
+         $env:FLASK_ENV="development"
 
-6. push the modifications to your own remote branch (the branch with the same name but in Github)
+      .. code-block:: bash
 
-    git push origin ${NAME OF THE BRANCH}
+         $env:FLASK_APP="server"
+         
+   8. run the server by executing `flask run`
 
+      .. code-block:: bash
 
-7. after step 6, normally you will be asked if you want to do a pull request (i.e. merge request)
-you can choose to merge your remote branch with the branch 'main' so that others can pull your changes.
-Otherwise you can continue to work on the code, make commits, and make a pull request later.
-
-!!! TIP: push your modifications frequently to your remote branch, so that it will be eaiser to be recovered in the case of a computer failure
-
-
-
-# AFDA
-AFDA (Airline Flight Data Analysis) is a tool for high-volume flight data analysis 
-This tool is part of the student project "Machine Learning to explore the the flight data ADS-B" at ISAE-SUPAERO.
-baptiste just modified the file
+         flask run
