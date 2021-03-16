@@ -20,7 +20,7 @@ To execute this script, enter these commands from project root:
 
     .. code-block:: bash
     
-        cd flight\ phase\ on\ dataset
+        cd PhaseAndDescComputation
         mpiexec -n "number of thread" python flight_phase.py
 
 Documentation of functions in **flight_phase.py**:

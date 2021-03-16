@@ -18,7 +18,6 @@ def calculate_descriptor(phase):
     """
     Compute the descriptors for a specific flight phase.
     The computed descriptors are:
-
         + duration
         + average speed
         + standard deviation of speed
@@ -28,7 +27,6 @@ def calculate_descriptor(phase):
         + min speed
         + max vertical speed
         + min vertical speed
-
     :param phase: a dataframe containing only the flight phase to analyse
     :returns: the list of descriptors as explained above
     """
@@ -50,7 +48,6 @@ def calculate_metar(lat,lon,time):
     """
     Determine the closest airport from a point and find
     the weather condition at this airport and at the input time
-
     :param lat: the lattitude
     :param lon: the longitude
     :param time: the time
