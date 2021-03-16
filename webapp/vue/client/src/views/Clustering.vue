@@ -52,7 +52,9 @@
         <v-card>
           <div class="d-flex flex-no-wrap justify-space-between">
             <v-col cols="6">
-              <v-img :src="cah_fig_src" height="75vh" contain />
+              <v-zoomer class="custom-zoomer">
+                <img :src="cah_fig_src" class="custom-img" />
+              </v-zoomer>
             </v-col>
             <v-divider vertical inset></v-divider>
             <v-col cols="6">
@@ -113,7 +115,16 @@
     </v-row>
   </v-container>
 </template>
-
+<style scoped>
+.custom-zoomer {
+  height: 75vh;
+}
+.custom-img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+</style>
 <script>
 export default {
   data() {
