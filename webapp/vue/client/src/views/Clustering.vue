@@ -85,7 +85,8 @@
         <v-card>
           <div class="d-flex flex-no-wrap justify-space-between">
             <v-col cols="6">
-              <v-img :src="pca_fig_src" height="75vh" contain />
+              <!-- <v-img :src="pca_fig_src" height="75vh" contain /> -->
+              <div class="fig-canvas mx-auto" id="pca" />
             </v-col>
             <v-divider vertical inset></v-divider>
             <v-col cols="6">
@@ -124,8 +125,14 @@
   width: 100%;
   height: 100%;
 }
+.fig-canvas {
+  height: 75vh;
+}
 </style>
 <script>
+import Plotly from "plotly.js-dist";
+import { generateGroupColors } from "../utils/my_utils";
+
 export default {
   data() {
     return {
@@ -232,14 +239,52 @@ export default {
     load_fig() {
       if (this.chosen.length == 2) {
         this.cah_fig_src = require("../assets/clustering_res/cah.svg");
-        this.pca_fig_src = require("../assets/clustering_res/pca.svg");
+        this.pca_fig_src = require("../assets/clustering_res/pca.json");
       } else if (this.chosen[0] == "Metar") {
         this.cah_fig_src = require("../assets/clustering_res/cah_meteo.svg");
-        this.pca_fig_src = require("../assets/clustering_res/pca_meteo.svg");
+        this.pca_fig_src = require("../assets/clustering_res/pca_meteo.json");
       } else if (this.chosen[0] == "ADSB") {
         this.cah_fig_src = require("../assets/clustering_res/cah_operation.svg");
-        this.pca_fig_src = require("../assets/clustering_res/pca_operation.svg");
+        this.pca_fig_src = require("../assets/clustering_res/pca_operation.json");
       }
+      const group_color = generateGroupColors(this.pca_fig_src.color);
+      Plotly.newPlot(
+        "pca",
+        [
+          {
+            x: this.pca_fig_src.x,
+            y: this.pca_fig_src.y,
+            mode: "markers",
+            marker: {
+              color: group_color
+            },
+            type: "scatter",
+            text: this.pca_fig_src.labels.map(
+              (l, index) =>
+                "Airline " + l + ", Group " + this.pca_fig_src.color[index]
+            )
+          }
+        ],
+        {
+          title: {
+            text: "<b>Principal Component Analysis</b>"
+          },
+          xaxis: {
+            title: {
+              text: "PCA 1"
+            }
+          },
+          yaxis: {
+            title: {
+              text: "PCA 2"
+            }
+          },
+          autosize: true
+        },
+        {
+          responsive: true
+        }
+      );
     },
     load_table() {
       if (this.chosen.length == 2) {
@@ -279,8 +324,8 @@ export default {
       });
     },
     load() {
-      this.load_fig();
       this.load_table();
+      this.load_fig();
     }
   }
 };

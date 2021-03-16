@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.metrics import silhouette_score
+from json_tricks import dump
 
 def to_airlines(df, columns_remained, group_by="median"):
     """
@@ -76,24 +77,35 @@ def cah(df_airlines, fig_title, output_filename, threshold=2, plot=True):
     return groups_cah
 
 
-def pca_plot_clustering(df_airlines, groups, fig_title, output_filename):
+def pca_plot_clustering(df_airlines, groups, fig_title, fig_output_filename, data_output_filename):
     """
     Provide a PCA plot for clustering
 
     :param df_airlines: dataframe on airline level
     :param groups: list of group labels
     :param fig_title: title of the plotted figure
-    :param output_filename: path-like string that indicates the place to output the figure as well as its name
+    :param fig_output_filename: path(and file)-like string that indicates the place to output the figure
+    :param data_output_filename: path(and file)-like string that indicates the place to output the data used to draw the figure
     """
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(scale(df_airlines))
     fig = plt.figure()
     plt.title(fig_title)
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
+    for i, txt in enumerate(df_airlines.index):
+        plt.annotate(txt, (X_pca[:, 0][i], X_pca[:, 1][i]))
     plt.colorbar()
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
-    plt.savefig(output_filename, format=output_filename.split(".")[-1])
+    plt.savefig(fig_output_filename, format=fig_output_filename.split(".")[-1])
+    
+    fig_data = {
+        "x": X_pca[:, 0].tolist(),
+        "y": X_pca[:, 1].tolist(),
+        "color": groups.tolist(),
+        "labels": df_airlines.index.tolist()
+    }
+    dump(fig_data, data_output_filename)
 
 
 def group_descriptors(df_airlines, groups):
@@ -131,7 +143,6 @@ def airlines_group(df_airlines, groups, airlines_decoder):
 
     df_airlines_group = pd.merge(df1, df2, how='left', left_on='airline_cat', right_index=True)
     df_airlines_group = df_airlines_group.rename(columns={0: 'airline'})
-    # .drop('airline_cat', axis=1)
 
     return df_airlines_group
 
