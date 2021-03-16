@@ -21,4 +21,28 @@ function get_unit(var_name) {
   }
 }
 
-export default get_unit;
+function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = (num >> 8) & 255;
+  var b = num & 255;
+  return "rgb(" + r + ", " + g + ", " + b + ")";
+}
+
+// group number starts from 1
+function generateGroupColors(group_list) {
+  let group_color_list = [];
+  return group_list.map(group => {
+    if (group > group_color_list.length) {
+      for (let i = 0; i < group - group_color_list.length; i++) {
+        let color = getRandomRgb();
+        group_color_list.push(color);
+      }
+      return group_color_list[group_color_list.length - 1];
+    } else {
+      return group_color_list[group - 1];
+    }
+  });
+}
+
+export { get_unit, getRandomRgb, generateGroupColors };

@@ -49,13 +49,9 @@ groups_cah_operation = cah(df_airlines_operation, "Hierarchical Clustering ADSB"
 
 
 # visualize clusters on PCA
-pca_plot_clustering(df_airlines, groups_cah, "PCA", "../webapp/vue/client/src/assets/clustering_res/pca.svg")
-pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA Weather", "../webapp/vue/client/src/assets/clustering_res/pca_meteo.svg")
-pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA ADSB", "../webapp/vue/client/src/assets/clustering_res/pca_operation.svg")
-
-pca_plot_clustering(df_airlines, groups_cah, "PCA", "../classification_result/pca.png")
-pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA Weather", "../classification_result/pca_meteo.png")
-pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA ADSB", "../classification_result/pca_operation.png")
+pca_plot_clustering(df_airlines, groups_cah, "PCA", "../classification_result/pca.png", "../webapp/vue/client/src/assets/clustering_res/pca.json")
+pca_plot_clustering(df_airlines_meteo, groups_cah_meteo, "PCA Weather", "../classification_result/pca_meteo.png", "../webapp/vue/client/src/assets/clustering_res/pca_meteo.json")
+pca_plot_clustering(df_airlines_operation, groups_cah_operation, "PCA ADSB", "../classification_result/pca_operation.png", "../webapp/vue/client/src/assets/clustering_res/pca_operation.json")
 
 # save statistics for clusters (csv)
 with open('../classification_result/clustering_stats.csv', 'w') as f:

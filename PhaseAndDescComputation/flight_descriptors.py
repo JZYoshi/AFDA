@@ -124,8 +124,6 @@ def compute_descriptors_wrap_function(file_name, sql_query_queue):
     else:
         airline_name = None
         unknown_airline.append(id_airline)
-    db.execute("INSERT INTO general_info (icao,icao_airline,airline) \
-        VALUES (?,?,?)",(icao24,id_airline,airline_name))
     sql_query_queue.put(["INSERT INTO general_info (icao,icao_airline,airline) \
         VALUES (?,?,?)",(icao24,id_airline,airline_name)])
 
@@ -138,6 +136,7 @@ def sql_query_executor(sql_query_queue, time):
             query = sql_query_queue.get(block=True, timeout=5)
         except queue.Empty:
             print("no more queries to execute")
+            db_connection.commit()
             db_connection.close()
             break
         else:
@@ -145,7 +144,7 @@ def sql_query_executor(sql_query_queue, time):
                 db_connection.execute(query[0])
             else:
                 db_connection.execute(query[0], query[1])
-            db_connection.commit()
+            
     
 
 ## main

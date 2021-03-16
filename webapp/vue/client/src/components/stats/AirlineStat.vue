@@ -32,7 +32,7 @@
 <script>
 import axios from "axios";
 import Plotly from "plotly.js-dist";
-import get_unit from "../../utils/my_utils";
+import { get_unit } from "../../utils/my_utils";
 
 export default {
   data() {
