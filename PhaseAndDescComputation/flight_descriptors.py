@@ -172,6 +172,7 @@ if __name__=="__main__":
     list_file_name = comm.scatter(list_file_name, root=0)
 
     query_list = []
+    values_list = []
 
     airline = pd.read_csv('../data/airlines.csv')
     airports=pd.read_csv('../data/airports.csv',
@@ -200,9 +201,11 @@ if __name__=="__main__":
             time = (int(data_takeof['time'])//3600)*3600
             desc_climb += calculate_metar(lat,lon,time)
             query_list.append("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'%s',%s,%s,%s)"%tuple(desc_climb))
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+            values_list.append(desc_climb)
         else:
             query_list.append("INSERT INTO climb DEFAULT VALUES")
+            values_list.append([])
 
         #compute descriptors for cruise phase
         if not(cruise.empty):
@@ -210,9 +213,11 @@ if __name__=="__main__":
             desc_cruise.append(cruise['baroaltitude'].mean())
             desc_cruise.append(cruise['baroaltitude'].std())
             query_list.append("INSERT INTO cruise (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,mean_altitude,std_altitude) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"%tuple(desc_cruise))
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+            values_list.append(desc_cruise)
         else:
             query_list.append('INSERT INTO cruise DEFAULT VALUES')
+            values_list.append([])
 
         # compute descriptors for descent phase
         if not(descent.empty):
@@ -223,10 +228,12 @@ if __name__=="__main__":
             time = (int(data_landing['time'])//3600)*3600
             desc_descent += calculate_metar(lat,lon,time)
             query_list.append("INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'%s',%s,%s,%s)"%tuple(desc_descent))
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+            values_list.append(desc_descent)
                 
         else:
             query_list.append('INSERT INTO descent DEFAULT VALUES')
+            values_list.append([])
 
         # get airline corresponding to the flight
         id_airline=file_name.split('_')[2][0:3]
@@ -236,19 +243,17 @@ if __name__=="__main__":
         else:
             airline_name = None
             unknown_airline.append(id_airline)
-        query_list.append("INSERT INTO general_info (icao,icao_airline,airline) \
-            VALUES ('%s','%s','%s')"%(icao24,id_airline,airline_name))
+        query_list.append("INSERT INTO general_info (icao,icao_airline,airline) VALUES (?,?,?)")
+        values_list.append([icao24,id_airline,airline_name])
 
     query_list = comm.gather(query_list, root=0)
-
+    values_list = comm.gather(values_list, root=0)
     if rank == 0:
     	query_list = list(itertools.chain(*query_list))
+    	values_list = list(itertools.chain(*values_list))
     	db = get_db()
-    	for query in query_list:
-    		query = query.replace('None','NULL')
-    		query = query.replace('nan','NULL')
-    		query = query.replace("'NULL'",'NULL')
-    		db.execute(query)
+    	for i in range(len(query_list)):
+    		db.execute(query_list[i], values_list[i])
 
     	db.commit()
     	db.close()
