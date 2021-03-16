@@ -89,6 +89,8 @@ def pca_plot_clustering(df_airlines, groups, fig_title, output_filename):
     fig = plt.figure()
     plt.title(fig_title)
     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=groups)
+    for i, txt in enumerate(df_airlines.index):
+        plt.annotate(txt, (X_pca[:, 0][i], X_pca[:, 1][i]))
     plt.colorbar()
     plt.xlabel('PCA1')
     plt.ylabel('PCA2')
