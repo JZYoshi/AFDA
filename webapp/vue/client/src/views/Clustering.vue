@@ -44,7 +44,7 @@
             Metar
           </v-btn>
           <v-btn value="ADSB">
-            Asd-b
+            ADS-B
           </v-btn>
         </v-btn-toggle>
       </v-col>
