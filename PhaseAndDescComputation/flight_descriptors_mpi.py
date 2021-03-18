@@ -122,7 +122,7 @@ if __name__=="__main__":
             lon = data_takeof['lon']
             time = (int(data_takeof['time'])//3600)*3600
             desc_climb += calculate_metar(lat,lon,time)
-            query_list.append("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+            query_list.append("INSERT INTO climb (duration,avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_speed_kt) \
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
             values_list.append(desc_climb)
         else:
@@ -149,7 +149,7 @@ if __name__=="__main__":
             lon = data_landing['lon']
             time = (int(data_landing['time'])//3600)*3600
             desc_descent += calculate_metar(lat,lon,time)
-            query_list.append("INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_spind_kt) \
+            query_list.append("INSERT INTO descent (duration, avg_speed,std_speed,avg_vertrate_speed,std_vertrate_speed,max_spd,min_spd,max_vertrate_speed,min_vertrate_speed,airport,temp_c,dewpoint_c,wind_speed_kt) \
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
             values_list.append(desc_descent)
                 
